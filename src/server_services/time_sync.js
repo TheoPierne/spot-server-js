@@ -12,7 +12,7 @@ const logger = LoggerUtil.getLogger('TIME_SYNC');
 const clockIdentifier = 'clock1234';
 
 function timeSyncUpdate(call, callback) {
-  logger.info('New request [TIME SYNC] /timeSyncUpdate !');
+  logger.info('New request /timeSyncUpdate !');
   let reply = new time_sync_pb.TimeSyncUpdateResponse();
   populate_response_header(reply, call.request);
 

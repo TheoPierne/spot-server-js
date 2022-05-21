@@ -5,9 +5,11 @@ const process = require('node:process');
 
 const grpc = require('@grpc/grpc-js');
 
-const server = new grpc.Server();
+const { LoggerUtil } = require('./loggerUtil');
 
-console.log(__dirname)
+const logger = LoggerUtil.getLogger('SERVER');
+
+const server = new grpc.Server();
 
 readdirSync(`${__dirname}/server_services`)
   .filter(file => file.endsWith('.js'))
@@ -17,7 +19,7 @@ readdirSync(`${__dirname}/server_services`)
   });
 
 server.bindAsync('0.0.0.0:443', grpc.ServerCredentials.createInsecure(), () => {
-  console.log(`[SERVER] Server started with ${server.handlers.size} services !`);
+  logger.info(`Server started with ${server.handlers.size} services !`);
   server.start();
 });
 
@@ -27,11 +29,12 @@ process.on('SIGINT', exitHandler.bind(null, { exit: true }));
 
 function exitHandler(options) {
   if (options.cleanup) {
-    server.forceShutdown();
-    console.log('[SERVER] Server stopped !');
+    logger.info('Server stopped !');
   }
 
   if (options.exit) {
-    process.exit(0);
+    server.tryShutdown(() => {
+      process.exit(0);
+    });
   }
 }

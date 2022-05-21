@@ -8,6 +8,10 @@
     "lint": "eslint --config .eslintrc.json .",
     "postinstall": "build-opencv --version 4.5.4 build"
   },
+  "bin": {
+    "spot-server-js": "node src/server.js",
+    "ssj": "node src/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/TheoPierne/spot-server-js.git"
