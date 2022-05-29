@@ -97,6 +97,18 @@ function listServiceEntries(call, callback) {
     .setAuthority('api.spot.robot')
     .setUserTokenRequired(true);
 
+  const serviceDataBuffer = new directory_pb.ServiceEntry()
+    .setName('data-buffer')
+    .setType('bosdyn.api.DataBufferService')
+    .setAuthority('api.spot.robot')
+    .setUserTokenRequired(true);
+
+    const serviceWorldObject = new directory_pb.ServiceEntry()
+    .setName('world-objects')
+    .setType('bosdyn.api.WorldObjectService')
+    .setAuthority('api.spot.robot')
+    .setUserTokenRequired(true);
+
   reply.setServiceEntriesList([
     serviceAuth,
     serviceId,
@@ -112,6 +124,8 @@ function listServiceEntries(call, callback) {
     serviceIR,
     serviceAutoReturn,
     serviceMission,
+    serviceDataBuffer,
+    serviceWorldObject,
   ]);
 
   callback(null, reply);
