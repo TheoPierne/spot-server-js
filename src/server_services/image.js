@@ -34,7 +34,9 @@ function getImage(call, callback) {
   populate_response_header(reply, call.request);
 
   // /spot.jpg
-  const imageData = cv.imread(path.join(__dirname, '/light.jpg'));
+  const randomImage = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+  console.log(path.join(__dirname, `/light_${randomImage}.jpg`))
+  const imageData = cv.imread(path.join(__dirname, `/light_${randomImage}.jpg`));
   const data = cv.imencode('.jpg', imageData);
   const dataArray = new Uint8Array(data);
 
