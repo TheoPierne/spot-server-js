@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "A simple server to simulate a Spot's robot for testing purpose.",
   "main": "src/server.js",
+  "files": [
+    "src"
+  ],
   "scripts": {
     "start": "node src/server.js",
     "lint": "eslint --config .eslintrc.json .",
-    "postinstall": "build-opencv --version 4.5.4 build"
+    "build": "build-opencv --version 4.5.4 build",
+    "rebuild": "build-opencv --version 4.5.4 rebuild"
   },
   "bin": {
     "spot-server-js": "node src/server.js",
@@ -25,7 +29,7 @@
     "node": ">=16.13.0"
   },
   "devDependencies": {
-    "eslint": "^8.15.0",
+    "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -33,7 +37,7 @@
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.6.7",
-    "@u4/opencv4nodejs": "^6.1.5",
+    "@u4/opencv4nodejs": "^6.1.6",
     "google-protobuf": "^3.20.1",
     "lodash": "^4.17.21",
     "luxon": "^2.4.0",
