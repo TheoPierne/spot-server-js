@@ -80,7 +80,7 @@ function getEstopConfig(call, callback) {
   const timeout = new time.Duration().setSeconds(10).setNanos(0);
 
   const endpoint = new estop_pb.EstopEndpoint()
-    .setRole('TEST_ROLE')
+    .setRole('PDB_rooted')
     .setName('TEST_NAME')
     .setUniqueId('4321')
     .setTimeout(timeout)
