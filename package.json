@@ -9,8 +9,8 @@
   "scripts": {
     "start": "node src/server.js",
     "lint": "eslint --config .eslintrc.json .",
-    "build": "build-opencv --version 4.5.4 build",
-    "rebuild": "build-opencv --version 4.5.4 rebuild"
+    "build": "build-opencv --version 4.5.5 build",
+    "rebuild": "build-opencv --version 4.5.5 --nobuild rebuild"
   },
   "bin": {
     "spot-server-js": "node src/server.js",
@@ -29,18 +29,18 @@
     "node": ">=16.13.0"
   },
   "devDependencies": {
-    "eslint": "^8.19.0",
+    "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.6.7",
-    "@u4/opencv4nodejs": "^6.2.1",
-    "google-protobuf": "^3.20.1",
+    "@grpc/grpc-js": "^1.7.1",
+    "@u4/opencv4nodejs": "^6.2.4",
+    "google-protobuf": "^3.21.0",
     "lodash": "^4.17.21",
-    "luxon": "^2.4.0",
-    "winston": "^3.8.1"
+    "luxon": "^3.0.3",
+    "winston": "^3.8.2"
   }
 }
