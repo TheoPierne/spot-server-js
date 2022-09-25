@@ -29,7 +29,7 @@
     "node": ">=16.13.0"
   },
   "devDependencies": {
-    "eslint": "^8.23.1",
+    "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -40,7 +40,7 @@
     "@u4/opencv4nodejs": "^6.2.4",
     "google-protobuf": "^3.21.0",
     "lodash": "^4.17.21",
-    "luxon": "^3.0.3",
+    "luxon": "^3.0.4",
     "winston": "^3.8.2"
   }
 }
