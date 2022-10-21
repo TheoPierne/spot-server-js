@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.7.2",
-    "@u4/opencv4nodejs": "^6.2.4",
+    "@u4/opencv4nodejs": "^6.2.5",
     "google-protobuf": "^3.21.2",
     "lodash": "^4.17.21",
     "luxon": "^3.0.4",
