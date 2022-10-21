@@ -1,7 +1,12 @@
 'use strict';
 
-const { readdirSync } = require('node:fs');
+const { readdirSync, readFileSync } = require('node:fs');
 const process = require('node:process');
+
+/*
+process.env['GRPC_VERBOSITY'] = 'debug';
+process.env['GRPC_TRACE'] = 'all';
+ */
 
 const grpc = require('@grpc/grpc-js');
 
@@ -18,7 +23,12 @@ readdirSync(`${__dirname}/server_services`)
     server.addService(file.service, file.func);
   });
 
-server.bindAsync('0.0.0.0:443', grpc.ServerCredentials.createInsecure(), () => {
+const keyPair = {
+  private_key: readFileSync(`${__dirname}/resources/server.key`),
+  cert_chain: readFileSync(`${__dirname}/resources/server.crt`)
+}
+
+server.bindAsync('0.0.0.0:443', grpc.ServerCredentials.createSsl(readFileSync(`${__dirname}/resources/ca.crt`), [keyPair], true), () => {
   logger.info(`Server started with ${server.handlers.size} services !`);
   server.start();
 });
