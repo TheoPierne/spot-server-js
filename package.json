@@ -29,14 +29,14 @@
     "node": ">=16.13.0"
   },
   "devDependencies": {
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.7.2",
+    "@grpc/grpc-js": "^1.7.3",
     "@u4/opencv4nodejs": "^6.2.5",
     "google-protobuf": "^3.21.2",
     "lodash": "^4.17.21",
