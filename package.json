@@ -42,7 +42,7 @@
     "@u4/opencv4nodejs": "^6.5.2",
     "argparse": "^2.0.1",
     "google-protobuf": "^3.21.2",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "luxon": "^3.4.0",
     "winston": "^3.10.0"
   }
