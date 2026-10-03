@@ -1,102 +1,90 @@
 'use strict';
 
-const lease_pb = require('../bosdyn/api/lease_pb');
-const lease_service_grpc_pb = require('../bosdyn/api/lease_service_grpc_pb');
-const { LoggerUtil } = require('../loggerUtil');
+const leasePb = require('../bosdyn/api/lease_pb');
+const { LeaseServiceService } = require('../bosdyn/api/lease_service_grpc_pb');
+const { LeaseManager, leaseFromProto, leaseToProto } = require('../sim/lease');
+const { unary } = require('../util');
 
-const { populate_response_header } = require('../util');
-
-const logger = LoggerUtil.getLogger('LEASE');
-
-function acquireLease(call, callback) {
-  logger.info('New request /acquireLease !');
-  let reply = new lease_pb.AcquireLeaseResponse();
-  populate_response_header(reply, call.request);
-
-  const lease = new lease_pb.Lease()
-    .setResource('body')
-    .setEpoch('1638316800')
-    .setSequenceList([0, 1, 2, 3])
-    .setClientNamesList(['Theo', 'TEST_2']);
-
-  const leaseOwner = new lease_pb.LeaseOwner().setClientName('Theo').setUserName('setUserName');
-
-  reply.setStatus(lease_pb.AcquireLeaseResponse.Status.STATUS_OK).setLease(lease).setLeaseOwner(leaseOwner);
-
-  callback(null, reply);
+/**
+ * The user of a call, from its token.
+ * @param {import('../robot').Robot} robot
+ * @param {any} call
+ * @returns {string}
+ */
+function userOf(robot, call) {
+  const value = call.metadata?.get('authorization')?.[0];
+  const token = /^Bearer (.+)$/.exec(String(value ?? ''))?.[1];
+  return (token && robot.auth.verify(token)?.sub) || '';
 }
 
-function takeLease(call, callback) {
-  logger.info('New request /takeLease !');
-  let reply = new lease_pb.TakeLeaseResponse();
-  populate_response_header(reply, call.request);
-
-  const lease = new lease_pb.Lease()
-    .setResource('body')
-    .setEpoch('1638316800')
-    .setSequenceList([0, 1, 2, 3])
-    .setClientNamesList(['Theo', 'TEST_2']);
-
-  const leaseOwner = new lease_pb.LeaseOwner().setClientName('Theo').setUserName('setUserName');
-
-  reply.setStatus(lease_pb.TakeLeaseResponse.Status.STATUS_OK).setLease(lease).setLeaseOwner(leaseOwner);
-
-  callback(null, reply);
+/**
+ * @param {?{clientName: string, userName: string}} owner
+ * @returns {leasePb.LeaseOwner}
+ */
+function ownerToProto(owner) {
+  return new leasePb.LeaseOwner().setClientName(owner?.clientName ?? '').setUserName(owner?.userName ?? '');
 }
 
-function returnLease(call, callback) {
-  logger.info('New request /returnLease !');
-  let reply = new lease_pb.ReturnLeaseResponse();
-  populate_response_header(reply, call.request);
-
-  reply.setStatus(lease_pb.ReturnLeaseResponse.Status.STATUS_OK);
-
-  callback(null, reply);
+/**
+ * AcquireLease / TakeLease.
+ * @param {boolean} take
+ * @returns {function(any, object): any}
+ */
+function acquireOrTake(take) {
+  const Response = take ? leasePb.TakeLeaseResponse : leasePb.AcquireLeaseResponse;
+  return (request, { robot, call, clientName }) => {
+    const result = robot.leases.acquire(request.getResource(), clientName, userOf(robot, call), take);
+    const response = new Response();
+    if (result.status === 'invalid_resource') return response.setStatus(Response.Status.STATUS_INVALID_RESOURCE);
+    if (result.status === 'already_claimed') {
+      return response
+        .setStatus(Response.Status.STATUS_RESOURCE_ALREADY_CLAIMED)
+        .setLeaseOwner(ownerToProto(result.owner));
+    }
+    return response
+      .setStatus(Response.Status.STATUS_OK)
+      .setLease(leaseToProto(result.lease))
+      .setLeaseOwner(ownerToProto(result.owner));
+  };
 }
 
-function retainLease(call, callback) {
-  logger.info('New request /retainLease !');
-  let reply = new lease_pb.RetainLeaseResponse();
-  populate_response_header(reply, call.request);
-
-  const lease = new lease_pb.Lease()
-    .setResource('body')
-    .setEpoch('1638316800')
-    .setSequenceList([0, 1, 2, 3])
-    .setClientNamesList(['Theo', 'TEST_2']);
-
-  const leaseOwner = new lease_pb.LeaseOwner().setClientName('Theo').setUserName('setUserName');
-
-  const leaseUseResult = new lease_pb.LeaseUseResult()
-    .setStatus(lease_pb.LeaseUseResult.Status.STATUS_OK)
-    .setOwner(leaseOwner)
-    .setAttemptedLease(lease)
-    .setPreviousLease(lease)
-    .setLatestKnownLease(lease)
-    .setLatestResourcesList([lease]);
-
-  reply.setLeaseUseResult(leaseUseResult);
-
-  callback(null, reply);
+/**
+ * ReturnLease.
+ * @param {leasePb.ReturnLeaseRequest} request
+ * @param {{robot: import('../robot').Robot}} context
+ * @returns {leasePb.ReturnLeaseResponse}
+ */
+function returnLease(request, { robot }) {
+  const { Status } = leasePb.ReturnLeaseResponse;
+  const status = robot.leases.returnLease(leaseFromProto(request.getLease()));
+  const value =
+    { ok: Status.STATUS_OK, invalid_resource: Status.STATUS_INVALID_RESOURCE }[status] ??
+    Status.STATUS_NOT_ACTIVE_LEASE;
+  return new leasePb.ReturnLeaseResponse().setStatus(value);
 }
 
-function listLeases(call, callback) {
-  logger.info('New request /listLeases !');
-  let reply = new lease_pb.ListLeasesResponse();
-  populate_response_header(reply, call.request);
-
-  reply.setResourcesList([]).setResourceTree();
-
-  callback(null, reply);
+/**
+ * RetainLease: keeps the lease fresh (a super lease of the lease to retain is accepted).
+ * @param {leasePb.RetainLeaseRequest} request
+ * @param {{robot: import('../robot').Robot}} context
+ * @returns {leasePb.RetainLeaseResponse}
+ */
+function retainLease(request, { robot }) {
+  const result = robot.leases.use(leaseFromProto(request.getLease()), null, { allowSuperLease: true });
+  return new leasePb.RetainLeaseResponse().setLeaseUseResult(LeaseManager.resultToProto(result));
 }
 
 module.exports = {
-  service: lease_service_grpc_pb.LeaseServiceService,
+  service: LeaseServiceService,
   func: {
-    acquireLease,
-    takeLease,
-    returnLease,
-    retainLease,
-    listLeases,
+    acquireLease: unary('AcquireLease', leasePb.AcquireLeaseResponse, acquireOrTake(false)),
+    takeLease: unary('TakeLease', leasePb.TakeLeaseResponse, acquireOrTake(true)),
+    returnLease: unary('ReturnLease', leasePb.ReturnLeaseResponse, returnLease),
+    retainLease: unary('RetainLease', leasePb.RetainLeaseResponse, retainLease),
+    listLeases: unary('ListLeases', leasePb.ListLeasesResponse, (request, { robot }) =>
+      robot.leases.listLeasesResponse(),
+    ),
   },
+  directory: [{ name: 'lease', type: 'bosdyn.api.LeaseService', authority: 'api.spot.robot' }],
+  userOf,
 };

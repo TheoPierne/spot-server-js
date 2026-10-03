@@ -1,29 +1,38 @@
 'use strict';
 
-const ir_enable_disable_pb = require('../bosdyn/api/ir_enable_disable_pb');
-const ir_enable_disable_service_grpc_pb = require('../bosdyn/api/ir_enable_disable_service_grpc_pb');
+const { IREnableDisableRequest, IREnableDisableResponse } = require('../bosdyn/api/ir_enable_disable_pb');
+const { IREnableDisableServiceService } = require('../bosdyn/api/ir_enable_disable_service_grpc_pb');
 const { LoggerUtil } = require('../loggerUtil');
-const { populate_response_header } = require('../util');
+const { invalidRequest, unary } = require('../util');
 
-const { REQUEST_ON } = ir_enable_disable_pb.IREnableDisableRequest.Request;
+const logger = LoggerUtil.getLogger('IR');
 
-const logger = LoggerUtil.getLogger('IR_ON_OFF');
-
-let isIrEnable = true;
-
-function iREnableDisable(call, callback) {
-  logger.info('New request /iREnableDisable !');
-  const reply = new ir_enable_disable_pb.IREnableDisableResponse();
-  populate_response_header(reply, call.request);
-
-  isIrEnable = call.request.getRequest() === REQUEST_ON;
-
-  callback(null, reply);
+/**
+ * IREnableDisable: the infrared emitters of the body cameras.
+ * @param {IREnableDisableRequest} request
+ * @param {{robot: import('../robot').Robot}} context
+ * @returns {IREnableDisableResponse}
+ */
+function iREnableDisable(request, { robot }) {
+  const { Request } = IREnableDisableRequest;
+  if (![Request.REQUEST_ON, Request.REQUEST_OFF].includes(request.getRequest())) {
+    throw invalidRequest('Unknown request.');
+  }
+  robot.irEmittersEnabled = request.getRequest() === Request.REQUEST_ON;
+  logger.info(`Infrared emitters ${robot.irEmittersEnabled ? 'enabled' : 'disabled'}`);
+  return new IREnableDisableResponse();
 }
 
 module.exports = {
-  service: ir_enable_disable_service_grpc_pb.IREnableDisableServiceService,
+  service: IREnableDisableServiceService,
   func: {
-    iREnableDisable,
+    iREnableDisable: unary('IREnableDisable', IREnableDisableResponse, iREnableDisable),
   },
+  directory: [
+    {
+      name: 'ir-enable-disable-service',
+      type: 'bosdyn.api.IREnableDisableService',
+      authority: 'ir-enable-disable.spot.robot',
+    },
+  ],
 };

@@ -1,83 +1,46 @@
 'use strict';
 
-const data_buffer_pb = require('../bosdyn/api/data_buffer_pb');
-const data_buffer_service_grpc_pb = require('../bosdyn/api/data_buffer_service_grpc_pb');
-const { LoggerUtil } = require('../loggerUtil');
-
-const { populate_response_header } = require('../util');
-
-const logger = LoggerUtil.getLogger('DATA_BUFFER');
-
-let logs = {
-  recordTextMessages: [],
-  recordOperatorComments: [],
-  recordDataBlobs: [],
-  recordEvents: []
-};
-
-function recordTextMessages(call, callback){
-  logger.info('New request /recordTextMessages !');
-  let reply = new data_buffer_pb.RecordTextMessagesResponse();
-  populate_response_header(reply, call.request);
-
-  logs.recordTextMessages = logs.recordTextMessages.concat(call.request.getTextMessagesList());
-
-  reply.setErrorsList([]);
-
-  console.log(logs.recordTextMessages.map(e => e.toObject()))
-
-  callback(null, reply);
-}
-
-function recordOperatorComments(call, callback){
-  logger.info('New request /recordOperatorComments !');
-  let reply = new data_buffer_pb.RecordOperatorCommentsResponse();
-  populate_response_header(reply, call.request);
-
-  logs.recordOperatorComments = logs.recordOperatorComments.concat(call.request.getOperatorCommentsList());
-
-  reply.setErrorsList([]);
-
-  console.log(logs.recordOperatorComments.map(e => e.toObject()))
-
-  callback(null, reply);
-}
-
-function recordDataBlobs(call, callback){
-  logger.info('New request /recordDataBlobs !');
-  let reply = new data_buffer_pb.RecordDataBlobsResponse();
-  populate_response_header(reply, call.request);
-
-  logs.recordDataBlobs = logs.recordDataBlobs.concat(call.request.getBlobDataList());
-
-  reply.setErrorsList([]);
-
-  console.log(logs.recordDataBlobs.map(e => e.toObject()))
-
-  callback(null, reply);
-}
-
-function recordEvents(call, callback){
-  logger.info('New request /recordEvents !');
-  let reply = new data_buffer_pb.RecordEventsResponse();
-  populate_response_header(reply, call.request);
-
-  logs.recordEvents = logs.recordEvents.concat(call.request.getEventsList());
-
-  reply.setErrorsList([]);
-
-  console.log(logs.recordEvents.map(e => e.toObject()))
-
-  callback(null, reply);
-}
-
+const dataBufferPb = require('../bosdyn/api/data_buffer_pb');
+const { DataBufferServiceService } = require('../bosdyn/api/data_buffer_service_grpc_pb');
+const { unary } = require('../util');
 
 module.exports = {
-  service: data_buffer_service_grpc_pb.DataBufferServiceService,
+  service: DataBufferServiceService,
   func: {
-    recordTextMessages,
-    recordOperatorComments,
-    recordDataBlobs,
-    recordEvents,
+    recordTextMessages: unary('RecordTextMessages', dataBufferPb.RecordTextMessagesResponse, (request, { robot }) =>
+      new dataBufferPb.RecordTextMessagesResponse().setErrorsList(
+        robot.dataBuffer.recordTextMessages(request.getTextMessagesList()),
+      ),
+    ),
+    recordOperatorComments: unary(
+      'RecordOperatorComments',
+      dataBufferPb.RecordOperatorCommentsResponse,
+      (request, { robot }) =>
+        new dataBufferPb.RecordOperatorCommentsResponse().setErrorsList(
+          robot.dataBuffer.recordOperatorComments(request.getOperatorCommentsList()),
+        ),
+    ),
+    recordDataBlobs: unary('RecordDataBlobs', dataBufferPb.RecordDataBlobsResponse, (request, { robot, clientName }) =>
+      new dataBufferPb.RecordDataBlobsResponse().setErrorsList(
+        robot.dataBuffer.recordDataBlobs(request.getBlobDataList(), clientName),
+      ),
+    ),
+    recordEvents: unary('RecordEvents', dataBufferPb.RecordEventsResponse, (request, { robot }) =>
+      new dataBufferPb.RecordEventsResponse().setErrorsList(robot.dataBuffer.recordEvents(request.getEventsList())),
+    ),
+    registerSignalSchema: unary(
+      'RegisterSignalSchema',
+      dataBufferPb.RegisterSignalSchemaResponse,
+      (request, { robot }) =>
+        new dataBufferPb.RegisterSignalSchemaResponse().setSchemaId(
+          robot.dataBuffer.registerSignalSchema(request.getSchema() ?? new dataBufferPb.SignalSchema()),
+        ),
+    ),
+    recordSignalTicks: unary('RecordSignalTicks', dataBufferPb.RecordSignalTicksResponse, (request, { robot }) =>
+      new dataBufferPb.RecordSignalTicksResponse().setErrorsList(
+        robot.dataBuffer.recordSignalTicks(request.getTickDataList()),
+      ),
+    ),
   },
+  directory: [{ name: 'data-buffer', type: 'bosdyn.api.DataBufferService', authority: 'buffer.spot.robot' }],
 };

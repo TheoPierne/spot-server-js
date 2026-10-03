@@ -1,2 +1,5 @@
 # Packages
 node_modules/
+
+# State of the simulated robot (--state-file)
+data/

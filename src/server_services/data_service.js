@@ -1,69 +1,34 @@
 'use strict';
 
-const data_buffer_pb = require('../bosdyn/api/data_buffer_pb');
-const data_service_grpc_pb = require('../bosdyn/api/data_service_grpc_pb');
-const { LoggerUtil } = require('../loggerUtil');
-
-const { populate_response_header } = require('../util');
-
-const logger = LoggerUtil.getLogger('DATA_SERVICE');
-
-function getDataIndex(call, callback){
-  logger.info('New request /getDataIndex !');
-  let reply = new data_buffer_pb.RecordTextMessagesResponse();
-  populate_response_header(reply, call.request);
-
-  
-
-  callback(null, reply);
-}
-
-function getEventsComments(call, callback){
-  logger.info('New request /getEventsComments !');
-  let reply = new data_buffer_pb.RecordTextMessagesResponse();
-  populate_response_header(reply, call.request);
-
-  
-
-  callback(null, reply);
-}
-
-function getDataBufferStatus(call, callback){
-  logger.info('New request /getDataBufferStatus !');
-  let reply = new data_buffer_pb.RecordTextMessagesResponse();
-  populate_response_header(reply, call.request);
-
-  
-
-  callback(null, reply);
-}
-
-function getDataPages(call, callback){
-  logger.info('New request /getDataPages !');
-  let reply = new data_buffer_pb.RecordTextMessagesResponse();
-  populate_response_header(reply, call.request);
-
-  
-
-  callback(null, reply);
-}
-
-function deleteDataPages(call, callback){
-  logger.info('New request /deleteDataPages !');
-  let reply = new data_buffer_pb.RecordTextMessagesResponse();
-  populate_response_header(reply, call.request);
-
-  
-
-  callback(null, reply);
-}
+const dataIndexPb = require('../bosdyn/api/data_index_pb');
+const { DataServiceService } = require('../bosdyn/api/data_service_grpc_pb');
+const { unary } = require('../util');
 
 module.exports = {
-  service: data_service_grpc_pb.DataServiceService,
+  service: DataServiceService,
   func: {
-    getDataIndex,
-    getEventsComments,
-    getDataBufferStatus,
-    deleteDataPages,
+    getDataIndex: unary('GetDataIndex', dataIndexPb.GetDataIndexResponse, (request, { robot }) =>
+      new dataIndexPb.GetDataIndexResponse().setDataIndex(robot.dataBuffer.dataIndex(request.getDataQuery())),
+    ),
+    getEventsComments: unary('GetEventsComments', dataIndexPb.GetEventsCommentsResponse, (request, { robot }) =>
+      new dataIndexPb.GetEventsCommentsResponse().setEventsComments(
+        robot.dataBuffer.eventsComments(request.getEventCommentRequest()),
+      ),
+    ),
+    getDataBufferStatus: unary('GetDataBufferStatus', dataIndexPb.GetDataBufferStatusResponse, (request, { robot }) =>
+      new dataIndexPb.GetDataBufferStatusResponse().setDataBufferStatus(
+        robot.dataBuffer.status(request.getGetBlobSpecs()),
+      ),
+    ),
+    getDataPages: unary('GetDataPages', dataIndexPb.GetDataPagesResponse, (request, { robot }) =>
+      new dataIndexPb.GetDataPagesResponse().setPagesList(robot.dataBuffer.pages(request.getTimeRange())),
+    ),
+    deleteDataPages: unary('DeleteDataPages', dataIndexPb.DeleteDataPagesResponse, (request, { robot }) => {
+      const result = robot.dataBuffer.deletePages(request.getTimeRange(), request.getPageIdsList());
+      return new dataIndexPb.DeleteDataPagesResponse()
+        .setBytesDeleted(result.bytesDeleted)
+        .setStatusList(result.statuses);
+    }),
   },
+  directory: [{ name: 'data', type: 'bosdyn.api.DataService', authority: 'data.spot.robot' }],
 };

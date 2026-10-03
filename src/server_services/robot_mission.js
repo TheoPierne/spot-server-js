@@ -1,107 +1,126 @@
 'use strict';
 
-const time = require('google-protobuf/google/protobuf/timestamp_pb');
+const missionPb = require('../bosdyn/api/mission/mission_pb');
+const { MissionServiceService } = require('../bosdyn/api/mission/mission_service_grpc_pb');
+const { LeaseManager, leaseFromProto } = require('../sim/lease');
+const { clientStreaming, unary } = require('../util');
 
-const lease_pb = require('../bosdyn/api/lease_pb');
-const mission_pb = require('../bosdyn/api/mission/mission_pb');
-const mission_service_grpc_pb = require('../bosdyn/api/mission/mission_service_grpc_pb');
-const nodes_pb = require('../bosdyn/api/mission/nodes_pb');
-const util_pb = require('../bosdyn/api/mission/util_pb');
-const { LoggerUtil } = require('../loggerUtil');
-
-const { populate_response_header } = require('../util');
-
-const logger = LoggerUtil.getLogger('ROBOT_MISSION');
-
-function loadMission(call, callback) {
-  logger.info('New request /loadMission !');
-  const reply = new mission_pb.LoadMissionResponse();
-  populate_response_header(reply, call.request);
-
-  const lease = new lease_pb.Lease()
-    .setResource('body')
-    .setEpoch('1638316800')
-    .setSequenceList([0, 1, 2, 3])
-    .setClientNamesList(['Theo', 'TEST_2']);
-
-  const leaseOwner = new lease_pb.LeaseOwner().setClientName('Theo').setUserName('setUserName');
-
-  const leaseUseResult = new lease_pb.LeaseUseResult()
-    .setStatus(lease_pb.LeaseUseResult.Status.STATUS_OK)
-    .setOwner(leaseOwner)
-    .setAttemptedLease(lease)
-    .setPreviousLease(lease)
-    .setLatestKnownLease(lease)
-    .setLatestResourcesList([lease]);
-
-  const userData = new util_pb.UserData().setId(117).setBytestring([1, 2, 4]);
-
-  const root = new mission_pb.NodeInfo()
-    .setId(1)
-    .setName('TEST_NODE_INFO_NAME')
-    .setUserData(userData)
-    .addChildren(root);
-
-  const missionInfo = new mission_pb.MissionInfo().setId(123).setRoot(root);
-
-  reply
-    .setStatus(mission_pb.LoadMissionResponse.Status.STATUS_OK)
-    .addLeaseUseResults(leaseUseResult)
-    .setMissionInfo(missionInfo)
-    .setFailedNodesList([]);
-
-  callback(null, reply);
+/**
+ * The lease use results of the leases of a mission request.
+ * @param {import('../robot').Robot} robot
+ * @param {import('../bosdyn/api/lease_pb').Lease[]} leases
+ * @returns {import('../bosdyn/api/lease_pb').LeaseUseResult[]}
+ */
+function useLeases(robot, leases) {
+  return leases.map(lease =>
+    LeaseManager.resultToProto(robot.leases.use(leaseFromProto(lease), null, { allowSuperLease: true })),
+  );
 }
 
-function getState(call, callback) {
-  logger.info('New request /getState !');
-  let reply = new mission_pb.GetStateResponse();
-  populate_response_header(reply, call.request);
+/**
+ * LoadMission.
+ * @param {missionPb.LoadMissionRequest} request
+ * @param {{robot: import('../robot').Robot}} context
+ * @returns {missionPb.LoadMissionResponse}
+ */
+function loadMission(request, { robot }) {
+  const { Status } = missionPb.LoadMissionResponse;
+  const response = new missionPb.LoadMissionResponse().setLeaseUseResultsList(
+    useLeases(robot, request.getLeasesList()),
+  );
+  if (!request.hasRoot()) {
+    return response
+      .setStatus(Status.STATUS_COMPILE_ERROR)
+      .setFailedNodesList([new missionPb.FailedNode().setName('').setError('The mission has no root node.')]);
+  }
+  return response.setStatus(Status.STATUS_OK).setMissionInfo(robot.missions.load(request.getRoot()));
+}
 
-  const options = new nodes_pb.Prompt.Option().setText('TEST_OPTION').setAnswerCode(1);
+/**
+ * LoadMissionAsChunks: the chunks hold a serialized LoadMissionRequest.
+ * @param {import('../bosdyn/api/data_chunk_pb').DataChunk[]} chunks
+ * @param {{robot: import('../robot').Robot}} context
+ * @returns {missionPb.LoadMissionResponse}
+ */
+function loadMissionAsChunks(chunks, context) {
+  const parts = chunks.map(chunk => chunk.getData_asU8());
+  const total = parts.reduce((sum, part) => sum + part.length, 0);
+  const data = new Uint8Array(total);
+  let offset = 0;
+  for (const part of parts) {
+    data.set(part, offset);
+    offset += part.length;
+  }
+  return loadMission(missionPb.LoadMissionRequest.deserializeBinary(data), context);
+}
 
-  const optionsAnswered = new nodes_pb.Prompt.Option().setText('TEST_OPTION_ANSWERED').setAnswerCode(1);
+/**
+ * PlayMission / RestartMission.
+ * @param {boolean} restart
+ * @returns {function(any, object): any}
+ */
+function play(restart) {
+  const Response = restart ? missionPb.RestartMissionResponse : missionPb.PlayMissionResponse;
+  return (request, { robot }) => {
+    const results = useLeases(robot, request.getLeasesList());
+    const played = robot.missions.play(request.getPauseTime(), restart);
+    return new Response()
+      .setStatus(played ? Response.Status.STATUS_OK : Response.Status.STATUS_NO_MISSION)
+      .setLeaseUseResultsList(results);
+  };
+}
 
-  const question = new mission_pb.Question()
-    .setId(1)
-    .setSource('TEST_SOURCE')
-    .setText('TEST_TEXT')
-    .setOptionsList([options])
-    .setForAutonomousProcessing(true);
-
-  const answeredQuestion = new mission_pb.Question()
-    .setId(1)
-    .setSource('TEST_SOURCE_ANSWERED')
-    .setText('TEST_TEXT_ANSWERED')
-    .setOptionsList([optionsAnswered])
-    .setForAutonomousProcessing(true);
-
-  const answeredQuestions = new mission_pb.State.AnsweredQuestion()
-    .setQuestion(answeredQuestion)
-    .setAcceptedAnswerCode(1);
-
-  const history = new mission_pb.State.NodeStatesAtTick()
-    .setTickCounter(10)
-    .setTickStartTimestamp(new time.Timestamp().fromDate(new Date()));
-
-  const state = new mission_pb.State()
-    .setQuestionsList([question])
-    .setAnsweredQuestionsList([answeredQuestions])
-    .setHistoryList([history])
-    .setStatus(mission_pb.State.Status.STATUS_SUCCESS)
-    .setError('TEST_ERROR')
-    .setTickCounter(10)
-    .setMissionId(123);
-
-  reply.setState(state);
-
-  callback(null, reply);
+/**
+ * PauseMission / StopMission.
+ * @param {boolean} stop
+ * @returns {function(any, object): any}
+ */
+function pauseOrStop(stop) {
+  const Response = stop ? missionPb.StopMissionResponse : missionPb.PauseMissionResponse;
+  return (request, { robot }) => {
+    const response = new Response();
+    if (request.hasLease()) {
+      response.setLeaseUseResult(
+        LeaseManager.resultToProto(
+          robot.leases.use(leaseFromProto(request.getLease()), null, { allowSuperLease: true }),
+        ),
+      );
+    }
+    const done = stop ? robot.missions.stop() : robot.missions.pause();
+    return response.setStatus(done ? Response.Status.STATUS_OK : Response.Status.STATUS_NO_MISSION_PLAYING);
+  };
 }
 
 module.exports = {
-  service: mission_service_grpc_pb.MissionServiceService,
+  service: MissionServiceService,
   func: {
-    loadMission,
-    getState,
+    loadMission: unary('LoadMission', missionPb.LoadMissionResponse, loadMission),
+    loadMissionAsChunks: clientStreaming('LoadMissionAsChunks', missionPb.LoadMissionResponse, loadMissionAsChunks),
+    playMission: unary('PlayMission', missionPb.PlayMissionResponse, play(false)),
+    restartMission: unary('RestartMission', missionPb.RestartMissionResponse, play(true)),
+    pauseMission: unary('PauseMission', missionPb.PauseMissionResponse, pauseOrStop(false)),
+    stopMission: unary('StopMission', missionPb.StopMissionResponse, pauseOrStop(true)),
+    getState: unary('GetState', missionPb.GetStateResponse, (request, { robot }) =>
+      new missionPb.GetStateResponse().setState(robot.missions.stateToProto()),
+    ),
+    getInfo: unary('GetInfo', missionPb.GetInfoResponse, (request, { robot }) => {
+      const response = new missionPb.GetInfoResponse();
+      if (robot.missions.mission) response.setMissionInfo(robot.missions.mission.info);
+      return response;
+    }),
+    getMission: unary('GetMission', missionPb.GetMissionResponse, (request, { robot }) => {
+      const response = new missionPb.GetMissionResponse();
+      const { mission } = robot.missions;
+      if (mission) response.setRoot(mission.root).setId(mission.info.getId());
+      return response;
+    }),
+    answerQuestion: unary('AnswerQuestion', missionPb.AnswerQuestionResponse, () =>
+      new missionPb.AnswerQuestionResponse().setStatus(
+        missionPb.AnswerQuestionResponse.Status.STATUS_INVALID_QUESTION_ID,
+      ),
+    ),
   },
+  directory: [
+    { name: 'robot-mission', type: 'bosdyn.api.mission.MissionService', authority: 'robot-mission.spot.robot' },
+  ],
 };

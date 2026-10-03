@@ -1,26 +1,29 @@
 'use strict';
 
-const auth_pb = require('../bosdyn/api/auth_pb');
-const auth_service_grpc_pb = require('../bosdyn/api/auth_service_grpc_pb');
-const { LoggerUtil } = require('../loggerUtil');
+const { GetAuthTokenResponse } = require('../bosdyn/api/auth_pb');
+const { AuthServiceService } = require('../bosdyn/api/auth_service_grpc_pb');
+const { unary } = require('../util');
 
-const { populate_response_header } = require('../util');
-
-const logger = LoggerUtil.getLogger('AUTH');
-
-function getAuthToken(call, callback) {
-  logger.info('New request /getAuthToken !');
-  let reply = new auth_pb.GetAuthTokenResponse();
-  populate_response_header(reply, call.request);
-
-  reply.setStatus(1).setToken('TEST_TOKEN');
-
-  callback(null, reply);
+/**
+ * GetAuthToken: with a username and a password, or with a valid token (refresh).
+ * @param {import('../bosdyn/api/auth_pb').GetAuthTokenRequest} request
+ * @param {{robot: import('../robot').Robot}} context
+ * @returns {GetAuthTokenResponse}
+ */
+function getAuthToken(request, { robot }) {
+  const credentials = request.getToken()
+    ? { token: request.getToken() }
+    : { username: request.getUsername(), password: request.getPassword() };
+  const result = robot.auth.authenticate(credentials);
+  const response = new GetAuthTokenResponse().setStatus(result.status);
+  if (result.token) response.setToken(result.token);
+  return response;
 }
 
 module.exports = {
-  service: auth_service_grpc_pb.AuthServiceService,
+  service: AuthServiceService,
   func: {
-    getAuthToken,
+    getAuthToken: unary('GetAuthToken', GetAuthTokenResponse, getAuthToken, { tokenRequired: false }),
   },
+  directory: [{ name: 'auth', type: 'bosdyn.api.AuthService', authority: 'auth.spot.robot', userTokenRequired: false }],
 };

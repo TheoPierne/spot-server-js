@@ -1,62 +1,40 @@
 'use strict';
 
-const path = require('node:path');
-const cv = require('@u4/opencv4nodejs');
+const imagePb = require('../bosdyn/api/image_pb');
+const { ImageServiceService } = require('../bosdyn/api/image_service_grpc_pb');
+const { unary } = require('../util');
 
-const image_pb = require('../bosdyn/api/image_pb');
-const image_service_grpc_pb = require('../bosdyn/api/image_service_grpc_pb');
-const { LoggerUtil } = require('../loggerUtil');
-
-const { populate_response_header } = require('../util');
-
-const logger = LoggerUtil.getLogger('IMAGE');
-
-function listImageSources(call, callback) {
-  logger.info('New request /listImageSources !');
-  let reply = new image_pb.ListImageSourcesResponse();
-  populate_response_header(reply, call.request);
-
-  // eslint-disable-next-line
-  const sourceA = new image_pb.ImageSource().setName('back_depth').setRows(240).setCols(424);
-  // eslint-disable-next-line
-  const sourceB = new image_pb.ImageSource().setName('back_depth_in_visual_frame').setRows(480).setCols(640);
-  // eslint-disable-next-line
-  const sourceC = new image_pb.ImageSource().setName('back_fisheye_image').setRows(480).setCols(640);
-
-  reply.setImageSourcesList([sourceA, sourceB, sourceC]);
-
-  callback(null, reply);
+/**
+ * ListImageSources.
+ * @param {imagePb.ListImageSourcesRequest} request
+ * @param {{robot: import('../robot').Robot}} context
+ * @returns {imagePb.ListImageSourcesResponse}
+ */
+function listImageSources(request, { robot }) {
+  const { cameras } = robot;
+  return new imagePb.ListImageSourcesResponse().setImageSourcesList(
+    cameras.sources.map(src => cameras.sourceToProto(src)),
+  );
 }
 
-function getImage(call, callback) {
-  logger.info('New request /getImage !');
-  let reply = new image_pb.GetImageResponse();
-  populate_response_header(reply, call.request);
-
-  // /spot.jpg
-  const randomImage = Math.floor(Math.random() * (2 - 1 + 1) + 1);
-  console.log(path.join(__dirname, `/light_${randomImage}.jpg`))
-  const imageData = cv.imread(path.join(__dirname, `/light_${randomImage}.jpg`));
-  const data = cv.imencode('.jpg', imageData);
-  const dataArray = new Uint8Array(data);
-
-  // eslint-disable-next-line
-  const imageA = new image_pb.Image().setRows(800).setCols(800).setFormat(2).setPixelFormat(3).setData(dataArray);
-  const shotA = new image_pb.ImageCapture().setImage(imageA);
-  // eslint-disable-next-line
-  const sourceA = new image_pb.ImageSource().setName('back_fisheye_image').setRows(480).setCols(640);
-  // eslint-disable-next-line
-  const ImageResponseA = new image_pb.ImageResponse().setStatus(1).setShot(shotA).setSource(sourceA);
-
-  reply.setImageResponsesList([ImageResponseA]);
-
-  callback(null, reply);
+/**
+ * GetImage: renders the cameras from the current pose of the robot.
+ * @param {imagePb.GetImageRequest} request
+ * @param {{robot: import('../robot').Robot}} context
+ * @returns {Promise<imagePb.GetImageResponse>}
+ */
+async function getImage(request, { robot }) {
+  const responses = await Promise.all(
+    request.getImageRequestsList().map(imageRequest => robot.cameras.capture(imageRequest)),
+  );
+  return new imagePb.GetImageResponse().setImageResponsesList(responses);
 }
 
 module.exports = {
-  service: image_service_grpc_pb.ImageServiceService,
+  service: ImageServiceService,
   func: {
-    listImageSources,
-    getImage,
+    listImageSources: unary('ListImageSources', imagePb.ListImageSourcesResponse, listImageSources),
+    getImage: unary('GetImage', imagePb.GetImageResponse, getImage),
   },
+  directory: [{ name: 'image', type: 'bosdyn.api.ImageService', authority: 'api.spot.robot' }],
 };
