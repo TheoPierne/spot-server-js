@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright (c) 2022 Boston Dynamics, Inc.  All rights reserved.
+// Copyright (c) 2023 Boston Dynamics, Inc.  All rights reserved.
 //
 // Downloading, reproducing, distributing or otherwise using the SDK Software
 // is subject to the terms and conditions of the Boston Dynamics Software
@@ -31,6 +31,28 @@ function serialize_bosdyn_api_ClearBehaviorFaultResponse(arg) {
 
 function deserialize_bosdyn_api_ClearBehaviorFaultResponse(buffer_arg) {
   return bosdyn_api_robot_command_pb.ClearBehaviorFaultResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_JointControlStreamRequest(arg) {
+  if (!(arg instanceof bosdyn_api_robot_command_pb.JointControlStreamRequest)) {
+    throw new Error('Expected argument of type bosdyn.api.JointControlStreamRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_JointControlStreamRequest(buffer_arg) {
+  return bosdyn_api_robot_command_pb.JointControlStreamRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_JointControlStreamResponse(arg) {
+  if (!(arg instanceof bosdyn_api_robot_command_pb.JointControlStreamResponse)) {
+    throw new Error('Expected argument of type bosdyn.api.JointControlStreamResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_JointControlStreamResponse(buffer_arg) {
+  return bosdyn_api_robot_command_pb.JointControlStreamResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_bosdyn_api_RobotCommandFeedbackRequest(arg) {
@@ -96,7 +118,7 @@ robotCommand: {
   // A client queries this RPC to determine a robot's progress towards completion of a command.
 // This updates the client with metrics like "distance to goal."
 // The client should use this feedback to determine whether the current command has
-// succeeeded or failed, and thus send the next command.
+// succeeded or failed, and thus send the next command.
 robotCommandFeedback: {
     path: '/bosdyn.api.RobotCommandService/RobotCommandFeedback',
     requestStream: false,
@@ -122,4 +144,23 @@ clearBehaviorFault: {
   },
 };
 
-exports.RobotCommandServiceClient = grpc.makeGenericClientConstructor(RobotCommandServiceService);
+exports.RobotCommandServiceClient = grpc.makeGenericClientConstructor(RobotCommandServiceService, 'RobotCommandService');
+// This service is used to stream high rate commands to the robot once they have been activated
+// using RobotCommandService.RobotCommand
+// This service is in BETA and may undergo changes in future releases.
+var RobotCommandStreamingServiceService = exports.RobotCommandStreamingServiceService = {
+  // Command updates for joint control
+jointControlStream: {
+    path: '/bosdyn.api.RobotCommandStreamingService/JointControlStream',
+    requestStream: true,
+    responseStream: false,
+    requestType: bosdyn_api_robot_command_pb.JointControlStreamRequest,
+    responseType: bosdyn_api_robot_command_pb.JointControlStreamResponse,
+    requestSerialize: serialize_bosdyn_api_JointControlStreamRequest,
+    requestDeserialize: deserialize_bosdyn_api_JointControlStreamRequest,
+    responseSerialize: serialize_bosdyn_api_JointControlStreamResponse,
+    responseDeserialize: deserialize_bosdyn_api_JointControlStreamResponse,
+  },
+};
+
+exports.RobotCommandStreamingServiceClient = grpc.makeGenericClientConstructor(RobotCommandStreamingServiceService, 'RobotCommandStreamingService');

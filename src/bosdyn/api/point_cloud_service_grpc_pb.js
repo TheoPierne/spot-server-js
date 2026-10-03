@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright (c) 2022 Boston Dynamics, Inc.  All rights reserved.
+// Copyright (c) 2023 Boston Dynamics, Inc.  All rights reserved.
 //
 // Downloading, reproducing, distributing or otherwise using the SDK Software
 // is subject to the terms and conditions of the Boston Dynamics Software
@@ -61,8 +61,8 @@ function deserialize_bosdyn_api_ListPointCloudSourcesResponse(buffer_arg) {
 // and it supports requesting the latest point cloud data for each source by name.
 var PointCloudServiceService = exports.PointCloudServiceService = {
   // Obtain the list of PointCloudSources for this given service.
-// Note that there may be multiple PointCloudServices running, each with their own set of sources
-// The name field keys access to individual point clouds when calling GetPointCloud.
+// Note that there may be multiple PointCloudServices running, each with their own set of
+// sources The name field keys access to individual point clouds when calling GetPointCloud.
 listPointCloudSources: {
     path: '/bosdyn.api.PointCloudService/ListPointCloudSources',
     requestStream: false,
@@ -88,4 +88,4 @@ getPointCloud: {
   },
 };
 
-exports.PointCloudServiceClient = grpc.makeGenericClientConstructor(PointCloudServiceService);
+exports.PointCloudServiceClient = grpc.makeGenericClientConstructor(PointCloudServiceService, 'PointCloudService');

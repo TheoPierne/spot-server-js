@@ -13,12 +13,19 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var bosdyn_api_geometry_pb = require('../../bosdyn/api/geometry_pb.js');
 goog.object.extend(proto, bosdyn_api_geometry_pb);
 goog.exportSymbol('proto.bosdyn.api.Keypoint', null, global);
 goog.exportSymbol('proto.bosdyn.api.KeypointMatches', null, global);
+goog.exportSymbol('proto.bosdyn.api.KeypointMatches.MatchType', null, global);
 goog.exportSymbol('proto.bosdyn.api.KeypointSet', null, global);
 goog.exportSymbol('proto.bosdyn.api.KeypointSet.KeypointType', null, global);
 goog.exportSymbol('proto.bosdyn.api.Match', null, global);
@@ -541,7 +548,8 @@ proto.bosdyn.api.KeypointSet.serializeBinaryToWriter = function(message, writer)
 proto.bosdyn.api.KeypointSet.KeypointType = {
   KEYPOINT_UNKNOWN: 0,
   KEYPOINT_SIMPLE: 1,
-  KEYPOINT_ORB: 2
+  KEYPOINT_ORB: 2,
+  KEYPOINT_DISK: 3
 };
 
 /**
@@ -832,7 +840,8 @@ proto.bosdyn.api.KeypointMatches.toObject = function(includeInstance, msg) {
     referenceKeypoints: (f = msg.getReferenceKeypoints()) && proto.bosdyn.api.KeypointSet.toObject(includeInstance, f),
     liveKeypoints: (f = msg.getLiveKeypoints()) && proto.bosdyn.api.KeypointSet.toObject(includeInstance, f),
     matchesList: jspb.Message.toObjectList(msg.getMatchesList(),
-    proto.bosdyn.api.Match.toObject, includeInstance)
+    proto.bosdyn.api.Match.toObject, includeInstance),
+    type: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
 
   if (includeInstance) {
@@ -883,6 +892,10 @@ proto.bosdyn.api.KeypointMatches.deserializeBinaryFromReader = function(msg, rea
       var value = new proto.bosdyn.api.Match;
       reader.readMessage(value,proto.bosdyn.api.Match.deserializeBinaryFromReader);
       msg.addMatches(value);
+      break;
+    case 5:
+      var value = /** @type {!proto.bosdyn.api.KeypointMatches.MatchType} */ (reader.readEnum());
+      msg.setType(value);
       break;
     default:
       reader.skipField();
@@ -937,8 +950,24 @@ proto.bosdyn.api.KeypointMatches.serializeBinaryToWriter = function(message, wri
       proto.bosdyn.api.Match.serializeBinaryToWriter
     );
   }
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      5,
+      f
+    );
+  }
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.KeypointMatches.MatchType = {
+  MATCH_UNKNOWN: 0,
+  MATCH_ORB: 1,
+  MATCH_LIGHTGLUE: 2
+};
 
 /**
  * optional KeypointSet reference_keypoints = 2;
@@ -1049,6 +1078,24 @@ proto.bosdyn.api.KeypointMatches.prototype.addMatches = function(opt_value, opt_
  */
 proto.bosdyn.api.KeypointMatches.prototype.clearMatchesList = function() {
   return this.setMatchesList([]);
+};
+
+
+/**
+ * optional MatchType type = 5;
+ * @return {!proto.bosdyn.api.KeypointMatches.MatchType}
+ */
+proto.bosdyn.api.KeypointMatches.prototype.getType = function() {
+  return /** @type {!proto.bosdyn.api.KeypointMatches.MatchType} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.KeypointMatches.MatchType} value
+ * @return {!proto.bosdyn.api.KeypointMatches} returns this
+ */
+proto.bosdyn.api.KeypointMatches.prototype.setType = function(value) {
+  return jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 

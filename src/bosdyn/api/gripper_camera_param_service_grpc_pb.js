@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright (c) 2022 Boston Dynamics, Inc.  All rights reserved.
+// Copyright (c) 2023 Boston Dynamics, Inc.  All rights reserved.
 //
 // Downloading, reproducing, distributing or otherwise using the SDK Software
 // is subject to the terms and conditions of the Boston Dynamics Software
@@ -10,6 +10,28 @@
 'use strict';
 var grpc = require('@grpc/grpc-js');
 var bosdyn_api_gripper_camera_param_pb = require('../../bosdyn/api/gripper_camera_param_pb.js');
+
+function serialize_bosdyn_api_GetGripperCameraCalibrationRequest(arg) {
+  if (!(arg instanceof bosdyn_api_gripper_camera_param_pb.GetGripperCameraCalibrationRequest)) {
+    throw new Error('Expected argument of type bosdyn.api.GetGripperCameraCalibrationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_GetGripperCameraCalibrationRequest(buffer_arg) {
+  return bosdyn_api_gripper_camera_param_pb.GetGripperCameraCalibrationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_GetGripperCameraCalibrationResponse(arg) {
+  if (!(arg instanceof bosdyn_api_gripper_camera_param_pb.GetGripperCameraCalibrationResponse)) {
+    throw new Error('Expected argument of type bosdyn.api.GetGripperCameraCalibrationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_GetGripperCameraCalibrationResponse(buffer_arg) {
+  return bosdyn_api_gripper_camera_param_pb.GetGripperCameraCalibrationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
 
 function serialize_bosdyn_api_GripperCameraGetParamRequest(arg) {
   if (!(arg instanceof bosdyn_api_gripper_camera_param_pb.GripperCameraGetParamRequest)) {
@@ -55,6 +77,28 @@ function deserialize_bosdyn_api_GripperCameraParamResponse(buffer_arg) {
   return bosdyn_api_gripper_camera_param_pb.GripperCameraParamResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_bosdyn_api_SetGripperCameraCalibrationRequest(arg) {
+  if (!(arg instanceof bosdyn_api_gripper_camera_param_pb.SetGripperCameraCalibrationRequest)) {
+    throw new Error('Expected argument of type bosdyn.api.SetGripperCameraCalibrationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_SetGripperCameraCalibrationRequest(buffer_arg) {
+  return bosdyn_api_gripper_camera_param_pb.SetGripperCameraCalibrationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_SetGripperCameraCalibrationResponse(arg) {
+  if (!(arg instanceof bosdyn_api_gripper_camera_param_pb.SetGripperCameraCalibrationResponse)) {
+    throw new Error('Expected argument of type bosdyn.api.SetGripperCameraCalibrationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_SetGripperCameraCalibrationResponse(buffer_arg) {
+  return bosdyn_api_gripper_camera_param_pb.SetGripperCameraCalibrationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 var GripperCameraParamServiceService = exports.GripperCameraParamServiceService = {
   setParams: {
@@ -79,6 +123,28 @@ var GripperCameraParamServiceService = exports.GripperCameraParamServiceService 
     responseSerialize: serialize_bosdyn_api_GripperCameraGetParamResponse,
     responseDeserialize: deserialize_bosdyn_api_GripperCameraGetParamResponse,
   },
+  setCamCalib: {
+    path: '/bosdyn.api.GripperCameraParamService/SetCamCalib',
+    requestStream: false,
+    responseStream: false,
+    requestType: bosdyn_api_gripper_camera_param_pb.SetGripperCameraCalibrationRequest,
+    responseType: bosdyn_api_gripper_camera_param_pb.SetGripperCameraCalibrationResponse,
+    requestSerialize: serialize_bosdyn_api_SetGripperCameraCalibrationRequest,
+    requestDeserialize: deserialize_bosdyn_api_SetGripperCameraCalibrationRequest,
+    responseSerialize: serialize_bosdyn_api_SetGripperCameraCalibrationResponse,
+    responseDeserialize: deserialize_bosdyn_api_SetGripperCameraCalibrationResponse,
+  },
+  getCamCalib: {
+    path: '/bosdyn.api.GripperCameraParamService/GetCamCalib',
+    requestStream: false,
+    responseStream: false,
+    requestType: bosdyn_api_gripper_camera_param_pb.GetGripperCameraCalibrationRequest,
+    responseType: bosdyn_api_gripper_camera_param_pb.GetGripperCameraCalibrationResponse,
+    requestSerialize: serialize_bosdyn_api_GetGripperCameraCalibrationRequest,
+    requestDeserialize: deserialize_bosdyn_api_GetGripperCameraCalibrationRequest,
+    responseSerialize: serialize_bosdyn_api_GetGripperCameraCalibrationResponse,
+    responseDeserialize: deserialize_bosdyn_api_GetGripperCameraCalibrationResponse,
+  },
 };
 
-exports.GripperCameraParamServiceClient = grpc.makeGenericClientConstructor(GripperCameraParamServiceService);
+exports.GripperCameraParamServiceClient = grpc.makeGenericClientConstructor(GripperCameraParamServiceService, 'GripperCameraParamService');

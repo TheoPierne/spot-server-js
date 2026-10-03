@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright (c) 2022 Boston Dynamics, Inc.  All rights reserved.
+// Copyright (c) 2023 Boston Dynamics, Inc.  All rights reserved.
 //
 // Downloading, reproducing, distributing or otherwise using the SDK Software
 // is subject to the terms and conditions of the Boston Dynamics Software
@@ -75,6 +75,17 @@ function serialize_bosdyn_api_graph_nav_DownloadGraphResponse(arg) {
 
 function deserialize_bosdyn_api_graph_nav_DownloadGraphResponse(buffer_arg) {
   return bosdyn_api_graph_nav_graph_nav_pb.DownloadGraphResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_graph_nav_DownloadGraphStreamingResponse(arg) {
+  if (!(arg instanceof bosdyn_api_graph_nav_graph_nav_pb.DownloadGraphStreamingResponse)) {
+    throw new Error('Expected argument of type bosdyn.api.graph_nav.DownloadGraphStreamingResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_graph_nav_DownloadGraphStreamingResponse(buffer_arg) {
+  return bosdyn_api_graph_nav_graph_nav_pb.DownloadGraphStreamingResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_bosdyn_api_graph_nav_DownloadWaypointSnapshotRequest(arg) {
@@ -275,6 +286,39 @@ function deserialize_bosdyn_api_graph_nav_UploadGraphResponse(buffer_arg) {
   return bosdyn_api_graph_nav_graph_nav_pb.UploadGraphResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_bosdyn_api_graph_nav_UploadGraphStreamingRequest(arg) {
+  if (!(arg instanceof bosdyn_api_graph_nav_graph_nav_pb.UploadGraphStreamingRequest)) {
+    throw new Error('Expected argument of type bosdyn.api.graph_nav.UploadGraphStreamingRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_graph_nav_UploadGraphStreamingRequest(buffer_arg) {
+  return bosdyn_api_graph_nav_graph_nav_pb.UploadGraphStreamingRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_graph_nav_UploadSnapshotsRequest(arg) {
+  if (!(arg instanceof bosdyn_api_graph_nav_graph_nav_pb.UploadSnapshotsRequest)) {
+    throw new Error('Expected argument of type bosdyn.api.graph_nav.UploadSnapshotsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_graph_nav_UploadSnapshotsRequest(buffer_arg) {
+  return bosdyn_api_graph_nav_graph_nav_pb.UploadSnapshotsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_graph_nav_UploadSnapshotsResponse(arg) {
+  if (!(arg instanceof bosdyn_api_graph_nav_graph_nav_pb.UploadSnapshotsResponse)) {
+    throw new Error('Expected argument of type bosdyn.api.graph_nav.UploadSnapshotsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_graph_nav_UploadSnapshotsResponse(buffer_arg) {
+  return bosdyn_api_graph_nav_graph_nav_pb.UploadSnapshotsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_bosdyn_api_graph_nav_UploadWaypointSnapshotRequest(arg) {
   if (!(arg instanceof bosdyn_api_graph_nav_graph_nav_pb.UploadWaypointSnapshotRequest)) {
     throw new Error('Expected argument of type bosdyn.api.graph_nav.UploadWaypointSnapshotRequest');
@@ -297,10 +341,32 @@ function deserialize_bosdyn_api_graph_nav_UploadWaypointSnapshotResponse(buffer_
   return bosdyn_api_graph_nav_graph_nav_pb.UploadWaypointSnapshotResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_bosdyn_api_graph_nav_ValidateGraphRequest(arg) {
+  if (!(arg instanceof bosdyn_api_graph_nav_graph_nav_pb.ValidateGraphRequest)) {
+    throw new Error('Expected argument of type bosdyn.api.graph_nav.ValidateGraphRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
 
-// The GraphNav service service is a place-based localization and locomotion service. The service can
-// be used to get/set the localization, upload and download the current graph nav maps, and send navigation
-// requests to move around the map.
+function deserialize_bosdyn_api_graph_nav_ValidateGraphRequest(buffer_arg) {
+  return bosdyn_api_graph_nav_graph_nav_pb.ValidateGraphRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_graph_nav_ValidateGraphResponse(arg) {
+  if (!(arg instanceof bosdyn_api_graph_nav_graph_nav_pb.ValidateGraphResponse)) {
+    throw new Error('Expected argument of type bosdyn.api.graph_nav.ValidateGraphResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_graph_nav_ValidateGraphResponse(buffer_arg) {
+  return bosdyn_api_graph_nav_graph_nav_pb.ValidateGraphResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+
+// The GraphNav service service is a place-based localization and locomotion service. The service
+// can be used to get/set the localization, upload and download the current graph nav maps, and send
+// navigation requests to move around the map.
 var GraphNavServiceService = exports.GraphNavServiceService = {
   // Trigger a manual localization. Typically done to provide the initial localization.
 setLocalization: {
@@ -398,7 +464,22 @@ downloadGraph: {
     responseSerialize: serialize_bosdyn_api_graph_nav_DownloadGraphResponse,
     responseDeserialize: deserialize_bosdyn_api_graph_nav_DownloadGraphResponse,
   },
+  // This is a streaming version of the DownloadGraph RPC.
+downloadGraphStreaming: {
+    path: '/bosdyn.api.graph_nav.GraphNavService/DownloadGraphStreaming',
+    requestStream: false,
+    responseStream: true,
+    requestType: bosdyn_api_graph_nav_graph_nav_pb.DownloadGraphRequest,
+    responseType: bosdyn_api_graph_nav_graph_nav_pb.DownloadGraphStreamingResponse,
+    requestSerialize: serialize_bosdyn_api_graph_nav_DownloadGraphRequest,
+    requestDeserialize: deserialize_bosdyn_api_graph_nav_DownloadGraphRequest,
+    responseSerialize: serialize_bosdyn_api_graph_nav_DownloadGraphStreamingResponse,
+    responseDeserialize: deserialize_bosdyn_api_graph_nav_DownloadGraphStreamingResponse,
+  },
   // Upload the full list of waypoint IDs, graph topology and other small info.
+// Note: if multiple clients/RPCs are attempting to upload a graph at the same time, uploads
+// will be performed synchronously in the order in which they are received, and the later
+// UploadGraph request will block until the earlier completes.
 uploadGraph: {
     path: '/bosdyn.api.graph_nav.GraphNavService/UploadGraph',
     requestStream: false,
@@ -407,6 +488,24 @@ uploadGraph: {
     responseType: bosdyn_api_graph_nav_graph_nav_pb.UploadGraphResponse,
     requestSerialize: serialize_bosdyn_api_graph_nav_UploadGraphRequest,
     requestDeserialize: deserialize_bosdyn_api_graph_nav_UploadGraphRequest,
+    responseSerialize: serialize_bosdyn_api_graph_nav_UploadGraphResponse,
+    responseDeserialize: deserialize_bosdyn_api_graph_nav_UploadGraphResponse,
+  },
+  // This is a streaming version of UploadGraph to allow uploading larger graphs.
+// Note: as with UploadWaypointSnapshot, this streaming process involves serializing a full
+// UploadGraph message from chunks. After all the chunks have been uploaded, a regular
+// UploadGraph RPC will be performed internally, so UploadGraphStreaming has the same semantics
+// as UploadGraph when it completes. That is, UploadGraphStreaming is *not* to be used for
+// incrementally uploading graph data as the robot is navigating -- this is merely a streaming
+// wrapper around UploadGraph.
+uploadGraphStreaming: {
+    path: '/bosdyn.api.graph_nav.GraphNavService/UploadGraphStreaming',
+    requestStream: true,
+    responseStream: false,
+    requestType: bosdyn_api_graph_nav_graph_nav_pb.UploadGraphStreamingRequest,
+    responseType: bosdyn_api_graph_nav_graph_nav_pb.UploadGraphResponse,
+    requestSerialize: serialize_bosdyn_api_graph_nav_UploadGraphStreamingRequest,
+    requestDeserialize: deserialize_bosdyn_api_graph_nav_UploadGraphStreamingRequest,
     responseSerialize: serialize_bosdyn_api_graph_nav_UploadGraphResponse,
     responseDeserialize: deserialize_bosdyn_api_graph_nav_UploadGraphResponse,
   },
@@ -434,7 +533,20 @@ uploadEdgeSnapshot: {
     responseSerialize: serialize_bosdyn_api_graph_nav_UploadEdgeSnapshotResponse,
     responseDeserialize: deserialize_bosdyn_api_graph_nav_UploadEdgeSnapshotResponse,
   },
-  // Download waypoint data from the server. If the snapshot exists in disk cache, it will be loaded.
+  // Uploads multiple waypoint+edge snapshots.
+uploadSnapshots: {
+    path: '/bosdyn.api.graph_nav.GraphNavService/UploadSnapshots',
+    requestStream: true,
+    responseStream: false,
+    requestType: bosdyn_api_graph_nav_graph_nav_pb.UploadSnapshotsRequest,
+    responseType: bosdyn_api_graph_nav_graph_nav_pb.UploadSnapshotsResponse,
+    requestSerialize: serialize_bosdyn_api_graph_nav_UploadSnapshotsRequest,
+    requestDeserialize: deserialize_bosdyn_api_graph_nav_UploadSnapshotsRequest,
+    responseSerialize: serialize_bosdyn_api_graph_nav_UploadSnapshotsResponse,
+    responseDeserialize: deserialize_bosdyn_api_graph_nav_UploadSnapshotsResponse,
+  },
+  // Download waypoint data from the server. If the snapshot exists in disk cache, it will be
+// loaded.
 downloadWaypointSnapshot: {
     path: '/bosdyn.api.graph_nav.GraphNavService/DownloadWaypointSnapshot',
     requestStream: false,
@@ -458,6 +570,20 @@ downloadEdgeSnapshot: {
     responseSerialize: serialize_bosdyn_api_graph_nav_DownloadEdgeSnapshotResponse,
     responseDeserialize: deserialize_bosdyn_api_graph_nav_DownloadEdgeSnapshotResponse,
   },
+  // Verify that the graph is still valid and all required external services are still available.
+// A map that was valid at upload time may not still be valid if required services are no longer
+// running.
+validateGraph: {
+    path: '/bosdyn.api.graph_nav.GraphNavService/ValidateGraph',
+    requestStream: false,
+    responseStream: false,
+    requestType: bosdyn_api_graph_nav_graph_nav_pb.ValidateGraphRequest,
+    responseType: bosdyn_api_graph_nav_graph_nav_pb.ValidateGraphResponse,
+    requestSerialize: serialize_bosdyn_api_graph_nav_ValidateGraphRequest,
+    requestDeserialize: deserialize_bosdyn_api_graph_nav_ValidateGraphRequest,
+    responseSerialize: serialize_bosdyn_api_graph_nav_ValidateGraphResponse,
+    responseDeserialize: deserialize_bosdyn_api_graph_nav_ValidateGraphResponse,
+  },
 };
 
-exports.GraphNavServiceClient = grpc.makeGenericClientConstructor(GraphNavServiceService);
+exports.GraphNavServiceClient = grpc.makeGenericClientConstructor(GraphNavServiceService, 'GraphNavService');

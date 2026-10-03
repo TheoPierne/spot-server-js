@@ -13,7 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var bosdyn_api_basic_command_pb = require('../../../bosdyn/api/basic_command_pb.js');
 goog.object.extend(proto, bosdyn_api_basic_command_pb);
@@ -21,10 +27,18 @@ var bosdyn_api_data_chunk_pb = require('../../../bosdyn/api/data_chunk_pb.js');
 goog.object.extend(proto, bosdyn_api_data_chunk_pb);
 var bosdyn_api_geometry_pb = require('../../../bosdyn/api/geometry_pb.js');
 goog.object.extend(proto, bosdyn_api_geometry_pb);
+var bosdyn_api_gps_gps_pb = require('../../../bosdyn/api/gps/gps_pb.js');
+goog.object.extend(proto, bosdyn_api_gps_gps_pb);
+var bosdyn_api_graph_nav_gps_pb = require('../../../bosdyn/api/graph_nav/gps_pb.js');
+goog.object.extend(proto, bosdyn_api_graph_nav_gps_pb);
+var bosdyn_api_graph_nav_lost_detection_pb = require('../../../bosdyn/api/graph_nav/lost_detection_pb.js');
+goog.object.extend(proto, bosdyn_api_graph_nav_lost_detection_pb);
 var bosdyn_api_graph_nav_nav_pb = require('../../../bosdyn/api/graph_nav/nav_pb.js');
 goog.object.extend(proto, bosdyn_api_graph_nav_nav_pb);
 var bosdyn_api_graph_nav_map_pb = require('../../../bosdyn/api/graph_nav/map_pb.js');
 goog.object.extend(proto, bosdyn_api_graph_nav_map_pb);
+var bosdyn_api_graph_nav_area_callback_pb = require('../../../bosdyn/api/graph_nav/area_callback_pb.js');
+goog.object.extend(proto, bosdyn_api_graph_nav_area_callback_pb);
 var bosdyn_api_header_pb = require('../../../bosdyn/api/header_pb.js');
 goog.object.extend(proto, bosdyn_api_header_pb);
 var bosdyn_api_lease_pb = require('../../../bosdyn/api/lease_pb.js');
@@ -33,10 +47,15 @@ var bosdyn_api_license_pb = require('../../../bosdyn/api/license_pb.js');
 goog.object.extend(proto, bosdyn_api_license_pb);
 var bosdyn_api_robot_state_pb = require('../../../bosdyn/api/robot_state_pb.js');
 goog.object.extend(proto, bosdyn_api_robot_state_pb);
-var bosdyn_api_world_object_pb = require('../../../bosdyn/api/world_object_pb.js');
-goog.object.extend(proto, bosdyn_api_world_object_pb);
+var bosdyn_api_service_fault_pb = require('../../../bosdyn/api/service_fault_pb.js');
+goog.object.extend(proto, bosdyn_api_service_fault_pb);
+var google_protobuf_wrappers_pb = require('google-protobuf/google/protobuf/wrappers_pb.js');
+goog.object.extend(proto, google_protobuf_wrappers_pb);
+var google_protobuf_duration_pb = require('google-protobuf/google/protobuf/duration_pb.js');
+goog.object.extend(proto, google_protobuf_duration_pb);
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 goog.object.extend(proto, google_protobuf_timestamp_pb);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.AreaCallbackServiceError', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.ClearGraphRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.ClearGraphResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.ClearGraphResponse.Status', null, global);
@@ -45,24 +64,37 @@ goog.exportSymbol('proto.bosdyn.api.graph_nav.DownloadEdgeSnapshotResponse', nul
 goog.exportSymbol('proto.bosdyn.api.graph_nav.DownloadEdgeSnapshotResponse.Status', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.DownloadGraphRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.DownloadGraphResponse', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.DownloadWaypointSnapshotRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.DownloadWaypointSnapshotResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.DownloadWaypointSnapshotResponse.Status', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.GPSNavigationParams', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.GetLocalizationStateRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.GetLocalizationStateResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.LostDetectorState', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.LostDetectorState.Params', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.ModifyNavigationResponse', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.ModifyNavigationResponse.Status', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateRouteRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateRouteResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateRouteResponse.Status', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateToAnchorRequest', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.GoalCase', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateToAnchorResponse', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.GPSStatus', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.Status', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateToRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateToResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigateToResponse.Status', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackResponse', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.AreaCallbackStatus', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.BlockageStatus', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.GoalStatus', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.RouteFollowingStatus', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.Status', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.StuckReason', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.RemotePointCloudStatus', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.RouteFollowingParams', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.RouteFollowingParams.ResumeBehavior', null, global);
@@ -72,19 +104,54 @@ goog.exportSymbol('proto.bosdyn.api.graph_nav.RouteGenParams', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.SensorCompatibilityStatus', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.SetLocalizationRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.SetLocalizationRequest.FiducialInit', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.SetLocalizationRequest.RefinementCase', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.SetLocalizationResponse', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.SetLocalizationResponse.QualityCheckResult', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.SetLocalizationResponse.Status', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.SetLocalizationResponse.SuspectedAmbiguity', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.TravelParams', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.TravelParams.CartesianDistanceParametersCase', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.TravelParams.FeatureQualityTolerance', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.TravelParams.PathPlannerMode', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadEdgeSnapshotRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadGraphRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadGraphResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadGraphResponse.Status', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadSnapshotsRequest', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadSnapshotsResponse', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.Status', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadWaypointSnapshotRequest', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse', null, global);
 goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.Status', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.ValidateGraphRequest', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.ValidateGraphResponse', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.ValidateGraphResponse.Status', null, global);
+goog.exportSymbol('proto.bosdyn.api.graph_nav.VisualRefinementOptions', null, global);
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.VisualRefinementOptions, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.VisualRefinementOptions.displayName = 'proto.bosdyn.api.graph_nav.VisualRefinementOptions';
+}
 /**
  * Generated by JsPbCodeGenerator.
  * @param {Array=} opt_data Optional initial data array, typically from a
@@ -96,7 +163,7 @@ goog.exportSymbol('proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.Sta
  * @constructor
  */
 proto.bosdyn.api.graph_nav.SetLocalizationRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.bosdyn.api.graph_nav.SetLocalizationRequest.oneofGroups_);
 };
 goog.inherits(proto.bosdyn.api.graph_nav.SetLocalizationRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -201,7 +268,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.bosdyn.api.graph_nav.TravelParams = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.bosdyn.api.graph_nav.TravelParams.oneofGroups_);
 };
 goog.inherits(proto.bosdyn.api.graph_nav.TravelParams, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -210,6 +277,27 @@ if (goog.DEBUG && !COMPILED) {
    * @override
    */
   proto.bosdyn.api.graph_nav.TravelParams.displayName = 'proto.bosdyn.api.graph_nav.TravelParams';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.bosdyn.api.graph_nav.ModifyNavigationResponse.repeatedFields_, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.ModifyNavigationResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.ModifyNavigationResponse.displayName = 'proto.bosdyn.api.graph_nav.ModifyNavigationResponse';
 }
 /**
  * Generated by JsPbCodeGenerator.
@@ -326,8 +414,29 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.bosdyn.api.graph_nav.GPSNavigationParams = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.GPSNavigationParams, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.GPSNavigationParams.displayName = 'proto.bosdyn.api.graph_nav.GPSNavigationParams';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.bosdyn.api.graph_nav.NavigateToAnchorRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.repeatedFields_, proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.oneofGroups_);
 };
 goog.inherits(proto.bosdyn.api.graph_nav.NavigateToAnchorRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -390,7 +499,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.bosdyn.api.graph_nav.NavigationFeedbackResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, 500, null, null);
 };
 goog.inherits(proto.bosdyn.api.graph_nav.NavigationFeedbackResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -399,6 +508,27 @@ if (goog.DEBUG && !COMPILED) {
    * @override
    */
   proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.displayName = 'proto.bosdyn.api.graph_nav.NavigationFeedbackResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.displayName = 'proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation';
 }
 /**
  * Generated by JsPbCodeGenerator.
@@ -462,6 +592,27 @@ if (goog.DEBUG && !COMPILED) {
    * @override
    */
   proto.bosdyn.api.graph_nav.LostDetectorState.displayName = 'proto.bosdyn.api.graph_nav.LostDetectorState';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.LostDetectorState.Params, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.LostDetectorState.Params.displayName = 'proto.bosdyn.api.graph_nav.LostDetectorState.Params';
 }
 /**
  * Generated by JsPbCodeGenerator.
@@ -557,6 +708,27 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.displayName = 'proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.bosdyn.api.graph_nav.UploadGraphResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.bosdyn.api.graph_nav.UploadGraphResponse.repeatedFields_, null);
 };
@@ -567,6 +739,27 @@ if (goog.DEBUG && !COMPILED) {
    * @override
    */
   proto.bosdyn.api.graph_nav.UploadGraphResponse.displayName = 'proto.bosdyn.api.graph_nav.UploadGraphResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.repeatedFields_, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.displayName = 'proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus';
 }
 /**
  * Generated by JsPbCodeGenerator.
@@ -609,6 +802,27 @@ if (goog.DEBUG && !COMPILED) {
    * @override
    */
   proto.bosdyn.api.graph_nav.DownloadGraphResponse.displayName = 'proto.bosdyn.api.graph_nav.DownloadGraphResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.displayName = 'proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse';
 }
 /**
  * Generated by JsPbCodeGenerator.
@@ -704,6 +918,69 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.UploadSnapshotsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.displayName = 'proto.bosdyn.api.graph_nav.UploadSnapshotsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.repeatedFields_, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.displayName = 'proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.UploadSnapshotsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.displayName = 'proto.bosdyn.api.graph_nav.UploadSnapshotsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.bosdyn.api.graph_nav.DownloadWaypointSnapshotRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -778,6 +1055,225 @@ if (goog.DEBUG && !COMPILED) {
    */
   proto.bosdyn.api.graph_nav.DownloadEdgeSnapshotResponse.displayName = 'proto.bosdyn.api.graph_nav.DownloadEdgeSnapshotResponse';
 }
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.bosdyn.api.graph_nav.AreaCallbackServiceError.repeatedFields_, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.AreaCallbackServiceError, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.AreaCallbackServiceError.displayName = 'proto.bosdyn.api.graph_nav.AreaCallbackServiceError';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.ValidateGraphRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.ValidateGraphRequest.displayName = 'proto.bosdyn.api.graph_nav.ValidateGraphRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bosdyn.api.graph_nav.ValidateGraphResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.bosdyn.api.graph_nav.ValidateGraphResponse.displayName = 'proto.bosdyn.api.graph_nav.ValidateGraphResponse';
+}
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.VisualRefinementOptions.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.VisualRefinementOptions} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    verifyRefinementQuality: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.VisualRefinementOptions}
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.VisualRefinementOptions;
+  return proto.bosdyn.api.graph_nav.VisualRefinementOptions.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.VisualRefinementOptions} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.VisualRefinementOptions}
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setVerifyRefinementQuality(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.VisualRefinementOptions.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.VisualRefinementOptions} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getVerifyRefinementQuality();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bool verify_refinement_quality = 1;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions.prototype.getVerifyRefinementQuality = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.VisualRefinementOptions} returns this
+ */
+proto.bosdyn.api.graph_nav.VisualRefinementOptions.prototype.setVerifyRefinementQuality = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.oneofGroups_ = [[9,12]];
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.RefinementCase = {
+  REFINEMENT_NOT_SET: 0,
+  REFINE_FIDUCIAL_RESULT_WITH_ICP: 9,
+  REFINE_WITH_VISUAL_FEATURES: 12
+};
+
+/**
+ * @return {proto.bosdyn.api.graph_nav.SetLocalizationRequest.RefinementCase}
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.getRefinementCase = function() {
+  return /** @type {proto.bosdyn.api.graph_nav.SetLocalizationRequest.RefinementCase} */(jspb.Message.computeOneofCase(this, proto.bosdyn.api.graph_nav.SetLocalizationRequest.oneofGroups_[0]));
+};
 
 
 
@@ -817,9 +1313,10 @@ proto.bosdyn.api.graph_nav.SetLocalizationRequest.toObject = function(includeIns
     maxYaw: jspb.Message.getFloatingPointFieldWithDefault(msg, 6, 0.0),
     fiducialInit: jspb.Message.getFieldWithDefault(msg, 7, 0),
     useFiducialId: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    refineFiducialResultWithIcp: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     doAmbiguityCheck: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
-    restrictFiducialDetectionsToTargetWaypoint: jspb.Message.getBooleanFieldWithDefault(msg, 11, false)
+    restrictFiducialDetectionsToTargetWaypoint: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
+    refineFiducialResultWithIcp: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
+    refineWithVisualFeatures: (f = msg.getRefineWithVisualFeatures()) && proto.bosdyn.api.graph_nav.VisualRefinementOptions.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -887,10 +1384,6 @@ proto.bosdyn.api.graph_nav.SetLocalizationRequest.deserializeBinaryFromReader = 
       var value = /** @type {number} */ (reader.readInt32());
       msg.setUseFiducialId(value);
       break;
-    case 9:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setRefineFiducialResultWithIcp(value);
-      break;
     case 10:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setDoAmbiguityCheck(value);
@@ -898,6 +1391,15 @@ proto.bosdyn.api.graph_nav.SetLocalizationRequest.deserializeBinaryFromReader = 
     case 11:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setRestrictFiducialDetectionsToTargetWaypoint(value);
+      break;
+    case 9:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setRefineFiducialResultWithIcp(value);
+      break;
+    case 12:
+      var value = new proto.bosdyn.api.graph_nav.VisualRefinementOptions;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.VisualRefinementOptions.deserializeBinaryFromReader);
+      msg.setRefineWithVisualFeatures(value);
       break;
     default:
       reader.skipField();
@@ -980,13 +1482,6 @@ proto.bosdyn.api.graph_nav.SetLocalizationRequest.serializeBinaryToWriter = func
       f
     );
   }
-  f = message.getRefineFiducialResultWithIcp();
-  if (f) {
-    writer.writeBool(
-      9,
-      f
-    );
-  }
   f = message.getDoAmbiguityCheck();
   if (f) {
     writer.writeBool(
@@ -999,6 +1494,21 @@ proto.bosdyn.api.graph_nav.SetLocalizationRequest.serializeBinaryToWriter = func
     writer.writeBool(
       11,
       f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 9));
+  if (f != null) {
+    writer.writeBool(
+      9,
+      f
+    );
+  }
+  f = message.getRefineWithVisualFeatures();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      proto.bosdyn.api.graph_nav.VisualRefinementOptions.serializeBinaryToWriter
     );
   }
 };
@@ -1199,24 +1709,6 @@ proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.setUseFiducialId = f
 
 
 /**
- * optional bool refine_fiducial_result_with_icp = 9;
- * @return {boolean}
- */
-proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.getRefineFiducialResultWithIcp = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.bosdyn.api.graph_nav.SetLocalizationRequest} returns this
- */
-proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.setRefineFiducialResultWithIcp = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 9, value);
-};
-
-
-/**
  * optional bool do_ambiguity_check = 10;
  * @return {boolean}
  */
@@ -1249,6 +1741,79 @@ proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.getRestrictFiducialD
  */
 proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.setRestrictFiducialDetectionsToTargetWaypoint = function(value) {
   return jspb.Message.setProto3BooleanField(this, 11, value);
+};
+
+
+/**
+ * optional bool refine_fiducial_result_with_icp = 9;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.getRefineFiducialResultWithIcp = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.SetLocalizationRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.setRefineFiducialResultWithIcp = function(value) {
+  return jspb.Message.setOneofField(this, 9, proto.bosdyn.api.graph_nav.SetLocalizationRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.SetLocalizationRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.clearRefineFiducialResultWithIcp = function() {
+  return jspb.Message.setOneofField(this, 9, proto.bosdyn.api.graph_nav.SetLocalizationRequest.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.hasRefineFiducialResultWithIcp = function() {
+  return jspb.Message.getField(this, 9) != null;
+};
+
+
+/**
+ * optional VisualRefinementOptions refine_with_visual_features = 12;
+ * @return {?proto.bosdyn.api.graph_nav.VisualRefinementOptions}
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.getRefineWithVisualFeatures = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.VisualRefinementOptions} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.VisualRefinementOptions, 12));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.VisualRefinementOptions|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.SetLocalizationRequest} returns this
+*/
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.setRefineWithVisualFeatures = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 12, proto.bosdyn.api.graph_nav.SetLocalizationRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.SetLocalizationRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.clearRefineWithVisualFeatures = function() {
+  return this.setRefineWithVisualFeatures(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationRequest.prototype.hasRefineWithVisualFeatures = function() {
+  return jspb.Message.getField(this, 12) != null;
 };
 
 
@@ -1285,7 +1850,9 @@ proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.prototype.toObject = functi
 proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject = function(includeInstance, msg) {
   var f, obj = {
     mapHasLidarData: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-    robotConfiguredForLidar: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
+    robotConfiguredForLidar: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+    mapHasGpsData: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    robotConfiguredForGps: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -1330,6 +1897,14 @@ proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.deserializeBinaryFromReader
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setRobotConfiguredForLidar(value);
       break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setMapHasGpsData(value);
+      break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setRobotConfiguredForGps(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1373,6 +1948,20 @@ proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.serializeBinaryToWriter = f
       f
     );
   }
+  f = message.getMapHasGpsData();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
+  f = message.getRobotConfiguredForGps();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -1409,6 +1998,42 @@ proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.prototype.getRobotConfigure
  */
 proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.prototype.setRobotConfiguredForLidar = function(value) {
   return jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional bool map_has_gps_data = 3;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.prototype.getMapHasGpsData = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.SensorCompatibilityStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.prototype.setMapHasGpsData = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 3, value);
+};
+
+
+/**
+ * optional bool robot_configured_for_gps = 4;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.prototype.getRobotConfiguredForGps = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.SensorCompatibilityStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.prototype.setRobotConfiguredForGps = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -1451,7 +2076,8 @@ proto.bosdyn.api.graph_nav.SetLocalizationResponse.toObject = function(includeIn
     localization: (f = msg.getLocalization()) && bosdyn_api_graph_nav_nav_pb.Localization.toObject(includeInstance, f),
     suspectedAmbiguity: (f = msg.getSuspectedAmbiguity()) && proto.bosdyn.api.graph_nav.SetLocalizationResponse.SuspectedAmbiguity.toObject(includeInstance, f),
     impairedState: (f = msg.getImpairedState()) && bosdyn_api_robot_state_pb.RobotImpairedState.toObject(includeInstance, f),
-    sensorStatus: (f = msg.getSensorStatus()) && proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject(includeInstance, f)
+    sensorStatus: (f = msg.getSensorStatus()) && proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject(includeInstance, f),
+    qualityCheckResult: jspb.Message.getFieldWithDefault(msg, 10, 0)
   };
 
   if (includeInstance) {
@@ -1525,6 +2151,10 @@ proto.bosdyn.api.graph_nav.SetLocalizationResponse.deserializeBinaryFromReader =
       var value = new proto.bosdyn.api.graph_nav.SensorCompatibilityStatus;
       reader.readMessage(value,proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.deserializeBinaryFromReader);
       msg.setSensorStatus(value);
+      break;
+    case 10:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.SetLocalizationResponse.QualityCheckResult} */ (reader.readEnum());
+      msg.setQualityCheckResult(value);
       break;
     default:
       reader.skipField();
@@ -1617,6 +2247,13 @@ proto.bosdyn.api.graph_nav.SetLocalizationResponse.serializeBinaryToWriter = fun
       proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.serializeBinaryToWriter
     );
   }
+  f = message.getQualityCheckResult();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      10,
+      f
+    );
+  }
 };
 
 
@@ -1634,7 +2271,21 @@ proto.bosdyn.api.graph_nav.SetLocalizationResponse.Status = {
   STATUS_FIDUCIAL_TOO_OLD: 7,
   STATUS_NO_MATCHING_FIDUCIAL: 8,
   STATUS_FIDUCIAL_POSE_UNCERTAIN: 9,
-  STATUS_INCOMPATIBLE_SENSORS: 10
+  STATUS_INCOMPATIBLE_SENSORS: 10,
+  STATUS_VISUAL_ALIGNMENT_FAILED: 11,
+  STATUS_NO_MAP_LOADED: 12
+};
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationResponse.QualityCheckResult = {
+  QUALITY_CHECK_UNKNOWN: 0,
+  QUALITY_CHECK_SUCCESS: 1,
+  QUALITY_CHECK_POOR_POINT_CLOUD_MATCH: 2,
+  QUALITY_CHECK_POOR_GRAVITY_ALIGNMENT: 3,
+  QUALITY_CHECK_SKIPPED: 4,
+  QUALITY_CHECK_BAD_HEIGHT: 5
 };
 
 
@@ -2046,6 +2697,24 @@ proto.bosdyn.api.graph_nav.SetLocalizationResponse.prototype.hasSensorStatus = f
 };
 
 
+/**
+ * optional QualityCheckResult quality_check_result = 10;
+ * @return {!proto.bosdyn.api.graph_nav.SetLocalizationResponse.QualityCheckResult}
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationResponse.prototype.getQualityCheckResult = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.SetLocalizationResponse.QualityCheckResult} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.SetLocalizationResponse.QualityCheckResult} value
+ * @return {!proto.bosdyn.api.graph_nav.SetLocalizationResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.SetLocalizationResponse.prototype.setQualityCheckResult = function(value) {
+  return jspb.Message.setProto3EnumField(this, 10, value);
+};
+
+
 
 
 
@@ -2078,7 +2747,7 @@ proto.bosdyn.api.graph_nav.RouteGenParams.prototype.toObject = function(opt_incl
  */
 proto.bosdyn.api.graph_nav.RouteGenParams.toObject = function(includeInstance, msg) {
   var f, obj = {
-
+    backtrackToStartWaypoint: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -2115,6 +2784,10 @@ proto.bosdyn.api.graph_nav.RouteGenParams.deserializeBinaryFromReader = function
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setBacktrackToStartWaypoint(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2144,9 +2817,60 @@ proto.bosdyn.api.graph_nav.RouteGenParams.prototype.serializeBinary = function()
  */
 proto.bosdyn.api.graph_nav.RouteGenParams.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getBacktrackToStartWaypoint();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
 };
 
 
+/**
+ * optional bool backtrack_to_start_waypoint = 2;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.RouteGenParams.prototype.getBacktrackToStartWaypoint = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.RouteGenParams} returns this
+ */
+proto.bosdyn.api.graph_nav.RouteGenParams.prototype.setBacktrackToStartWaypoint = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.bosdyn.api.graph_nav.TravelParams.oneofGroups_ = [[1,15]];
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.CartesianDistanceParametersCase = {
+  CARTESIAN_DISTANCE_PARAMETERS_NOT_SET: 0,
+  MAX_DISTANCE: 1,
+  BOX_REGION: 15
+};
+
+/**
+ * @return {proto.bosdyn.api.graph_nav.TravelParams.CartesianDistanceParametersCase}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.getCartesianDistanceParametersCase = function() {
+  return /** @type {proto.bosdyn.api.graph_nav.TravelParams.CartesianDistanceParametersCase} */(jspb.Message.computeOneofCase(this, proto.bosdyn.api.graph_nav.TravelParams.oneofGroups_[0]));
+};
 
 
 
@@ -2180,12 +2904,19 @@ proto.bosdyn.api.graph_nav.TravelParams.prototype.toObject = function(opt_includ
 proto.bosdyn.api.graph_nav.TravelParams.toObject = function(includeInstance, msg) {
   var f, obj = {
     maxDistance: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0),
+    boxRegion: (f = msg.getBoxRegion()) && bosdyn_api_geometry_pb.OrientedBox2.toObject(includeInstance, f),
     maxYaw: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
     velocityLimit: (f = msg.getVelocityLimit()) && bosdyn_api_geometry_pb.SE2VelocityLimit.toObject(includeInstance, f),
     ignoreFinalYaw: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    maxCorridorDistance: jspb.Message.getFloatingPointFieldWithDefault(msg, 18, 0.0),
     featureQualityTolerance: jspb.Message.getFieldWithDefault(msg, 5, 0),
     disableDirectedExploration: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
-    disableAlternateRouteFinding: jspb.Message.getBooleanFieldWithDefault(msg, 8, false)
+    disableAlternateRouteFinding: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
+    pathFollowingMode: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    blockedPathWaitTime: (f = msg.getBlockedPathWaitTime()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
+    groundClutterMode: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    lostDetectorStrictness: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    plannerMode: jspb.Message.getFieldWithDefault(msg, 17, 0)
   };
 
   if (includeInstance) {
@@ -2226,6 +2957,11 @@ proto.bosdyn.api.graph_nav.TravelParams.deserializeBinaryFromReader = function(m
       var value = /** @type {number} */ (reader.readDouble());
       msg.setMaxDistance(value);
       break;
+    case 15:
+      var value = new bosdyn_api_geometry_pb.OrientedBox2;
+      reader.readMessage(value,bosdyn_api_geometry_pb.OrientedBox2.deserializeBinaryFromReader);
+      msg.setBoxRegion(value);
+      break;
     case 2:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setMaxYaw(value);
@@ -2239,6 +2975,10 @@ proto.bosdyn.api.graph_nav.TravelParams.deserializeBinaryFromReader = function(m
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIgnoreFinalYaw(value);
       break;
+    case 18:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setMaxCorridorDistance(value);
+      break;
     case 5:
       var value = /** @type {!proto.bosdyn.api.graph_nav.TravelParams.FeatureQualityTolerance} */ (reader.readEnum());
       msg.setFeatureQualityTolerance(value);
@@ -2250,6 +2990,27 @@ proto.bosdyn.api.graph_nav.TravelParams.deserializeBinaryFromReader = function(m
     case 8:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setDisableAlternateRouteFinding(value);
+      break;
+    case 9:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.Edge.Annotations.PathFollowingMode} */ (reader.readEnum());
+      msg.setPathFollowingMode(value);
+      break;
+    case 10:
+      var value = new google_protobuf_duration_pb.Duration;
+      reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
+      msg.setBlockedPathWaitTime(value);
+      break;
+    case 11:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.Edge.Annotations.GroundClutterAvoidanceMode} */ (reader.readEnum());
+      msg.setGroundClutterMode(value);
+      break;
+    case 14:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.LostDetectorStrictness} */ (reader.readEnum());
+      msg.setLostDetectorStrictness(value);
+      break;
+    case 17:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.TravelParams.PathPlannerMode} */ (reader.readEnum());
+      msg.setPlannerMode(value);
       break;
     default:
       reader.skipField();
@@ -2280,11 +3041,19 @@ proto.bosdyn.api.graph_nav.TravelParams.prototype.serializeBinary = function() {
  */
 proto.bosdyn.api.graph_nav.TravelParams.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getMaxDistance();
-  if (f !== 0.0) {
+  f = /** @type {number} */ (jspb.Message.getField(message, 1));
+  if (f != null) {
     writer.writeDouble(
       1,
       f
+    );
+  }
+  f = message.getBoxRegion();
+  if (f != null) {
+    writer.writeMessage(
+      15,
+      f,
+      bosdyn_api_geometry_pb.OrientedBox2.serializeBinaryToWriter
     );
   }
   f = message.getMaxYaw();
@@ -2309,6 +3078,13 @@ proto.bosdyn.api.graph_nav.TravelParams.serializeBinaryToWriter = function(messa
       f
     );
   }
+  f = message.getMaxCorridorDistance();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      18,
+      f
+    );
+  }
   f = message.getFeatureQualityTolerance();
   if (f !== 0.0) {
     writer.writeEnum(
@@ -2330,6 +3106,42 @@ proto.bosdyn.api.graph_nav.TravelParams.serializeBinaryToWriter = function(messa
       f
     );
   }
+  f = message.getPathFollowingMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      9,
+      f
+    );
+  }
+  f = message.getBlockedPathWaitTime();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      google_protobuf_duration_pb.Duration.serializeBinaryToWriter
+    );
+  }
+  f = message.getGroundClutterMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      11,
+      f
+    );
+  }
+  f = message.getLostDetectorStrictness();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      14,
+      f
+    );
+  }
+  f = message.getPlannerMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      17,
+      f
+    );
+  }
 };
 
 
@@ -2340,6 +3152,17 @@ proto.bosdyn.api.graph_nav.TravelParams.FeatureQualityTolerance = {
   TOLERANCE_UNKNOWN: 0,
   TOLERANCE_DEFAULT: 1,
   TOLERANCE_IGNORE_POOR_FEATURE_QUALITY: 2
+};
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.PathPlannerMode = {
+  PLANNER_MODE_UNKNOWN: 0,
+  PLANNER_MODE_DEFAULT: 1,
+  PLANNER_MODE_SHORT_RANGE: 2,
+  PLANNER_MODE_LONG_RANGE: 3,
+  PLANNER_MODE_LONG_RANGE_LIVE_ONLY: 4
 };
 
 /**
@@ -2356,7 +3179,62 @@ proto.bosdyn.api.graph_nav.TravelParams.prototype.getMaxDistance = function() {
  * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
  */
 proto.bosdyn.api.graph_nav.TravelParams.prototype.setMaxDistance = function(value) {
-  return jspb.Message.setProto3FloatField(this, 1, value);
+  return jspb.Message.setOneofField(this, 1, proto.bosdyn.api.graph_nav.TravelParams.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.clearMaxDistance = function() {
+  return jspb.Message.setOneofField(this, 1, proto.bosdyn.api.graph_nav.TravelParams.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.hasMaxDistance = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional bosdyn.api.OrientedBox2 box_region = 15;
+ * @return {?proto.bosdyn.api.OrientedBox2}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.getBoxRegion = function() {
+  return /** @type{?proto.bosdyn.api.OrientedBox2} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_geometry_pb.OrientedBox2, 15));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.OrientedBox2|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+*/
+proto.bosdyn.api.graph_nav.TravelParams.prototype.setBoxRegion = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 15, proto.bosdyn.api.graph_nav.TravelParams.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.clearBoxRegion = function() {
+  return this.setBoxRegion(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.hasBoxRegion = function() {
+  return jspb.Message.getField(this, 15) != null;
 };
 
 
@@ -2434,6 +3312,24 @@ proto.bosdyn.api.graph_nav.TravelParams.prototype.setIgnoreFinalYaw = function(v
 
 
 /**
+ * optional double max_corridor_distance = 18;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.getMaxCorridorDistance = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 18, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.setMaxCorridorDistance = function(value) {
+  return jspb.Message.setProto3FloatField(this, 18, value);
+};
+
+
+/**
  * optional FeatureQualityTolerance feature_quality_tolerance = 5;
  * @return {!proto.bosdyn.api.graph_nav.TravelParams.FeatureQualityTolerance}
  */
@@ -2487,6 +3383,365 @@ proto.bosdyn.api.graph_nav.TravelParams.prototype.setDisableAlternateRouteFindin
 };
 
 
+/**
+ * optional Edge.Annotations.PathFollowingMode path_following_mode = 9;
+ * @return {!proto.bosdyn.api.graph_nav.Edge.Annotations.PathFollowingMode}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.getPathFollowingMode = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.Edge.Annotations.PathFollowingMode} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.Edge.Annotations.PathFollowingMode} value
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.setPathFollowingMode = function(value) {
+  return jspb.Message.setProto3EnumField(this, 9, value);
+};
+
+
+/**
+ * optional google.protobuf.Duration blocked_path_wait_time = 10;
+ * @return {?proto.google.protobuf.Duration}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.getBlockedPathWaitTime = function() {
+  return /** @type{?proto.google.protobuf.Duration} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 10));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Duration|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+*/
+proto.bosdyn.api.graph_nav.TravelParams.prototype.setBlockedPathWaitTime = function(value) {
+  return jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.clearBlockedPathWaitTime = function() {
+  return this.setBlockedPathWaitTime(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.hasBlockedPathWaitTime = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional Edge.Annotations.GroundClutterAvoidanceMode ground_clutter_mode = 11;
+ * @return {!proto.bosdyn.api.graph_nav.Edge.Annotations.GroundClutterAvoidanceMode}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.getGroundClutterMode = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.Edge.Annotations.GroundClutterAvoidanceMode} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.Edge.Annotations.GroundClutterAvoidanceMode} value
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.setGroundClutterMode = function(value) {
+  return jspb.Message.setProto3EnumField(this, 11, value);
+};
+
+
+/**
+ * optional LostDetectorStrictness lost_detector_strictness = 14;
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorStrictness}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.getLostDetectorStrictness = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.LostDetectorStrictness} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.LostDetectorStrictness} value
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.setLostDetectorStrictness = function(value) {
+  return jspb.Message.setProto3EnumField(this, 14, value);
+};
+
+
+/**
+ * optional PathPlannerMode planner_mode = 17;
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams.PathPlannerMode}
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.getPlannerMode = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.TravelParams.PathPlannerMode} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.TravelParams.PathPlannerMode} value
+ * @return {!proto.bosdyn.api.graph_nav.TravelParams} returns this
+ */
+proto.bosdyn.api.graph_nav.TravelParams.prototype.setPlannerMode = function(value) {
+  return jspb.Message.setProto3EnumField(this, 17, value);
+};
+
+
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.repeatedFields_ = [2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.ModifyNavigationResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    header: (f = msg.getHeader()) && bosdyn_api_header_pb.ResponseHeader.toObject(includeInstance, f),
+    leaseUseResultsList: jspb.Message.toObjectList(msg.getLeaseUseResultsList(),
+    bosdyn_api_lease_pb.LeaseUseResult.toObject, includeInstance),
+    status: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.ModifyNavigationResponse;
+  return proto.bosdyn.api.graph_nav.ModifyNavigationResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_header_pb.ResponseHeader;
+      reader.readMessage(value,bosdyn_api_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      msg.setHeader(value);
+      break;
+    case 2:
+      var value = new bosdyn_api_lease_pb.LeaseUseResult;
+      reader.readMessage(value,bosdyn_api_lease_pb.LeaseUseResult.deserializeBinaryFromReader);
+      msg.addLeaseUseResults(value);
+      break;
+    case 3:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse.Status} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.ModifyNavigationResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHeader();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      bosdyn_api_header_pb.ResponseHeader.serializeBinaryToWriter
+    );
+  }
+  f = message.getLeaseUseResultsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      bosdyn_api_lease_pb.LeaseUseResult.serializeBinaryToWriter
+    );
+  }
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.Status = {
+  STATUS_UNKNOWN: 0,
+  STATUS_OK: 1,
+  STATUS_UNRECOGNIZED_COMMAND: 2
+};
+
+/**
+ * optional bosdyn.api.ResponseHeader header = 1;
+ * @return {?proto.bosdyn.api.ResponseHeader}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.getHeader = function() {
+  return /** @type{?proto.bosdyn.api.ResponseHeader} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_header_pb.ResponseHeader, 1));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.ResponseHeader|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.setHeader = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.clearHeader = function() {
+  return this.setHeader(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.hasHeader = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * repeated bosdyn.api.LeaseUseResult lease_use_results = 2;
+ * @return {!Array<!proto.bosdyn.api.LeaseUseResult>}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.getLeaseUseResultsList = function() {
+  return /** @type{!Array<!proto.bosdyn.api.LeaseUseResult>} */ (
+    jspb.Message.getRepeatedWrapperField(this, bosdyn_api_lease_pb.LeaseUseResult, 2));
+};
+
+
+/**
+ * @param {!Array<!proto.bosdyn.api.LeaseUseResult>} value
+ * @return {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.setLeaseUseResultsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.LeaseUseResult=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.LeaseUseResult}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.addLeaseUseResults = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.bosdyn.api.LeaseUseResult, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.clearLeaseUseResultsList = function() {
+  return this.setLeaseUseResultsList([]);
+};
+
+
+/**
+ * optional Status status = 3;
+ * @return {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse.Status}
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.getStatus = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse.Status} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse.Status} value
+ * @return {!proto.bosdyn.api.graph_nav.ModifyNavigationResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.ModifyNavigationResponse.prototype.setStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 3, value);
+};
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -2535,7 +3790,8 @@ proto.bosdyn.api.graph_nav.NavigateToRequest.toObject = function(includeInstance
     endTime: (f = msg.getEndTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     clockIdentifier: jspb.Message.getFieldWithDefault(msg, 7, ""),
     destinationWaypointTformBodyGoal: (f = msg.getDestinationWaypointTformBodyGoal()) && bosdyn_api_geometry_pb.SE2Pose.toObject(includeInstance, f),
-    commandId: jspb.Message.getFieldWithDefault(msg, 9, 0)
+    commandId: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    routeBlockedBehavior: jspb.Message.getFieldWithDefault(msg, 10, 0)
   };
 
   if (includeInstance) {
@@ -2613,6 +3869,10 @@ proto.bosdyn.api.graph_nav.NavigateToRequest.deserializeBinaryFromReader = funct
     case 9:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setCommandId(value);
+      break;
+    case 10:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.RouteFollowingParams.RouteBlockedBehavior} */ (reader.readEnum());
+      msg.setRouteBlockedBehavior(value);
       break;
     default:
       reader.skipField();
@@ -2709,6 +3969,13 @@ proto.bosdyn.api.graph_nav.NavigateToRequest.serializeBinaryToWriter = function(
   if (f !== 0) {
     writer.writeUint32(
       9,
+      f
+    );
+  }
+  f = message.getRouteBlockedBehavior();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      10,
       f
     );
   }
@@ -2992,6 +4259,24 @@ proto.bosdyn.api.graph_nav.NavigateToRequest.prototype.setCommandId = function(v
 };
 
 
+/**
+ * optional RouteFollowingParams.RouteBlockedBehavior route_blocked_behavior = 10;
+ * @return {!proto.bosdyn.api.graph_nav.RouteFollowingParams.RouteBlockedBehavior}
+ */
+proto.bosdyn.api.graph_nav.NavigateToRequest.prototype.getRouteBlockedBehavior = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.RouteFollowingParams.RouteBlockedBehavior} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.RouteFollowingParams.RouteBlockedBehavior} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigateToRequest.prototype.setRouteBlockedBehavior = function(value) {
+  return jspb.Message.setProto3EnumField(this, 10, value);
+};
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -3037,7 +4322,8 @@ proto.bosdyn.api.graph_nav.NavigateToResponse.toObject = function(includeInstanc
     status: jspb.Message.getFieldWithDefault(msg, 3, 0),
     impairedState: (f = msg.getImpairedState()) && bosdyn_api_robot_state_pb.RobotImpairedState.toObject(includeInstance, f),
     commandId: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    errorWaypointIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
+    errorWaypointIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
+    areaCallbackError: (f = msg.getAreaCallbackError()) && proto.bosdyn.api.graph_nav.AreaCallbackServiceError.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3100,6 +4386,11 @@ proto.bosdyn.api.graph_nav.NavigateToResponse.deserializeBinaryFromReader = func
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.addErrorWaypointIds(value);
+      break;
+    case 10:
+      var value = new proto.bosdyn.api.graph_nav.AreaCallbackServiceError;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.AreaCallbackServiceError.deserializeBinaryFromReader);
+      msg.setAreaCallbackError(value);
       break;
     default:
       reader.skipField();
@@ -3175,6 +4466,14 @@ proto.bosdyn.api.graph_nav.NavigateToResponse.serializeBinaryToWriter = function
       f
     );
   }
+  f = message.getAreaCallbackError();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.bosdyn.api.graph_nav.AreaCallbackServiceError.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -3196,7 +4495,8 @@ proto.bosdyn.api.graph_nav.NavigateToResponse.Status = {
   STATUS_NOT_LOCALIZED_TO_MAP: 13,
   STATUS_COULD_NOT_UPDATE_ROUTE: 12,
   STATUS_STUCK: 14,
-  STATUS_UNRECOGNIZED_COMMAND: 15
+  STATUS_UNRECOGNIZED_COMMAND: 15,
+  STATUS_AREA_CALLBACK_ERROR: 16
 };
 
 /**
@@ -3381,6 +4681,43 @@ proto.bosdyn.api.graph_nav.NavigateToResponse.prototype.addErrorWaypointIds = fu
  */
 proto.bosdyn.api.graph_nav.NavigateToResponse.prototype.clearErrorWaypointIdsList = function() {
   return this.setErrorWaypointIdsList([]);
+};
+
+
+/**
+ * optional AreaCallbackServiceError area_callback_error = 10;
+ * @return {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError}
+ */
+proto.bosdyn.api.graph_nav.NavigateToResponse.prototype.getAreaCallbackError = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.AreaCallbackServiceError} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.AreaCallbackServiceError, 10));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.NavigateToResponse.prototype.setAreaCallbackError = function(value) {
+  return jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigateToResponse.prototype.clearAreaCallbackError = function() {
+  return this.setAreaCallbackError(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.NavigateToResponse.prototype.hasAreaCallbackError = function() {
+  return jspb.Message.getField(this, 10) != null;
 };
 
 
@@ -4175,7 +5512,8 @@ proto.bosdyn.api.graph_nav.NavigateRouteResponse.toObject = function(includeInst
     commandId: jspb.Message.getFieldWithDefault(msg, 4, 0),
     errorWaypointIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
     errorEdgeIdsList: jspb.Message.toObjectList(msg.getErrorEdgeIdsList(),
-    bosdyn_api_graph_nav_map_pb.Edge.Id.toObject, includeInstance)
+    bosdyn_api_graph_nav_map_pb.Edge.Id.toObject, includeInstance),
+    areaCallbackError: (f = msg.getAreaCallbackError()) && proto.bosdyn.api.graph_nav.AreaCallbackServiceError.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -4243,6 +5581,11 @@ proto.bosdyn.api.graph_nav.NavigateRouteResponse.deserializeBinaryFromReader = f
       var value = new bosdyn_api_graph_nav_map_pb.Edge.Id;
       reader.readMessage(value,bosdyn_api_graph_nav_map_pb.Edge.Id.deserializeBinaryFromReader);
       msg.addErrorEdgeIds(value);
+      break;
+    case 8:
+      var value = new proto.bosdyn.api.graph_nav.AreaCallbackServiceError;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.AreaCallbackServiceError.deserializeBinaryFromReader);
+      msg.setAreaCallbackError(value);
       break;
     default:
       reader.skipField();
@@ -4326,6 +5669,14 @@ proto.bosdyn.api.graph_nav.NavigateRouteResponse.serializeBinaryToWriter = funct
       bosdyn_api_graph_nav_map_pb.Edge.Id.serializeBinaryToWriter
     );
   }
+  f = message.getAreaCallbackError();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      proto.bosdyn.api.graph_nav.AreaCallbackServiceError.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -4350,7 +5701,8 @@ proto.bosdyn.api.graph_nav.NavigateRouteResponse.Status = {
   STATUS_NOT_LOCALIZED_TO_MAP: 19,
   STATUS_COULD_NOT_UPDATE_ROUTE: 15,
   STATUS_STUCK: 17,
-  STATUS_UNRECOGNIZED_COMMAND: 18
+  STATUS_UNRECOGNIZED_COMMAND: 18,
+  STATUS_AREA_CALLBACK_ERROR: 21
 };
 
 /**
@@ -4576,6 +5928,296 @@ proto.bosdyn.api.graph_nav.NavigateRouteResponse.prototype.clearErrorEdgeIdsList
 };
 
 
+/**
+ * optional AreaCallbackServiceError area_callback_error = 8;
+ * @return {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError}
+ */
+proto.bosdyn.api.graph_nav.NavigateRouteResponse.prototype.getAreaCallbackError = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.AreaCallbackServiceError} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.AreaCallbackServiceError, 8));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigateRouteResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.NavigateRouteResponse.prototype.setAreaCallbackError = function(value) {
+  return jspb.Message.setWrapperField(this, 8, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.NavigateRouteResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigateRouteResponse.prototype.clearAreaCallbackError = function() {
+  return this.setAreaCallbackError(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.NavigateRouteResponse.prototype.hasAreaCallbackError = function() {
+  return jspb.Message.getField(this, 8) != null;
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.GPSNavigationParams.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.GPSNavigationParams} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    goalLlh: (f = msg.getGoalLlh()) && bosdyn_api_gps_gps_pb.LLH.toObject(includeInstance, f),
+    goalYaw: (f = msg.getGoalYaw()) && google_protobuf_wrappers_pb.DoubleValue.toObject(includeInstance, f),
+    maxDistanceFromMap: (f = msg.getMaxDistanceFromMap()) && google_protobuf_wrappers_pb.DoubleValue.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.GPSNavigationParams}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.GPSNavigationParams;
+  return proto.bosdyn.api.graph_nav.GPSNavigationParams.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.GPSNavigationParams} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.GPSNavigationParams}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_gps_gps_pb.LLH;
+      reader.readMessage(value,bosdyn_api_gps_gps_pb.LLH.deserializeBinaryFromReader);
+      msg.setGoalLlh(value);
+      break;
+    case 2:
+      var value = new google_protobuf_wrappers_pb.DoubleValue;
+      reader.readMessage(value,google_protobuf_wrappers_pb.DoubleValue.deserializeBinaryFromReader);
+      msg.setGoalYaw(value);
+      break;
+    case 3:
+      var value = new google_protobuf_wrappers_pb.DoubleValue;
+      reader.readMessage(value,google_protobuf_wrappers_pb.DoubleValue.deserializeBinaryFromReader);
+      msg.setMaxDistanceFromMap(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.GPSNavigationParams.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.GPSNavigationParams} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getGoalLlh();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      bosdyn_api_gps_gps_pb.LLH.serializeBinaryToWriter
+    );
+  }
+  f = message.getGoalYaw();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      google_protobuf_wrappers_pb.DoubleValue.serializeBinaryToWriter
+    );
+  }
+  f = message.getMaxDistanceFromMap();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      google_protobuf_wrappers_pb.DoubleValue.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional bosdyn.api.gps.LLH goal_llh = 1;
+ * @return {?proto.bosdyn.api.gps.LLH}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.getGoalLlh = function() {
+  return /** @type{?proto.bosdyn.api.gps.LLH} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_gps_gps_pb.LLH, 1));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.gps.LLH|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.GPSNavigationParams} returns this
+*/
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.setGoalLlh = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.GPSNavigationParams} returns this
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.clearGoalLlh = function() {
+  return this.setGoalLlh(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.hasGoalLlh = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional google.protobuf.DoubleValue goal_yaw = 2;
+ * @return {?proto.google.protobuf.DoubleValue}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.getGoalYaw = function() {
+  return /** @type{?proto.google.protobuf.DoubleValue} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_wrappers_pb.DoubleValue, 2));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.DoubleValue|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.GPSNavigationParams} returns this
+*/
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.setGoalYaw = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.GPSNavigationParams} returns this
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.clearGoalYaw = function() {
+  return this.setGoalYaw(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.hasGoalYaw = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional google.protobuf.DoubleValue max_distance_from_map = 3;
+ * @return {?proto.google.protobuf.DoubleValue}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.getMaxDistanceFromMap = function() {
+  return /** @type{?proto.google.protobuf.DoubleValue} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_wrappers_pb.DoubleValue, 3));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.DoubleValue|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.GPSNavigationParams} returns this
+*/
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.setMaxDistanceFromMap = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.GPSNavigationParams} returns this
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.clearMaxDistanceFromMap = function() {
+  return this.setMaxDistanceFromMap(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.GPSNavigationParams.prototype.hasMaxDistanceFromMap = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -4583,6 +6225,32 @@ proto.bosdyn.api.graph_nav.NavigateRouteResponse.prototype.clearErrorEdgeIdsList
  * @const
  */
 proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.repeatedFields_ = [2];
+
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.oneofGroups_ = [[3,11]];
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.GoalCase = {
+  GOAL_NOT_SET: 0,
+  SEED_TFORM_GOAL: 3,
+  GPS_NAVIGATION_PARAMS: 11
+};
+
+/**
+ * @return {proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.GoalCase}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.getGoalCase = function() {
+  return /** @type {proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.GoalCase} */(jspb.Message.computeOneofCase(this, proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.oneofGroups_[0]));
+};
 
 
 
@@ -4619,11 +6287,13 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.toObject = function(includeIn
     leasesList: jspb.Message.toObjectList(msg.getLeasesList(),
     bosdyn_api_lease_pb.Lease.toObject, includeInstance),
     seedTformGoal: (f = msg.getSeedTformGoal()) && bosdyn_api_geometry_pb.SE3Pose.toObject(includeInstance, f),
+    gpsNavigationParams: (f = msg.getGpsNavigationParams()) && proto.bosdyn.api.graph_nav.GPSNavigationParams.toObject(includeInstance, f),
     goalWaypointRtSeedEwrtSeedTolerance: (f = msg.getGoalWaypointRtSeedEwrtSeedTolerance()) && bosdyn_api_geometry_pb.Vec3.toObject(includeInstance, f),
     routeParams: (f = msg.getRouteParams()) && proto.bosdyn.api.graph_nav.RouteGenParams.toObject(includeInstance, f),
     travelParams: (f = msg.getTravelParams()) && proto.bosdyn.api.graph_nav.TravelParams.toObject(includeInstance, f),
     endTime: (f = msg.getEndTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     clockIdentifier: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    routeBlockedBehavior: jspb.Message.getFieldWithDefault(msg, 12, 0),
     commandId: jspb.Message.getFieldWithDefault(msg, 10, 0)
   };
 
@@ -4676,6 +6346,11 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.deserializeBinaryFromReader =
       reader.readMessage(value,bosdyn_api_geometry_pb.SE3Pose.deserializeBinaryFromReader);
       msg.setSeedTformGoal(value);
       break;
+    case 11:
+      var value = new proto.bosdyn.api.graph_nav.GPSNavigationParams;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.GPSNavigationParams.deserializeBinaryFromReader);
+      msg.setGpsNavigationParams(value);
+      break;
     case 4:
       var value = new bosdyn_api_geometry_pb.Vec3;
       reader.readMessage(value,bosdyn_api_geometry_pb.Vec3.deserializeBinaryFromReader);
@@ -4699,6 +6374,10 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.deserializeBinaryFromReader =
     case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setClockIdentifier(value);
+      break;
+    case 12:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.RouteFollowingParams.RouteBlockedBehavior} */ (reader.readEnum());
+      msg.setRouteBlockedBehavior(value);
       break;
     case 10:
       var value = /** @type {number} */ (reader.readUint32());
@@ -4757,6 +6436,14 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.serializeBinaryToWriter = fun
       bosdyn_api_geometry_pb.SE3Pose.serializeBinaryToWriter
     );
   }
+  f = message.getGpsNavigationParams();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      proto.bosdyn.api.graph_nav.GPSNavigationParams.serializeBinaryToWriter
+    );
+  }
   f = message.getGoalWaypointRtSeedEwrtSeedTolerance();
   if (f != null) {
     writer.writeMessage(
@@ -4793,6 +6480,13 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.serializeBinaryToWriter = fun
   if (f.length > 0) {
     writer.writeString(
       9,
+      f
+    );
+  }
+  f = message.getRouteBlockedBehavior();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      12,
       f
     );
   }
@@ -4896,7 +6590,7 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.getSeedTformGoal = 
  * @return {!proto.bosdyn.api.graph_nav.NavigateToAnchorRequest} returns this
 */
 proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.setSeedTformGoal = function(value) {
-  return jspb.Message.setWrapperField(this, 3, value);
+  return jspb.Message.setOneofWrapperField(this, 3, proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.oneofGroups_[0], value);
 };
 
 
@@ -4915,6 +6609,43 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.clearSeedTformGoal 
  */
 proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.hasSeedTformGoal = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional GPSNavigationParams gps_navigation_params = 11;
+ * @return {?proto.bosdyn.api.graph_nav.GPSNavigationParams}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.getGpsNavigationParams = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.GPSNavigationParams} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.GPSNavigationParams, 11));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.GPSNavigationParams|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToAnchorRequest} returns this
+*/
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.setGpsNavigationParams = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 11, proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToAnchorRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.clearGpsNavigationParams = function() {
+  return this.setGpsNavigationParams(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.hasGpsNavigationParams = function() {
+  return jspb.Message.getField(this, 11) != null;
 };
 
 
@@ -5085,6 +6816,24 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.setClockIdentifier 
 
 
 /**
+ * optional RouteFollowingParams.RouteBlockedBehavior route_blocked_behavior = 12;
+ * @return {!proto.bosdyn.api.graph_nav.RouteFollowingParams.RouteBlockedBehavior}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.getRouteBlockedBehavior = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.RouteFollowingParams.RouteBlockedBehavior} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.RouteFollowingParams.RouteBlockedBehavior} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToAnchorRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorRequest.prototype.setRouteBlockedBehavior = function(value) {
+  return jspb.Message.setProto3EnumField(this, 12, value);
+};
+
+
+/**
  * optional uint32 command_id = 10;
  * @return {number}
  */
@@ -5147,7 +6896,9 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.toObject = function(includeI
     status: jspb.Message.getFieldWithDefault(msg, 3, 0),
     impairedState: (f = msg.getImpairedState()) && bosdyn_api_robot_state_pb.RobotImpairedState.toObject(includeInstance, f),
     commandId: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    errorWaypointIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
+    errorWaypointIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
+    areaCallbackError: (f = msg.getAreaCallbackError()) && proto.bosdyn.api.graph_nav.AreaCallbackServiceError.toObject(includeInstance, f),
+    gpsStatus: jspb.Message.getFieldWithDefault(msg, 8, 0)
   };
 
   if (includeInstance) {
@@ -5210,6 +6961,15 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.deserializeBinaryFromReader 
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.addErrorWaypointIds(value);
+      break;
+    case 7:
+      var value = new proto.bosdyn.api.graph_nav.AreaCallbackServiceError;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.AreaCallbackServiceError.deserializeBinaryFromReader);
+      msg.setAreaCallbackError(value);
+      break;
+    case 8:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.GPSStatus} */ (reader.readEnum());
+      msg.setGpsStatus(value);
       break;
     default:
       reader.skipField();
@@ -5285,6 +7045,21 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.serializeBinaryToWriter = fu
       f
     );
   }
+  f = message.getAreaCallbackError();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.bosdyn.api.graph_nav.AreaCallbackServiceError.serializeBinaryToWriter
+    );
+  }
+  f = message.getGpsStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      8,
+      f
+    );
+  }
 };
 
 
@@ -5307,7 +7082,19 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.Status = {
   STATUS_COULD_NOT_UPDATE_ROUTE: 12,
   STATUS_STUCK: 14,
   STATUS_UNRECOGNIZED_COMMAND: 15,
-  STATUS_INVALID_POSE: 16
+  STATUS_INVALID_POSE: 16,
+  STATUS_AREA_CALLBACK_ERROR: 17,
+  STATUS_INVALID_GPS_COMMAND: 18
+};
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.GPSStatus = {
+  GPS_STATUS_UNKNOWN: 0,
+  GPS_STATUS_OK: 1,
+  GPS_STATUS_NO_COORDS_IN_MAP: 2,
+  GPS_STATUS_TOO_FAR_FROM_MAP: 3
 };
 
 /**
@@ -5492,6 +7279,61 @@ proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.prototype.addErrorWaypointId
  */
 proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.prototype.clearErrorWaypointIdsList = function() {
   return this.setErrorWaypointIdsList([]);
+};
+
+
+/**
+ * optional AreaCallbackServiceError area_callback_error = 7;
+ * @return {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.prototype.getAreaCallbackError = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.AreaCallbackServiceError} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.AreaCallbackServiceError, 7));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToAnchorResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.prototype.setAreaCallbackError = function(value) {
+  return jspb.Message.setWrapperField(this, 7, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToAnchorResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.prototype.clearAreaCallbackError = function() {
+  return this.setAreaCallbackError(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.prototype.hasAreaCallbackError = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional GPSStatus gps_status = 8;
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.GPSStatus}
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.prototype.getGpsStatus = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.GPSStatus} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.GPSStatus} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigateToAnchorResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigateToAnchorResponse.prototype.setGpsStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 8, value);
 };
 
 
@@ -5711,10 +7553,19 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.toObject = function(includ
     header: (f = msg.getHeader()) && bosdyn_api_header_pb.ResponseHeader.toObject(includeInstance, f),
     status: jspb.Message.getFieldWithDefault(msg, 2, 0),
     impairedState: (f = msg.getImpairedState()) && bosdyn_api_robot_state_pb.RobotImpairedState.toObject(includeInstance, f),
+    areaCallbackErrorsMap: (f = msg.getAreaCallbackErrorsMap()) ? f.toObject(includeInstance, proto.bosdyn.api.graph_nav.AreaCallbackError.toObject) : [],
     remainingRoute: (f = msg.getRemainingRoute()) && bosdyn_api_graph_nav_nav_pb.Route.toObject(includeInstance, f),
+    completedRoute: (f = msg.getCompletedRoute()) && bosdyn_api_graph_nav_nav_pb.CompletedRoute.toObject(includeInstance, f),
+    remainingRouteLength: jspb.Message.getFloatingPointFieldWithDefault(msg, 17, 0.0),
     commandId: jspb.Message.getFieldWithDefault(msg, 4, 0),
     lastKoTformGoal: (f = msg.getLastKoTformGoal()) && bosdyn_api_geometry_pb.SE3Pose.toObject(includeInstance, f),
-    bodyMovementStatus: jspb.Message.getFieldWithDefault(msg, 7, 0)
+    bodyMovementStatus: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    pathFollowingMode: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    activeRegionInformationMap: (f = msg.getActiveRegionInformationMap()) ? f.toObject(includeInstance, proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.toObject) : [],
+    goalStatus: jspb.Message.getFieldWithDefault(msg, 19, 0),
+    routeFollowingStatus: jspb.Message.getFieldWithDefault(msg, 1000, 0),
+    blockageStatus: jspb.Message.getFieldWithDefault(msg, 1001, 0),
+    stuckReason: jspb.Message.getFieldWithDefault(msg, 11, 0)
   };
 
   if (includeInstance) {
@@ -5765,10 +7616,25 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.deserializeBinaryFromReade
       reader.readMessage(value,bosdyn_api_robot_state_pb.RobotImpairedState.deserializeBinaryFromReader);
       msg.setImpairedState(value);
       break;
+    case 9:
+      var value = msg.getAreaCallbackErrorsMap();
+      reader.readMessage(value, function(message, reader) {
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.bosdyn.api.graph_nav.AreaCallbackError.deserializeBinaryFromReader, "", new proto.bosdyn.api.graph_nav.AreaCallbackError());
+         });
+      break;
     case 3:
       var value = new bosdyn_api_graph_nav_nav_pb.Route;
       reader.readMessage(value,bosdyn_api_graph_nav_nav_pb.Route.deserializeBinaryFromReader);
       msg.setRemainingRoute(value);
+      break;
+    case 18:
+      var value = new bosdyn_api_graph_nav_nav_pb.CompletedRoute;
+      reader.readMessage(value,bosdyn_api_graph_nav_nav_pb.CompletedRoute.deserializeBinaryFromReader);
+      msg.setCompletedRoute(value);
+      break;
+    case 17:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setRemainingRouteLength(value);
       break;
     case 4:
       var value = /** @type {number} */ (reader.readUint32());
@@ -5782,6 +7648,32 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.deserializeBinaryFromReade
     case 7:
       var value = /** @type {!proto.bosdyn.api.SE2TrajectoryCommand.Feedback.BodyMovementStatus} */ (reader.readEnum());
       msg.setBodyMovementStatus(value);
+      break;
+    case 8:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.Edge.Annotations.PathFollowingMode} */ (reader.readEnum());
+      msg.setPathFollowingMode(value);
+      break;
+    case 10:
+      var value = msg.getActiveRegionInformationMap();
+      reader.readMessage(value, function(message, reader) {
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.deserializeBinaryFromReader, "", new proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation());
+         });
+      break;
+    case 19:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.GoalStatus} */ (reader.readEnum());
+      msg.setGoalStatus(value);
+      break;
+    case 1000:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.RouteFollowingStatus} */ (reader.readEnum());
+      msg.setRouteFollowingStatus(value);
+      break;
+    case 1001:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.BlockageStatus} */ (reader.readEnum());
+      msg.setBlockageStatus(value);
+      break;
+    case 11:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.StuckReason} */ (reader.readEnum());
+      msg.setStuckReason(value);
       break;
     default:
       reader.skipField();
@@ -5835,12 +7727,31 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.serializeBinaryToWriter = 
       bosdyn_api_robot_state_pb.RobotImpairedState.serializeBinaryToWriter
     );
   }
+  f = message.getAreaCallbackErrorsMap(true);
+  if (f && f.getLength() > 0) {
+    f.serializeBinary(9, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.bosdyn.api.graph_nav.AreaCallbackError.serializeBinaryToWriter);
+  }
   f = message.getRemainingRoute();
   if (f != null) {
     writer.writeMessage(
       3,
       f,
       bosdyn_api_graph_nav_nav_pb.Route.serializeBinaryToWriter
+    );
+  }
+  f = message.getCompletedRoute();
+  if (f != null) {
+    writer.writeMessage(
+      18,
+      f,
+      bosdyn_api_graph_nav_nav_pb.CompletedRoute.serializeBinaryToWriter
+    );
+  }
+  f = message.getRemainingRouteLength();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      17,
+      f
     );
   }
   f = message.getCommandId();
@@ -5865,6 +7776,45 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.serializeBinaryToWriter = 
       f
     );
   }
+  f = message.getPathFollowingMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      8,
+      f
+    );
+  }
+  f = message.getActiveRegionInformationMap(true);
+  if (f && f.getLength() > 0) {
+    f.serializeBinary(10, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.serializeBinaryToWriter);
+  }
+  f = message.getGoalStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      19,
+      f
+    );
+  }
+  f = message.getRouteFollowingStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1000,
+      f
+    );
+  }
+  f = message.getBlockageStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1001,
+      f
+    );
+  }
+  f = message.getStuckReason();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      11,
+      f
+    );
+  }
 };
 
 
@@ -5884,8 +7834,251 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.Status = {
   STATUS_CONSTRAINT_FAULT: 11,
   STATUS_COMMAND_OVERRIDDEN: 12,
   STATUS_NOT_LOCALIZED_TO_ROUTE: 13,
-  STATUS_LEASE_ERROR: 14
+  STATUS_LEASE_ERROR: 14,
+  STATUS_AREA_CALLBACK_ERROR: 15
 };
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.GoalStatus = {
+  GOAL_STATUS_UNKNOWN: 0,
+  GOAL_STATUS_NOT_REACHED: 1,
+  GOAL_STATUS_IN_GOAL_AREA: 2,
+  GOAL_STATUS_STANDING_AT_GOAL: 3
+};
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.RouteFollowingStatus = {
+  ROUTE_FOLLOWING_STATUS_UNKNOWN: 0,
+  ROUTE_FOLLOWING_STATUS_FOLLOWING_ROUTE: 1,
+  ROUTE_FOLLOWING_STATUS_RETURNING_TO_ROUTE: 2,
+  ROUTE_FOLLOWING_STATUS_FOLLOWING_ALTERNATE_ROUTE: 3,
+  ROUTE_FOLLOWING_STATUS_EXPLORING: 4
+};
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.BlockageStatus = {
+  BLOCKAGE_STATUS_UNKNOWN: 0,
+  BLOCKAGE_STATUS_ROUTE_CLEAR: 1,
+  BLOCKAGE_STATUS_ROUTE_BLOCKED_TEMPORARILY: 2,
+  BLOCKAGE_STATUS_STUCK: 3
+};
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.StuckReason = {
+  STUCK_REASON_UNKNOWN: 0,
+  STUCK_REASON_OBSTACLE: 1,
+  STUCK_REASON_AREA_CALLBACK_BLOCKED: 2,
+  STUCK_REASON_AREA_CALLBACK_FAILED: 3,
+  STUCK_REASON_GOAL_BLOCKED: 4
+};
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    description: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    serviceName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    regionStatus: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation;
+  return proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setServiceName(value);
+      break;
+    case 3:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.AreaCallbackStatus} */ (reader.readEnum());
+      msg.setRegionStatus(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getServiceName();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getRegionStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.AreaCallbackStatus = {
+  STATUS_UNKNOWN: 0,
+  STATUS_NAVIGATING: 1,
+  STATUS_WAITING: 2,
+  STATUS_CALLBACK_IN_CONTROL: 3
+};
+
+/**
+ * optional string description = 1;
+ * @return {string}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.prototype.getDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.prototype.setDescription = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string service_name = 2;
+ * @return {string}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.prototype.getServiceName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.prototype.setServiceName = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional AreaCallbackStatus region_status = 3;
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.AreaCallbackStatus}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.prototype.getRegionStatus = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.AreaCallbackStatus} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.AreaCallbackStatus} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation.prototype.setRegionStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 3, value);
+};
+
 
 /**
  * optional bosdyn.api.ResponseHeader header = 1;
@@ -5980,6 +8173,28 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.hasImpairedState
 
 
 /**
+ * map<string, AreaCallbackError> area_callback_errors = 9;
+ * @param {boolean=} opt_noLazyCreate Do not create the map if
+ * empty, instead returning `undefined`
+ * @return {!jspb.Map<string,!proto.bosdyn.api.graph_nav.AreaCallbackError>}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getAreaCallbackErrorsMap = function(opt_noLazyCreate) {
+  return /** @type {!jspb.Map<string,!proto.bosdyn.api.graph_nav.AreaCallbackError>} */ (
+      jspb.Message.getMapField(this, 9, opt_noLazyCreate,
+      proto.bosdyn.api.graph_nav.AreaCallbackError));
+};
+
+
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.clearAreaCallbackErrorsMap = function() {
+  this.getAreaCallbackErrorsMap().clear();
+  return this;};
+
+
+/**
  * optional Route remaining_route = 3;
  * @return {?proto.bosdyn.api.graph_nav.Route}
  */
@@ -6013,6 +8228,61 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.clearRemainingRo
  */
 proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.hasRemainingRoute = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional CompletedRoute completed_route = 18;
+ * @return {?proto.bosdyn.api.graph_nav.CompletedRoute}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getCompletedRoute = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.CompletedRoute} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_nav_pb.CompletedRoute, 18));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.CompletedRoute|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.setCompletedRoute = function(value) {
+  return jspb.Message.setWrapperField(this, 18, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.clearCompletedRoute = function() {
+  return this.setCompletedRoute(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.hasCompletedRoute = function() {
+  return jspb.Message.getField(this, 18) != null;
+};
+
+
+/**
+ * optional double remaining_route_length = 17;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getRemainingRouteLength = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 17, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.setRemainingRouteLength = function(value) {
+  return jspb.Message.setProto3FloatField(this, 17, value);
 };
 
 
@@ -6089,6 +8359,118 @@ proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.setBodyMovementS
 };
 
 
+/**
+ * optional Edge.Annotations.PathFollowingMode path_following_mode = 8;
+ * @return {!proto.bosdyn.api.graph_nav.Edge.Annotations.PathFollowingMode}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getPathFollowingMode = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.Edge.Annotations.PathFollowingMode} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.Edge.Annotations.PathFollowingMode} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.setPathFollowingMode = function(value) {
+  return jspb.Message.setProto3EnumField(this, 8, value);
+};
+
+
+/**
+ * map<string, ActiveRegionInformation> active_region_information = 10;
+ * @param {boolean=} opt_noLazyCreate Do not create the map if
+ * empty, instead returning `undefined`
+ * @return {!jspb.Map<string,!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation>}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getActiveRegionInformationMap = function(opt_noLazyCreate) {
+  return /** @type {!jspb.Map<string,!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation>} */ (
+      jspb.Message.getMapField(this, 10, opt_noLazyCreate,
+      proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.ActiveRegionInformation));
+};
+
+
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.clearActiveRegionInformationMap = function() {
+  this.getActiveRegionInformationMap().clear();
+  return this;};
+
+
+/**
+ * optional GoalStatus goal_status = 19;
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.GoalStatus}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getGoalStatus = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.GoalStatus} */ (jspb.Message.getFieldWithDefault(this, 19, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.GoalStatus} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.setGoalStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 19, value);
+};
+
+
+/**
+ * optional RouteFollowingStatus route_following_status = 1000;
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.RouteFollowingStatus}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getRouteFollowingStatus = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.RouteFollowingStatus} */ (jspb.Message.getFieldWithDefault(this, 1000, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.RouteFollowingStatus} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.setRouteFollowingStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 1000, value);
+};
+
+
+/**
+ * optional BlockageStatus blockage_status = 1001;
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.BlockageStatus}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getBlockageStatus = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.BlockageStatus} */ (jspb.Message.getFieldWithDefault(this, 1001, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.BlockageStatus} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.setBlockageStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 1001, value);
+};
+
+
+/**
+ * optional StuckReason stuck_reason = 11;
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.StuckReason}
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.getStuckReason = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.StuckReason} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.StuckReason} value
+ * @return {!proto.bosdyn.api.graph_nav.NavigationFeedbackResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.NavigationFeedbackResponse.prototype.setStuckReason = function(value) {
+  return jspb.Message.setProto3EnumField(this, 11, value);
+};
+
+
 
 
 
@@ -6128,7 +8510,8 @@ proto.bosdyn.api.graph_nav.GetLocalizationStateRequest.toObject = function(inclu
     requestLiveTerrainMaps: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     requestLiveWorldObjects: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
     requestLiveRobotState: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
-    compressLivePointCloud: jspb.Message.getBooleanFieldWithDefault(msg, 7, false)
+    compressLivePointCloud: jspb.Message.getBooleanFieldWithDefault(msg, 7, false),
+    requestGpsState: jspb.Message.getBooleanFieldWithDefault(msg, 9, false)
   };
 
   if (includeInstance) {
@@ -6197,6 +8580,10 @@ proto.bosdyn.api.graph_nav.GetLocalizationStateRequest.deserializeBinaryFromRead
     case 7:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setCompressLivePointCloud(value);
+      break;
+    case 9:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setRequestGpsState(value);
       break;
     default:
       reader.skipField();
@@ -6281,6 +8668,13 @@ proto.bosdyn.api.graph_nav.GetLocalizationStateRequest.serializeBinaryToWriter =
   if (f) {
     writer.writeBool(
       7,
+      f
+    );
+  }
+  f = message.getRequestGpsState();
+  if (f) {
+    writer.writeBool(
+      9,
       f
     );
   }
@@ -6447,6 +8841,24 @@ proto.bosdyn.api.graph_nav.GetLocalizationStateRequest.prototype.getCompressLive
  */
 proto.bosdyn.api.graph_nav.GetLocalizationStateRequest.prototype.setCompressLivePointCloud = function(value) {
   return jspb.Message.setProto3BooleanField(this, 7, value);
+};
+
+
+/**
+ * optional bool request_gps_state = 9;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.GetLocalizationStateRequest.prototype.getRequestGpsState = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.GetLocalizationStateRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.GetLocalizationStateRequest.prototype.setRequestGpsState = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
@@ -6672,7 +9084,16 @@ proto.bosdyn.api.graph_nav.LostDetectorState.prototype.toObject = function(opt_i
  */
 proto.bosdyn.api.graph_nav.LostDetectorState.toObject = function(includeInstance, msg) {
   var f, obj = {
-    isLost: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
+    isLost: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    totalNumAcceptedLocalizations: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    totalNumRejectedLocalizations: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    numRejectedLocalizationsSinceAccepted: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    distanceTraveledWithRejectedLocalization: jspb.Message.getFloatingPointFieldWithDefault(msg, 5, 0.0),
+    lastAcceptedLocalization: (f = msg.getLastAcceptedLocalization()) && bosdyn_api_graph_nav_nav_pb.Localization.toObject(includeInstance, f),
+    lastRejectedLocalization: (f = msg.getLastRejectedLocalization()) && bosdyn_api_graph_nav_nav_pb.Localization.toObject(includeInstance, f),
+    lastAcceptedStrictLocalization: (f = msg.getLastAcceptedStrictLocalization()) && bosdyn_api_graph_nav_nav_pb.Localization.toObject(includeInstance, f),
+    numConsecutiveBadEdges: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    params: (f = msg.getParams()) && proto.bosdyn.api.graph_nav.LostDetectorState.Params.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -6713,6 +9134,46 @@ proto.bosdyn.api.graph_nav.LostDetectorState.deserializeBinaryFromReader = funct
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsLost(value);
       break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTotalNumAcceptedLocalizations(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTotalNumRejectedLocalizations(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setNumRejectedLocalizationsSinceAccepted(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setDistanceTraveledWithRejectedLocalization(value);
+      break;
+    case 6:
+      var value = new bosdyn_api_graph_nav_nav_pb.Localization;
+      reader.readMessage(value,bosdyn_api_graph_nav_nav_pb.Localization.deserializeBinaryFromReader);
+      msg.setLastAcceptedLocalization(value);
+      break;
+    case 7:
+      var value = new bosdyn_api_graph_nav_nav_pb.Localization;
+      reader.readMessage(value,bosdyn_api_graph_nav_nav_pb.Localization.deserializeBinaryFromReader);
+      msg.setLastRejectedLocalization(value);
+      break;
+    case 10:
+      var value = new bosdyn_api_graph_nav_nav_pb.Localization;
+      reader.readMessage(value,bosdyn_api_graph_nav_nav_pb.Localization.deserializeBinaryFromReader);
+      msg.setLastAcceptedStrictLocalization(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setNumConsecutiveBadEdges(value);
+      break;
+    case 9:
+      var value = new proto.bosdyn.api.graph_nav.LostDetectorState.Params;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.LostDetectorState.Params.deserializeBinaryFromReader);
+      msg.setParams(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -6749,6 +9210,293 @@ proto.bosdyn.api.graph_nav.LostDetectorState.serializeBinaryToWriter = function(
       f
     );
   }
+  f = message.getTotalNumAcceptedLocalizations();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = message.getTotalNumRejectedLocalizations();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = message.getNumRejectedLocalizationsSinceAccepted();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = message.getDistanceTraveledWithRejectedLocalization();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      5,
+      f
+    );
+  }
+  f = message.getLastAcceptedLocalization();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      bosdyn_api_graph_nav_nav_pb.Localization.serializeBinaryToWriter
+    );
+  }
+  f = message.getLastRejectedLocalization();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      bosdyn_api_graph_nav_nav_pb.Localization.serializeBinaryToWriter
+    );
+  }
+  f = message.getLastAcceptedStrictLocalization();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      bosdyn_api_graph_nav_nav_pb.Localization.serializeBinaryToWriter
+    );
+  }
+  f = message.getNumConsecutiveBadEdges();
+  if (f !== 0) {
+    writer.writeInt32(
+      8,
+      f
+    );
+  }
+  f = message.getParams();
+  if (f != null) {
+    writer.writeMessage(
+      9,
+      f,
+      proto.bosdyn.api.graph_nav.LostDetectorState.Params.serializeBinaryToWriter
+    );
+  }
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.LostDetectorState.Params.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.LostDetectorState.Params} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    maxTimeWithBadLocalization: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0),
+    maxDistanceWithBadLocalization: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
+    maxNumEdgesWithBadLocalization: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    strictness: jspb.Message.getFieldWithDefault(msg, 4, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState.Params}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.LostDetectorState.Params;
+  return proto.bosdyn.api.graph_nav.LostDetectorState.Params.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.LostDetectorState.Params} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState.Params}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setMaxTimeWithBadLocalization(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setMaxDistanceWithBadLocalization(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setMaxNumEdgesWithBadLocalization(value);
+      break;
+    case 4:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.LostDetectorStrictness} */ (reader.readEnum());
+      msg.setStrictness(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.LostDetectorState.Params.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.LostDetectorState.Params} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMaxTimeWithBadLocalization();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      1,
+      f
+    );
+  }
+  f = message.getMaxDistanceWithBadLocalization();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      2,
+      f
+    );
+  }
+  f = message.getMaxNumEdgesWithBadLocalization();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = message.getStrictness();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional double max_time_with_bad_localization = 1;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.getMaxTimeWithBadLocalization = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 1, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState.Params} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.setMaxTimeWithBadLocalization = function(value) {
+  return jspb.Message.setProto3FloatField(this, 1, value);
+};
+
+
+/**
+ * optional double max_distance_with_bad_localization = 2;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.getMaxDistanceWithBadLocalization = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState.Params} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.setMaxDistanceWithBadLocalization = function(value) {
+  return jspb.Message.setProto3FloatField(this, 2, value);
+};
+
+
+/**
+ * optional int32 max_num_edges_with_bad_localization = 3;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.getMaxNumEdgesWithBadLocalization = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState.Params} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.setMaxNumEdgesWithBadLocalization = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional LostDetectorStrictness strictness = 4;
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorStrictness}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.getStrictness = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.LostDetectorStrictness} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.LostDetectorStrictness} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState.Params} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.Params.prototype.setStrictness = function(value) {
+  return jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -6767,6 +9515,244 @@ proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getIsLost = function() {
  */
 proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setIsLost = function(value) {
   return jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional int32 total_num_accepted_localizations = 2;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getTotalNumAcceptedLocalizations = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setTotalNumAcceptedLocalizations = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional int32 total_num_rejected_localizations = 3;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getTotalNumRejectedLocalizations = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setTotalNumRejectedLocalizations = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional int32 num_rejected_localizations_since_accepted = 4;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getNumRejectedLocalizationsSinceAccepted = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setNumRejectedLocalizationsSinceAccepted = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional float distance_traveled_with_rejected_localization = 5;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getDistanceTraveledWithRejectedLocalization = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 5, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setDistanceTraveledWithRejectedLocalization = function(value) {
+  return jspb.Message.setProto3FloatField(this, 5, value);
+};
+
+
+/**
+ * optional Localization last_accepted_localization = 6;
+ * @return {?proto.bosdyn.api.graph_nav.Localization}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getLastAcceptedLocalization = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.Localization} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_nav_pb.Localization, 6));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.Localization|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+*/
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setLastAcceptedLocalization = function(value) {
+  return jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.clearLastAcceptedLocalization = function() {
+  return this.setLastAcceptedLocalization(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.hasLastAcceptedLocalization = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional Localization last_rejected_localization = 7;
+ * @return {?proto.bosdyn.api.graph_nav.Localization}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getLastRejectedLocalization = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.Localization} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_nav_pb.Localization, 7));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.Localization|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+*/
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setLastRejectedLocalization = function(value) {
+  return jspb.Message.setWrapperField(this, 7, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.clearLastRejectedLocalization = function() {
+  return this.setLastRejectedLocalization(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.hasLastRejectedLocalization = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional Localization last_accepted_strict_localization = 10;
+ * @return {?proto.bosdyn.api.graph_nav.Localization}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getLastAcceptedStrictLocalization = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.Localization} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_nav_pb.Localization, 10));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.Localization|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+*/
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setLastAcceptedStrictLocalization = function(value) {
+  return jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.clearLastAcceptedStrictLocalization = function() {
+  return this.setLastAcceptedStrictLocalization(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.hasLastAcceptedStrictLocalization = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional int32 num_consecutive_bad_edges = 8;
+ * @return {number}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getNumConsecutiveBadEdges = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setNumConsecutiveBadEdges = function(value) {
+  return jspb.Message.setProto3IntField(this, 8, value);
+};
+
+
+/**
+ * optional Params params = 9;
+ * @return {?proto.bosdyn.api.graph_nav.LostDetectorState.Params}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.getParams = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.LostDetectorState.Params} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.LostDetectorState.Params, 9));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.LostDetectorState.Params|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+*/
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.setParams = function(value) {
+  return jspb.Message.setWrapperField(this, 9, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.LostDetectorState} returns this
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.clearParams = function() {
+  return this.setParams(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.LostDetectorState.prototype.hasParams = function() {
+  return jspb.Message.getField(this, 9) != null;
 };
 
 
@@ -6815,7 +9801,8 @@ proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.toObject = function(incl
     remoteCloudStatusList: jspb.Message.toObjectList(msg.getRemoteCloudStatusList(),
     proto.bosdyn.api.graph_nav.RemotePointCloudStatus.toObject, includeInstance),
     liveData: (f = msg.getLiveData()) && bosdyn_api_graph_nav_map_pb.WaypointSnapshot.toObject(includeInstance, f),
-    lostDetectorState: (f = msg.getLostDetectorState()) && proto.bosdyn.api.graph_nav.LostDetectorState.toObject(includeInstance, f)
+    lostDetectorState: (f = msg.getLostDetectorState()) && proto.bosdyn.api.graph_nav.LostDetectorState.toObject(includeInstance, f),
+    gps: (f = msg.getGps()) && bosdyn_api_graph_nav_gps_pb.GPSLocalization.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -6881,6 +9868,11 @@ proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.deserializeBinaryFromRea
       var value = new proto.bosdyn.api.graph_nav.LostDetectorState;
       reader.readMessage(value,proto.bosdyn.api.graph_nav.LostDetectorState.deserializeBinaryFromReader);
       msg.setLostDetectorState(value);
+      break;
+    case 8:
+      var value = new bosdyn_api_graph_nav_gps_pb.GPSLocalization;
+      reader.readMessage(value,bosdyn_api_graph_nav_gps_pb.GPSLocalization.deserializeBinaryFromReader);
+      msg.setGps(value);
       break;
     default:
       reader.skipField();
@@ -6957,6 +9949,14 @@ proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.serializeBinaryToWriter 
       7,
       f,
       proto.bosdyn.api.graph_nav.LostDetectorState.serializeBinaryToWriter
+    );
+  }
+  f = message.getGps();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      bosdyn_api_graph_nav_gps_pb.GPSLocalization.serializeBinaryToWriter
     );
   }
 };
@@ -7182,6 +10182,43 @@ proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.prototype.clearLostDetec
  */
 proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.prototype.hasLostDetectorState = function() {
   return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional GPSLocalization gps = 8;
+ * @return {?proto.bosdyn.api.graph_nav.GPSLocalization}
+ */
+proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.prototype.getGps = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.GPSLocalization} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_gps_pb.GPSLocalization, 8));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.GPSLocalization|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.GetLocalizationStateResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.prototype.setGps = function(value) {
+  return jspb.Message.setWrapperField(this, 8, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.GetLocalizationStateResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.prototype.clearGps = function() {
+  return this.setGps(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.GetLocalizationStateResponse.prototype.hasGps = function() {
+  return jspb.Message.getField(this, 8) != null;
 };
 
 
@@ -7663,7 +10700,9 @@ proto.bosdyn.api.graph_nav.UploadGraphRequest.toObject = function(includeInstanc
     header: (f = msg.getHeader()) && bosdyn_api_header_pb.RequestHeader.toObject(includeInstance, f),
     graph: (f = msg.getGraph()) && bosdyn_api_graph_nav_map_pb.Graph.toObject(includeInstance, f),
     lease: (f = msg.getLease()) && bosdyn_api_lease_pb.Lease.toObject(includeInstance, f),
-    generateNewAnchoring: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
+    generateNewAnchoring: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    treatValidationWarningsAsErrors: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
+    replaceGraph: jspb.Message.getBooleanFieldWithDefault(msg, 6, false)
   };
 
   if (includeInstance) {
@@ -7718,6 +10757,14 @@ proto.bosdyn.api.graph_nav.UploadGraphRequest.deserializeBinaryFromReader = func
     case 4:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setGenerateNewAnchoring(value);
+      break;
+    case 5:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setTreatValidationWarningsAsErrors(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setReplaceGraph(value);
       break;
     default:
       reader.skipField();
@@ -7776,6 +10823,20 @@ proto.bosdyn.api.graph_nav.UploadGraphRequest.serializeBinaryToWriter = function
   if (f) {
     writer.writeBool(
       4,
+      f
+    );
+  }
+  f = message.getTreatValidationWarningsAsErrors();
+  if (f) {
+    writer.writeBool(
+      5,
+      f
+    );
+  }
+  f = message.getReplaceGraph();
+  if (f) {
+    writer.writeBool(
+      6,
       f
     );
   }
@@ -7911,6 +10972,244 @@ proto.bosdyn.api.graph_nav.UploadGraphRequest.prototype.setGenerateNewAnchoring 
 };
 
 
+/**
+ * optional bool treat_validation_warnings_as_errors = 5;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphRequest.prototype.getTreatValidationWarningsAsErrors = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphRequest.prototype.setTreatValidationWarningsAsErrors = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 5, value);
+};
+
+
+/**
+ * optional bool replace_graph = 6;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphRequest.prototype.getReplaceGraph = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphRequest.prototype.setReplaceGraph = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 6, value);
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    header: (f = msg.getHeader()) && bosdyn_api_header_pb.RequestHeader.toObject(includeInstance, f),
+    chunk: (f = msg.getChunk()) && bosdyn_api_data_chunk_pb.DataChunk.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest;
+  return proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_header_pb.RequestHeader;
+      reader.readMessage(value,bosdyn_api_header_pb.RequestHeader.deserializeBinaryFromReader);
+      msg.setHeader(value);
+      break;
+    case 2:
+      var value = new bosdyn_api_data_chunk_pb.DataChunk;
+      reader.readMessage(value,bosdyn_api_data_chunk_pb.DataChunk.deserializeBinaryFromReader);
+      msg.setChunk(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHeader();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      bosdyn_api_header_pb.RequestHeader.serializeBinaryToWriter
+    );
+  }
+  f = message.getChunk();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      bosdyn_api_data_chunk_pb.DataChunk.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional bosdyn.api.RequestHeader header = 1;
+ * @return {?proto.bosdyn.api.RequestHeader}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.getHeader = function() {
+  return /** @type{?proto.bosdyn.api.RequestHeader} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_header_pb.RequestHeader, 1));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.RequestHeader|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.setHeader = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.clearHeader = function() {
+  return this.setHeader(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.hasHeader = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional bosdyn.api.DataChunk chunk = 2;
+ * @return {?proto.bosdyn.api.DataChunk}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.getChunk = function() {
+  return /** @type{?proto.bosdyn.api.DataChunk} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_data_chunk_pb.DataChunk, 2));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.DataChunk|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.setChunk = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.clearChunk = function() {
+  return this.setChunk(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphStreamingRequest.prototype.hasChunk = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -7958,7 +11257,11 @@ proto.bosdyn.api.graph_nav.UploadGraphResponse.toObject = function(includeInstan
     loadedEdgeSnapshotIdsList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
     unknownEdgeSnapshotIdsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f,
     licenseStatus: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    sensorStatus: (f = msg.getSensorStatus()) && proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject(includeInstance, f)
+    sensorStatus: (f = msg.getSensorStatus()) && proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject(includeInstance, f),
+    areaCallbackError: (f = msg.getAreaCallbackError()) && proto.bosdyn.api.graph_nav.AreaCallbackServiceError.toObject(includeInstance, f),
+    mapStats: (f = msg.getMapStats()) && bosdyn_api_graph_nav_map_pb.MapStats.toObject(includeInstance, f),
+    validationStatus: (f = msg.getValidationStatus()) && proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.toObject(includeInstance, f),
+    replacedGraph: jspb.Message.getBooleanFieldWithDefault(msg, 13, false)
   };
 
   if (includeInstance) {
@@ -8033,6 +11336,25 @@ proto.bosdyn.api.graph_nav.UploadGraphResponse.deserializeBinaryFromReader = fun
       var value = new proto.bosdyn.api.graph_nav.SensorCompatibilityStatus;
       reader.readMessage(value,proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.deserializeBinaryFromReader);
       msg.setSensorStatus(value);
+      break;
+    case 10:
+      var value = new proto.bosdyn.api.graph_nav.AreaCallbackServiceError;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.AreaCallbackServiceError.deserializeBinaryFromReader);
+      msg.setAreaCallbackError(value);
+      break;
+    case 11:
+      var value = new bosdyn_api_graph_nav_map_pb.MapStats;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.MapStats.deserializeBinaryFromReader);
+      msg.setMapStats(value);
+      break;
+    case 12:
+      var value = new proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.deserializeBinaryFromReader);
+      msg.setValidationStatus(value);
+      break;
+    case 13:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setReplacedGraph(value);
       break;
     default:
       reader.skipField();
@@ -8129,6 +11451,37 @@ proto.bosdyn.api.graph_nav.UploadGraphResponse.serializeBinaryToWriter = functio
       proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.serializeBinaryToWriter
     );
   }
+  f = message.getAreaCallbackError();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.bosdyn.api.graph_nav.AreaCallbackServiceError.serializeBinaryToWriter
+    );
+  }
+  f = message.getMapStats();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      bosdyn_api_graph_nav_map_pb.MapStats.serializeBinaryToWriter
+    );
+  }
+  f = message.getValidationStatus();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.serializeBinaryToWriter
+    );
+  }
+  f = message.getReplacedGraph();
+  if (f) {
+    writer.writeBool(
+      13,
+      f
+    );
+  }
 };
 
 
@@ -8140,8 +11493,787 @@ proto.bosdyn.api.graph_nav.UploadGraphResponse.Status = {
   STATUS_OK: 1,
   STATUS_MAP_TOO_LARGE_LICENSE: 3,
   STATUS_INVALID_GRAPH: 4,
-  STATUS_INCOMPATIBLE_SENSORS: 5
+  STATUS_INCOMPATIBLE_SENSORS: 5,
+  STATUS_AREA_CALLBACK_ERROR: 6
 };
+
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.repeatedFields_ = [1,2,3,4,5,6,7,8,9,10,15];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    missingWaypointIdsInEdgesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
+    missingWaypointIdsInAnchorsList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
+    edgeIdsInvalidTransformList: jspb.Message.toObjectList(msg.getEdgeIdsInvalidTransformList(),
+    bosdyn_api_graph_nav_map_pb.Edge.Id.toObject, includeInstance),
+    waypointAnchorsInvalidTransformList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
+    objectAnchorsInvalidTransformList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
+    duplicateWaypointIdsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f,
+    duplicateWaypointAnchorIdsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f,
+    duplicateObjectAnchorIdsList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
+    duplicateEdgeIdsList: jspb.Message.toObjectList(msg.getDuplicateEdgeIdsList(),
+    bosdyn_api_graph_nav_map_pb.Edge.Id.toObject, includeInstance),
+    invalidWaypointIdsSelfEdgesList: (f = jspb.Message.getRepeatedField(msg, 10)) == null ? undefined : f,
+    hasEmptyWaypointIds: jspb.Message.getBooleanFieldWithDefault(msg, 11, false),
+    hasEmptyEdgeIds: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
+    hasEmptyWaypointAnchorIds: jspb.Message.getBooleanFieldWithDefault(msg, 13, false),
+    hasEmptyObjectAnchorIds: jspb.Message.getBooleanFieldWithDefault(msg, 14, false),
+    malformedStaircaseEdgeIdsList: jspb.Message.toObjectList(msg.getMalformedStaircaseEdgeIdsList(),
+    bosdyn_api_graph_nav_map_pb.Edge.Id.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus;
+  return proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addMissingWaypointIdsInEdges(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addMissingWaypointIdsInAnchors(value);
+      break;
+    case 3:
+      var value = new bosdyn_api_graph_nav_map_pb.Edge.Id;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.Edge.Id.deserializeBinaryFromReader);
+      msg.addEdgeIdsInvalidTransform(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addWaypointAnchorsInvalidTransform(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addObjectAnchorsInvalidTransform(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addDuplicateWaypointIds(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addDuplicateWaypointAnchorIds(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addDuplicateObjectAnchorIds(value);
+      break;
+    case 9:
+      var value = new bosdyn_api_graph_nav_map_pb.Edge.Id;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.Edge.Id.deserializeBinaryFromReader);
+      msg.addDuplicateEdgeIds(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addInvalidWaypointIdsSelfEdges(value);
+      break;
+    case 11:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setHasEmptyWaypointIds(value);
+      break;
+    case 12:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setHasEmptyEdgeIds(value);
+      break;
+    case 13:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setHasEmptyWaypointAnchorIds(value);
+      break;
+    case 14:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setHasEmptyObjectAnchorIds(value);
+      break;
+    case 15:
+      var value = new bosdyn_api_graph_nav_map_pb.Edge.Id;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.Edge.Id.deserializeBinaryFromReader);
+      msg.addMalformedStaircaseEdgeIds(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMissingWaypointIdsInEdgesList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      1,
+      f
+    );
+  }
+  f = message.getMissingWaypointIdsInAnchorsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      2,
+      f
+    );
+  }
+  f = message.getEdgeIdsInvalidTransformList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      3,
+      f,
+      bosdyn_api_graph_nav_map_pb.Edge.Id.serializeBinaryToWriter
+    );
+  }
+  f = message.getWaypointAnchorsInvalidTransformList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      4,
+      f
+    );
+  }
+  f = message.getObjectAnchorsInvalidTransformList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      5,
+      f
+    );
+  }
+  f = message.getDuplicateWaypointIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      6,
+      f
+    );
+  }
+  f = message.getDuplicateWaypointAnchorIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      7,
+      f
+    );
+  }
+  f = message.getDuplicateObjectAnchorIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      8,
+      f
+    );
+  }
+  f = message.getDuplicateEdgeIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      9,
+      f,
+      bosdyn_api_graph_nav_map_pb.Edge.Id.serializeBinaryToWriter
+    );
+  }
+  f = message.getInvalidWaypointIdsSelfEdgesList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      10,
+      f
+    );
+  }
+  f = message.getHasEmptyWaypointIds();
+  if (f) {
+    writer.writeBool(
+      11,
+      f
+    );
+  }
+  f = message.getHasEmptyEdgeIds();
+  if (f) {
+    writer.writeBool(
+      12,
+      f
+    );
+  }
+  f = message.getHasEmptyWaypointAnchorIds();
+  if (f) {
+    writer.writeBool(
+      13,
+      f
+    );
+  }
+  f = message.getHasEmptyObjectAnchorIds();
+  if (f) {
+    writer.writeBool(
+      14,
+      f
+    );
+  }
+  f = message.getMalformedStaircaseEdgeIdsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      15,
+      f,
+      bosdyn_api_graph_nav_map_pb.Edge.Id.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * repeated string missing_waypoint_ids_in_edges = 1;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getMissingWaypointIdsInEdgesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setMissingWaypointIdsInEdgesList = function(value) {
+  return jspb.Message.setField(this, 1, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addMissingWaypointIdsInEdges = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearMissingWaypointIdsInEdgesList = function() {
+  return this.setMissingWaypointIdsInEdgesList([]);
+};
+
+
+/**
+ * repeated string missing_waypoint_ids_in_anchors = 2;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getMissingWaypointIdsInAnchorsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setMissingWaypointIdsInAnchorsList = function(value) {
+  return jspb.Message.setField(this, 2, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addMissingWaypointIdsInAnchors = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearMissingWaypointIdsInAnchorsList = function() {
+  return this.setMissingWaypointIdsInAnchorsList([]);
+};
+
+
+/**
+ * repeated Edge.Id edge_ids_invalid_transform = 3;
+ * @return {!Array<!proto.bosdyn.api.graph_nav.Edge.Id>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getEdgeIdsInvalidTransformList = function() {
+  return /** @type{!Array<!proto.bosdyn.api.graph_nav.Edge.Id>} */ (
+    jspb.Message.getRepeatedWrapperField(this, bosdyn_api_graph_nav_map_pb.Edge.Id, 3));
+};
+
+
+/**
+ * @param {!Array<!proto.bosdyn.api.graph_nav.Edge.Id>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setEdgeIdsInvalidTransformList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 3, value);
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.Edge.Id=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.Edge.Id}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addEdgeIdsInvalidTransform = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.bosdyn.api.graph_nav.Edge.Id, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearEdgeIdsInvalidTransformList = function() {
+  return this.setEdgeIdsInvalidTransformList([]);
+};
+
+
+/**
+ * repeated string waypoint_anchors_invalid_transform = 4;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getWaypointAnchorsInvalidTransformList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setWaypointAnchorsInvalidTransformList = function(value) {
+  return jspb.Message.setField(this, 4, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addWaypointAnchorsInvalidTransform = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearWaypointAnchorsInvalidTransformList = function() {
+  return this.setWaypointAnchorsInvalidTransformList([]);
+};
+
+
+/**
+ * repeated string object_anchors_invalid_transform = 5;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getObjectAnchorsInvalidTransformList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 5));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setObjectAnchorsInvalidTransformList = function(value) {
+  return jspb.Message.setField(this, 5, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addObjectAnchorsInvalidTransform = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearObjectAnchorsInvalidTransformList = function() {
+  return this.setObjectAnchorsInvalidTransformList([]);
+};
+
+
+/**
+ * repeated string duplicate_waypoint_ids = 6;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getDuplicateWaypointIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 6));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setDuplicateWaypointIdsList = function(value) {
+  return jspb.Message.setField(this, 6, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addDuplicateWaypointIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 6, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearDuplicateWaypointIdsList = function() {
+  return this.setDuplicateWaypointIdsList([]);
+};
+
+
+/**
+ * repeated string duplicate_waypoint_anchor_ids = 7;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getDuplicateWaypointAnchorIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setDuplicateWaypointAnchorIdsList = function(value) {
+  return jspb.Message.setField(this, 7, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addDuplicateWaypointAnchorIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearDuplicateWaypointAnchorIdsList = function() {
+  return this.setDuplicateWaypointAnchorIdsList([]);
+};
+
+
+/**
+ * repeated string duplicate_object_anchor_ids = 8;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getDuplicateObjectAnchorIdsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 8));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setDuplicateObjectAnchorIdsList = function(value) {
+  return jspb.Message.setField(this, 8, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addDuplicateObjectAnchorIds = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 8, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearDuplicateObjectAnchorIdsList = function() {
+  return this.setDuplicateObjectAnchorIdsList([]);
+};
+
+
+/**
+ * repeated Edge.Id duplicate_edge_ids = 9;
+ * @return {!Array<!proto.bosdyn.api.graph_nav.Edge.Id>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getDuplicateEdgeIdsList = function() {
+  return /** @type{!Array<!proto.bosdyn.api.graph_nav.Edge.Id>} */ (
+    jspb.Message.getRepeatedWrapperField(this, bosdyn_api_graph_nav_map_pb.Edge.Id, 9));
+};
+
+
+/**
+ * @param {!Array<!proto.bosdyn.api.graph_nav.Edge.Id>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setDuplicateEdgeIdsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 9, value);
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.Edge.Id=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.Edge.Id}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addDuplicateEdgeIds = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 9, opt_value, proto.bosdyn.api.graph_nav.Edge.Id, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearDuplicateEdgeIdsList = function() {
+  return this.setDuplicateEdgeIdsList([]);
+};
+
+
+/**
+ * repeated string invalid_waypoint_ids_self_edges = 10;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getInvalidWaypointIdsSelfEdgesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 10));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setInvalidWaypointIdsSelfEdgesList = function(value) {
+  return jspb.Message.setField(this, 10, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addInvalidWaypointIdsSelfEdges = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 10, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearInvalidWaypointIdsSelfEdgesList = function() {
+  return this.setInvalidWaypointIdsSelfEdgesList([]);
+};
+
+
+/**
+ * optional bool has_empty_waypoint_ids = 11;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getHasEmptyWaypointIds = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 11, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setHasEmptyWaypointIds = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 11, value);
+};
+
+
+/**
+ * optional bool has_empty_edge_ids = 12;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getHasEmptyEdgeIds = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 12, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setHasEmptyEdgeIds = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 12, value);
+};
+
+
+/**
+ * optional bool has_empty_waypoint_anchor_ids = 13;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getHasEmptyWaypointAnchorIds = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 13, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setHasEmptyWaypointAnchorIds = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 13, value);
+};
+
+
+/**
+ * optional bool has_empty_object_anchor_ids = 14;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getHasEmptyObjectAnchorIds = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 14, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setHasEmptyObjectAnchorIds = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 14, value);
+};
+
+
+/**
+ * repeated Edge.Id malformed_staircase_edge_ids = 15;
+ * @return {!Array<!proto.bosdyn.api.graph_nav.Edge.Id>}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.getMalformedStaircaseEdgeIdsList = function() {
+  return /** @type{!Array<!proto.bosdyn.api.graph_nav.Edge.Id>} */ (
+    jspb.Message.getRepeatedWrapperField(this, bosdyn_api_graph_nav_map_pb.Edge.Id, 15));
+};
+
+
+/**
+ * @param {!Array<!proto.bosdyn.api.graph_nav.Edge.Id>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.setMalformedStaircaseEdgeIdsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 15, value);
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.Edge.Id=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.Edge.Id}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.addMalformedStaircaseEdgeIds = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 15, opt_value, proto.bosdyn.api.graph_nav.Edge.Id, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus.prototype.clearMalformedStaircaseEdgeIdsList = function() {
+  return this.setMalformedStaircaseEdgeIdsList([]);
+};
+
 
 /**
  * optional bosdyn.api.ResponseHeader header = 1;
@@ -8435,6 +12567,135 @@ proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.clearSensorStatus = fun
  */
 proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.hasSensorStatus = function() {
   return jspb.Message.getField(this, 9) != null;
+};
+
+
+/**
+ * optional AreaCallbackServiceError area_callback_error = 10;
+ * @return {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.getAreaCallbackError = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.AreaCallbackServiceError} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.AreaCallbackServiceError, 10));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.setAreaCallbackError = function(value) {
+  return jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.clearAreaCallbackError = function() {
+  return this.setAreaCallbackError(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.hasAreaCallbackError = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional MapStats map_stats = 11;
+ * @return {?proto.bosdyn.api.graph_nav.MapStats}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.getMapStats = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.MapStats} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_map_pb.MapStats, 11));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.MapStats|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.setMapStats = function(value) {
+  return jspb.Message.setWrapperField(this, 11, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.clearMapStats = function() {
+  return this.setMapStats(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.hasMapStats = function() {
+  return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional ValidationStatus validation_status = 12;
+ * @return {?proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.getValidationStatus = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus, 12));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.UploadGraphResponse.ValidationStatus|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.setValidationStatus = function(value) {
+  return jspb.Message.setWrapperField(this, 12, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.clearValidationStatus = function() {
+  return this.setValidationStatus(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.hasValidationStatus = function() {
+  return jspb.Message.getField(this, 12) != null;
+};
+
+
+/**
+ * optional bool replaced_graph = 13;
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.getReplacedGraph = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 13, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadGraphResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadGraphResponse.prototype.setReplacedGraph = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 13, value);
 };
 
 
@@ -8807,6 +13068,208 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     http://goto/soy-param-migration
  * @return {!Object}
  */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    header: (f = msg.getHeader()) && bosdyn_api_header_pb.ResponseHeader.toObject(includeInstance, f),
+    chunk: (f = msg.getChunk()) && bosdyn_api_data_chunk_pb.DataChunk.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse}
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse;
+  return proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse}
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_header_pb.ResponseHeader;
+      reader.readMessage(value,bosdyn_api_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      msg.setHeader(value);
+      break;
+    case 2:
+      var value = new bosdyn_api_data_chunk_pb.DataChunk;
+      reader.readMessage(value,bosdyn_api_data_chunk_pb.DataChunk.deserializeBinaryFromReader);
+      msg.setChunk(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHeader();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      bosdyn_api_header_pb.ResponseHeader.serializeBinaryToWriter
+    );
+  }
+  f = message.getChunk();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      bosdyn_api_data_chunk_pb.DataChunk.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional bosdyn.api.ResponseHeader header = 1;
+ * @return {?proto.bosdyn.api.ResponseHeader}
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.getHeader = function() {
+  return /** @type{?proto.bosdyn.api.ResponseHeader} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_header_pb.ResponseHeader, 1));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.ResponseHeader|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.setHeader = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.clearHeader = function() {
+  return this.setHeader(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.hasHeader = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional bosdyn.api.DataChunk chunk = 2;
+ * @return {?proto.bosdyn.api.DataChunk}
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.getChunk = function() {
+  return /** @type{?proto.bosdyn.api.DataChunk} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_data_chunk_pb.DataChunk, 2));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.DataChunk|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.setChunk = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.clearChunk = function() {
+  return this.setChunk(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.DownloadGraphStreamingResponse.prototype.hasChunk = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
 proto.bosdyn.api.graph_nav.UploadWaypointSnapshotRequest.prototype.toObject = function(opt_includeInstance) {
   return proto.bosdyn.api.graph_nav.UploadWaypointSnapshotRequest.toObject(opt_includeInstance, this);
 };
@@ -9079,7 +13542,8 @@ proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.toObject = function(in
     header: (f = msg.getHeader()) && bosdyn_api_header_pb.ResponseHeader.toObject(includeInstance, f),
     leaseUseResult: (f = msg.getLeaseUseResult()) && bosdyn_api_lease_pb.LeaseUseResult.toObject(includeInstance, f),
     status: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    sensorStatus: (f = msg.getSensorStatus()) && proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject(includeInstance, f)
+    sensorStatus: (f = msg.getSensorStatus()) && proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject(includeInstance, f),
+    mapStats: (f = msg.getMapStats()) && bosdyn_api_graph_nav_map_pb.MapStats.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -9134,6 +13598,11 @@ proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.deserializeBinaryFromR
       var value = new proto.bosdyn.api.graph_nav.SensorCompatibilityStatus;
       reader.readMessage(value,proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.deserializeBinaryFromReader);
       msg.setSensorStatus(value);
+      break;
+    case 5:
+      var value = new bosdyn_api_graph_nav_map_pb.MapStats;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.MapStats.deserializeBinaryFromReader);
+      msg.setMapStats(value);
       break;
     default:
       reader.skipField();
@@ -9193,6 +13662,14 @@ proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.serializeBinaryToWrite
       4,
       f,
       proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.serializeBinaryToWriter
+    );
+  }
+  f = message.getMapStats();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      bosdyn_api_graph_nav_map_pb.MapStats.serializeBinaryToWriter
     );
   }
 };
@@ -9333,6 +13810,43 @@ proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.prototype.clearSensorS
  */
 proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.prototype.hasSensorStatus = function() {
   return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional MapStats map_stats = 5;
+ * @return {?proto.bosdyn.api.graph_nav.MapStats}
+ */
+proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.prototype.getMapStats = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.MapStats} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_map_pb.MapStats, 5));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.MapStats|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.prototype.setMapStats = function(value) {
+  return jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.prototype.clearMapStats = function() {
+  return this.setMapStats(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadWaypointSnapshotResponse.prototype.hasMapStats = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 
@@ -9622,7 +14136,8 @@ proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.prototype.toObject = funct
 proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     header: (f = msg.getHeader()) && bosdyn_api_header_pb.ResponseHeader.toObject(includeInstance, f),
-    leaseUseResult: (f = msg.getLeaseUseResult()) && bosdyn_api_lease_pb.LeaseUseResult.toObject(includeInstance, f)
+    leaseUseResult: (f = msg.getLeaseUseResult()) && bosdyn_api_lease_pb.LeaseUseResult.toObject(includeInstance, f),
+    mapStats: (f = msg.getMapStats()) && bosdyn_api_graph_nav_map_pb.MapStats.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -9669,6 +14184,11 @@ proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.deserializeBinaryFromReade
       reader.readMessage(value,bosdyn_api_lease_pb.LeaseUseResult.deserializeBinaryFromReader);
       msg.setLeaseUseResult(value);
       break;
+    case 3:
+      var value = new bosdyn_api_graph_nav_map_pb.MapStats;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.MapStats.deserializeBinaryFromReader);
+      msg.setMapStats(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -9712,6 +14232,14 @@ proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.serializeBinaryToWriter = 
       2,
       f,
       bosdyn_api_lease_pb.LeaseUseResult.serializeBinaryToWriter
+    );
+  }
+  f = message.getMapStats();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      bosdyn_api_graph_nav_map_pb.MapStats.serializeBinaryToWriter
     );
   }
 };
@@ -9788,6 +14316,852 @@ proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.prototype.clearLeaseUseRes
  */
 proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.prototype.hasLeaseUseResult = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional MapStats map_stats = 3;
+ * @return {?proto.bosdyn.api.graph_nav.MapStats}
+ */
+proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.prototype.getMapStats = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.MapStats} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_map_pb.MapStats, 3));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.MapStats|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.prototype.setMapStats = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.prototype.clearMapStats = function() {
+  return this.setMapStats(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadEdgeSnapshotResponse.prototype.hasMapStats = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    header: (f = msg.getHeader()) && bosdyn_api_header_pb.RequestHeader.toObject(includeInstance, f),
+    chunk: (f = msg.getChunk()) && bosdyn_api_data_chunk_pb.DataChunk.toObject(includeInstance, f),
+    lease: (f = msg.getLease()) && bosdyn_api_lease_pb.Lease.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.UploadSnapshotsRequest;
+  return proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_header_pb.RequestHeader;
+      reader.readMessage(value,bosdyn_api_header_pb.RequestHeader.deserializeBinaryFromReader);
+      msg.setHeader(value);
+      break;
+    case 2:
+      var value = new bosdyn_api_data_chunk_pb.DataChunk;
+      reader.readMessage(value,bosdyn_api_data_chunk_pb.DataChunk.deserializeBinaryFromReader);
+      msg.setChunk(value);
+      break;
+    case 3:
+      var value = new bosdyn_api_lease_pb.Lease;
+      reader.readMessage(value,bosdyn_api_lease_pb.Lease.deserializeBinaryFromReader);
+      msg.setLease(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHeader();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      bosdyn_api_header_pb.RequestHeader.serializeBinaryToWriter
+    );
+  }
+  f = message.getChunk();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      bosdyn_api_data_chunk_pb.DataChunk.serializeBinaryToWriter
+    );
+  }
+  f = message.getLease();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      bosdyn_api_lease_pb.Lease.serializeBinaryToWriter
+    );
+  }
+};
+
+
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.repeatedFields_ = [1,2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    waypointSnapshotsList: jspb.Message.toObjectList(msg.getWaypointSnapshotsList(),
+    bosdyn_api_graph_nav_map_pb.WaypointSnapshot.toObject, includeInstance),
+    edgeSnapshotsList: jspb.Message.toObjectList(msg.getEdgeSnapshotsList(),
+    bosdyn_api_graph_nav_map_pb.EdgeSnapshot.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots;
+  return proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_graph_nav_map_pb.WaypointSnapshot;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.WaypointSnapshot.deserializeBinaryFromReader);
+      msg.addWaypointSnapshots(value);
+      break;
+    case 2:
+      var value = new bosdyn_api_graph_nav_map_pb.EdgeSnapshot;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.EdgeSnapshot.deserializeBinaryFromReader);
+      msg.addEdgeSnapshots(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getWaypointSnapshotsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      bosdyn_api_graph_nav_map_pb.WaypointSnapshot.serializeBinaryToWriter
+    );
+  }
+  f = message.getEdgeSnapshotsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      bosdyn_api_graph_nav_map_pb.EdgeSnapshot.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * repeated WaypointSnapshot waypoint_snapshots = 1;
+ * @return {!Array<!proto.bosdyn.api.graph_nav.WaypointSnapshot>}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.getWaypointSnapshotsList = function() {
+  return /** @type{!Array<!proto.bosdyn.api.graph_nav.WaypointSnapshot>} */ (
+    jspb.Message.getRepeatedWrapperField(this, bosdyn_api_graph_nav_map_pb.WaypointSnapshot, 1));
+};
+
+
+/**
+ * @param {!Array<!proto.bosdyn.api.graph_nav.WaypointSnapshot>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.setWaypointSnapshotsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.WaypointSnapshot=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.WaypointSnapshot}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.addWaypointSnapshots = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.bosdyn.api.graph_nav.WaypointSnapshot, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.clearWaypointSnapshotsList = function() {
+  return this.setWaypointSnapshotsList([]);
+};
+
+
+/**
+ * repeated EdgeSnapshot edge_snapshots = 2;
+ * @return {!Array<!proto.bosdyn.api.graph_nav.EdgeSnapshot>}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.getEdgeSnapshotsList = function() {
+  return /** @type{!Array<!proto.bosdyn.api.graph_nav.EdgeSnapshot>} */ (
+    jspb.Message.getRepeatedWrapperField(this, bosdyn_api_graph_nav_map_pb.EdgeSnapshot, 2));
+};
+
+
+/**
+ * @param {!Array<!proto.bosdyn.api.graph_nav.EdgeSnapshot>} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.setEdgeSnapshotsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.EdgeSnapshot=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.EdgeSnapshot}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.addEdgeSnapshots = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.bosdyn.api.graph_nav.EdgeSnapshot, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.Snapshots.prototype.clearEdgeSnapshotsList = function() {
+  return this.setEdgeSnapshotsList([]);
+};
+
+
+/**
+ * optional bosdyn.api.RequestHeader header = 1;
+ * @return {?proto.bosdyn.api.RequestHeader}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.getHeader = function() {
+  return /** @type{?proto.bosdyn.api.RequestHeader} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_header_pb.RequestHeader, 1));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.RequestHeader|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.setHeader = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.clearHeader = function() {
+  return this.setHeader(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.hasHeader = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional bosdyn.api.DataChunk chunk = 2;
+ * @return {?proto.bosdyn.api.DataChunk}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.getChunk = function() {
+  return /** @type{?proto.bosdyn.api.DataChunk} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_data_chunk_pb.DataChunk, 2));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.DataChunk|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.setChunk = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.clearChunk = function() {
+  return this.setChunk(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.hasChunk = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional bosdyn.api.Lease lease = 3;
+ * @return {?proto.bosdyn.api.Lease}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.getLease = function() {
+  return /** @type{?proto.bosdyn.api.Lease} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_lease_pb.Lease, 3));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.Lease|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.setLease = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.clearLease = function() {
+  return this.setLease(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsRequest.prototype.hasLease = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    header: (f = msg.getHeader()) && bosdyn_api_header_pb.ResponseHeader.toObject(includeInstance, f),
+    leaseUseResult: (f = msg.getLeaseUseResult()) && bosdyn_api_lease_pb.LeaseUseResult.toObject(includeInstance, f),
+    status: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    sensorStatus: (f = msg.getSensorStatus()) && proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject(includeInstance, f),
+    mapStats: (f = msg.getMapStats()) && bosdyn_api_graph_nav_map_pb.MapStats.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.UploadSnapshotsResponse;
+  return proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_header_pb.ResponseHeader;
+      reader.readMessage(value,bosdyn_api_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      msg.setHeader(value);
+      break;
+    case 2:
+      var value = new bosdyn_api_lease_pb.LeaseUseResult;
+      reader.readMessage(value,bosdyn_api_lease_pb.LeaseUseResult.deserializeBinaryFromReader);
+      msg.setLeaseUseResult(value);
+      break;
+    case 3:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.Status} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    case 4:
+      var value = new proto.bosdyn.api.graph_nav.SensorCompatibilityStatus;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.deserializeBinaryFromReader);
+      msg.setSensorStatus(value);
+      break;
+    case 5:
+      var value = new bosdyn_api_graph_nav_map_pb.MapStats;
+      reader.readMessage(value,bosdyn_api_graph_nav_map_pb.MapStats.deserializeBinaryFromReader);
+      msg.setMapStats(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHeader();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      bosdyn_api_header_pb.ResponseHeader.serializeBinaryToWriter
+    );
+  }
+  f = message.getLeaseUseResult();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      bosdyn_api_lease_pb.LeaseUseResult.serializeBinaryToWriter
+    );
+  }
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      3,
+      f
+    );
+  }
+  f = message.getSensorStatus();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.serializeBinaryToWriter
+    );
+  }
+  f = message.getMapStats();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      bosdyn_api_graph_nav_map_pb.MapStats.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.Status = {
+  STATUS_UNKNOWN: 0,
+  STATUS_OK: 1,
+  STATUS_INCOMPATIBLE_SENSORS: 2
+};
+
+/**
+ * optional bosdyn.api.ResponseHeader header = 1;
+ * @return {?proto.bosdyn.api.ResponseHeader}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.getHeader = function() {
+  return /** @type{?proto.bosdyn.api.ResponseHeader} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_header_pb.ResponseHeader, 1));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.ResponseHeader|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.setHeader = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.clearHeader = function() {
+  return this.setHeader(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.hasHeader = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional bosdyn.api.LeaseUseResult lease_use_result = 2;
+ * @return {?proto.bosdyn.api.LeaseUseResult}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.getLeaseUseResult = function() {
+  return /** @type{?proto.bosdyn.api.LeaseUseResult} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_lease_pb.LeaseUseResult, 2));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.LeaseUseResult|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.setLeaseUseResult = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.clearLeaseUseResult = function() {
+  return this.setLeaseUseResult(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.hasLeaseUseResult = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional Status status = 3;
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.Status}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.getStatus = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.Status} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.Status} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.setStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 3, value);
+};
+
+
+/**
+ * optional SensorCompatibilityStatus sensor_status = 4;
+ * @return {?proto.bosdyn.api.graph_nav.SensorCompatibilityStatus}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.getSensorStatus = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.SensorCompatibilityStatus} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.SensorCompatibilityStatus, 4));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.SensorCompatibilityStatus|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.setSensorStatus = function(value) {
+  return jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.clearSensorStatus = function() {
+  return this.setSensorStatus(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.hasSensorStatus = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional MapStats map_stats = 5;
+ * @return {?proto.bosdyn.api.graph_nav.MapStats}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.getMapStats = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.MapStats} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_graph_nav_map_pb.MapStats, 5));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.MapStats|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.setMapStats = function(value) {
+  return jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.UploadSnapshotsResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.clearMapStats = function() {
+  return this.setMapStats(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.UploadSnapshotsResponse.prototype.hasMapStats = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 
@@ -10782,6 +16156,659 @@ proto.bosdyn.api.graph_nav.DownloadEdgeSnapshotResponse.prototype.clearChunk = f
  */
 proto.bosdyn.api.graph_nav.DownloadEdgeSnapshotResponse.prototype.hasChunk = function() {
   return jspb.Message.getField(this, 5) != null;
+};
+
+
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.repeatedFields_ = [1,2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.AreaCallbackServiceError.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    missingServicesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
+    faultedServicesList: jspb.Message.toObjectList(msg.getFaultedServicesList(),
+    bosdyn_api_service_fault_pb.ServiceFault.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError}
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.AreaCallbackServiceError;
+  return proto.bosdyn.api.graph_nav.AreaCallbackServiceError.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError}
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addMissingServices(value);
+      break;
+    case 2:
+      var value = new bosdyn_api_service_fault_pb.ServiceFault;
+      reader.readMessage(value,bosdyn_api_service_fault_pb.ServiceFault.deserializeBinaryFromReader);
+      msg.addFaultedServices(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.AreaCallbackServiceError.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMissingServicesList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      1,
+      f
+    );
+  }
+  f = message.getFaultedServicesList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      bosdyn_api_service_fault_pb.ServiceFault.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * repeated string missing_services = 1;
+ * @return {!Array<string>}
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.getMissingServicesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError} returns this
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.setMissingServicesList = function(value) {
+  return jspb.Message.setField(this, 1, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError} returns this
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.addMissingServices = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError} returns this
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.clearMissingServicesList = function() {
+  return this.setMissingServicesList([]);
+};
+
+
+/**
+ * repeated bosdyn.api.ServiceFault faulted_services = 2;
+ * @return {!Array<!proto.bosdyn.api.ServiceFault>}
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.getFaultedServicesList = function() {
+  return /** @type{!Array<!proto.bosdyn.api.ServiceFault>} */ (
+    jspb.Message.getRepeatedWrapperField(this, bosdyn_api_service_fault_pb.ServiceFault, 2));
+};
+
+
+/**
+ * @param {!Array<!proto.bosdyn.api.ServiceFault>} value
+ * @return {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError} returns this
+*/
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.setFaultedServicesList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.ServiceFault=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.bosdyn.api.ServiceFault}
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.addFaultedServices = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.bosdyn.api.ServiceFault, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.bosdyn.api.graph_nav.AreaCallbackServiceError} returns this
+ */
+proto.bosdyn.api.graph_nav.AreaCallbackServiceError.prototype.clearFaultedServicesList = function() {
+  return this.setFaultedServicesList([]);
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.ValidateGraphRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.ValidateGraphRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    header: (f = msg.getHeader()) && bosdyn_api_header_pb.RequestHeader.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphRequest}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.ValidateGraphRequest;
+  return proto.bosdyn.api.graph_nav.ValidateGraphRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.ValidateGraphRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphRequest}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_header_pb.RequestHeader;
+      reader.readMessage(value,bosdyn_api_header_pb.RequestHeader.deserializeBinaryFromReader);
+      msg.setHeader(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.ValidateGraphRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.ValidateGraphRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHeader();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      bosdyn_api_header_pb.RequestHeader.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional bosdyn.api.RequestHeader header = 1;
+ * @return {?proto.bosdyn.api.RequestHeader}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.prototype.getHeader = function() {
+  return /** @type{?proto.bosdyn.api.RequestHeader} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_header_pb.RequestHeader, 1));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.RequestHeader|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphRequest} returns this
+*/
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.prototype.setHeader = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphRequest} returns this
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.prototype.clearHeader = function() {
+  return this.setHeader(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphRequest.prototype.hasHeader = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.bosdyn.api.graph_nav.ValidateGraphResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    header: (f = msg.getHeader()) && bosdyn_api_header_pb.ResponseHeader.toObject(includeInstance, f),
+    status: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    sensorStatus: (f = msg.getSensorStatus()) && proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.toObject(includeInstance, f),
+    areaCallbackError: (f = msg.getAreaCallbackError()) && proto.bosdyn.api.graph_nav.AreaCallbackServiceError.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bosdyn.api.graph_nav.ValidateGraphResponse;
+  return proto.bosdyn.api.graph_nav.ValidateGraphResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new bosdyn_api_header_pb.ResponseHeader;
+      reader.readMessage(value,bosdyn_api_header_pb.ResponseHeader.deserializeBinaryFromReader);
+      msg.setHeader(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.bosdyn.api.graph_nav.ValidateGraphResponse.Status} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    case 3:
+      var value = new proto.bosdyn.api.graph_nav.SensorCompatibilityStatus;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.deserializeBinaryFromReader);
+      msg.setSensorStatus(value);
+      break;
+    case 4:
+      var value = new proto.bosdyn.api.graph_nav.AreaCallbackServiceError;
+      reader.readMessage(value,proto.bosdyn.api.graph_nav.AreaCallbackServiceError.deserializeBinaryFromReader);
+      msg.setAreaCallbackError(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bosdyn.api.graph_nav.ValidateGraphResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHeader();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      bosdyn_api_header_pb.ResponseHeader.serializeBinaryToWriter
+    );
+  }
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = message.getSensorStatus();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.bosdyn.api.graph_nav.SensorCompatibilityStatus.serializeBinaryToWriter
+    );
+  }
+  f = message.getAreaCallbackError();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.bosdyn.api.graph_nav.AreaCallbackServiceError.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.Status = {
+  STATUS_UNKNOWN: 0,
+  STATUS_OK: 1,
+  STATUS_INCOMPATIBLE_SENSORS: 5,
+  STATUS_AREA_CALLBACK_ERROR: 6
+};
+
+/**
+ * optional bosdyn.api.ResponseHeader header = 1;
+ * @return {?proto.bosdyn.api.ResponseHeader}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.getHeader = function() {
+  return /** @type{?proto.bosdyn.api.ResponseHeader} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_header_pb.ResponseHeader, 1));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.ResponseHeader|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.setHeader = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.clearHeader = function() {
+  return this.setHeader(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.hasHeader = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Status status = 2;
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse.Status}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.getStatus = function() {
+  return /** @type {!proto.bosdyn.api.graph_nav.ValidateGraphResponse.Status} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {!proto.bosdyn.api.graph_nav.ValidateGraphResponse.Status} value
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.setStatus = function(value) {
+  return jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional SensorCompatibilityStatus sensor_status = 3;
+ * @return {?proto.bosdyn.api.graph_nav.SensorCompatibilityStatus}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.getSensorStatus = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.SensorCompatibilityStatus} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.SensorCompatibilityStatus, 3));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.SensorCompatibilityStatus|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.setSensorStatus = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.clearSensorStatus = function() {
+  return this.setSensorStatus(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.hasSensorStatus = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional AreaCallbackServiceError area_callback_error = 4;
+ * @return {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.getAreaCallbackError = function() {
+  return /** @type{?proto.bosdyn.api.graph_nav.AreaCallbackServiceError} */ (
+    jspb.Message.getWrapperField(this, proto.bosdyn.api.graph_nav.AreaCallbackServiceError, 4));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.graph_nav.AreaCallbackServiceError|undefined} value
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} returns this
+*/
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.setAreaCallbackError = function(value) {
+  return jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.graph_nav.ValidateGraphResponse} returns this
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.clearAreaCallbackError = function() {
+  return this.setAreaCallbackError(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.graph_nav.ValidateGraphResponse.prototype.hasAreaCallbackError = function() {
+  return jspb.Message.getField(this, 4) != null;
 };
 
 

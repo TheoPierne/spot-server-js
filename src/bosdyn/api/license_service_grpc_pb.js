@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright (c) 2022 Boston Dynamics, Inc.  All rights reserved.
+// Copyright (c) 2023 Boston Dynamics, Inc.  All rights reserved.
 //
 // Downloading, reproducing, distributing or otherwise using the SDK Software
 // is subject to the terms and conditions of the Boston Dynamics Software
@@ -71,8 +71,8 @@ getLicenseInfo: {
     responseSerialize: serialize_bosdyn_api_GetLicenseInfoResponse,
     responseDeserialize: deserialize_bosdyn_api_GetLicenseInfoResponse,
   },
-  // Check if specific features (identified by string names) are enabled under the currently loaded
-// license for this robot.
+  // Check if specific features (identified by string names) are enabled under the currently
+// loaded license for this robot.
 getFeatureEnabled: {
     path: '/bosdyn.api.LicenseService/GetFeatureEnabled',
     requestStream: false,
@@ -86,4 +86,4 @@ getFeatureEnabled: {
   },
 };
 
-exports.LicenseServiceClient = grpc.makeGenericClientConstructor(LicenseServiceService);
+exports.LicenseServiceClient = grpc.makeGenericClientConstructor(LicenseServiceService, 'LicenseService');

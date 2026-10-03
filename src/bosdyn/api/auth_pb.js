@@ -13,7 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var bosdyn_api_header_pb = require('../../bosdyn/api/header_pb.js');
 goog.object.extend(proto, bosdyn_api_header_pb);
@@ -97,8 +103,7 @@ proto.bosdyn.api.GetAuthTokenRequest.toObject = function(includeInstance, msg) {
     header: (f = msg.getHeader()) && bosdyn_api_header_pb.RequestHeader.toObject(includeInstance, f),
     username: jspb.Message.getFieldWithDefault(msg, 2, ""),
     password: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    token: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    applicationToken: jspb.Message.getFieldWithDefault(msg, 5, "")
+    token: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -151,10 +156,6 @@ proto.bosdyn.api.GetAuthTokenRequest.deserializeBinaryFromReader = function(msg,
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setToken(value);
-      break;
-    case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setApplicationToken(value);
       break;
     default:
       reader.skipField();
@@ -211,13 +212,6 @@ proto.bosdyn.api.GetAuthTokenRequest.serializeBinaryToWriter = function(message,
   if (f.length > 0) {
     writer.writeString(
       4,
-      f
-    );
-  }
-  f = message.getApplicationToken();
-  if (f.length > 0) {
-    writer.writeString(
-      5,
       f
     );
   }
@@ -312,24 +306,6 @@ proto.bosdyn.api.GetAuthTokenRequest.prototype.getToken = function() {
  */
 proto.bosdyn.api.GetAuthTokenRequest.prototype.setToken = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
-};
-
-
-/**
- * optional string application_token = 5;
- * @return {string}
- */
-proto.bosdyn.api.GetAuthTokenRequest.prototype.getApplicationToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.bosdyn.api.GetAuthTokenRequest} returns this
- */
-proto.bosdyn.api.GetAuthTokenRequest.prototype.setApplicationToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -479,9 +455,7 @@ proto.bosdyn.api.GetAuthTokenResponse.Status = {
   STATUS_OK: 1,
   STATUS_INVALID_LOGIN: 2,
   STATUS_INVALID_TOKEN: 3,
-  STATUS_TEMPORARILY_LOCKED_OUT: 4,
-  STATUS_INVALID_APPLICATION_TOKEN: 5,
-  STATUS_EXPIRED_APPLICATION_TOKEN: 6
+  STATUS_TEMPORARILY_LOCKED_OUT: 4
 };
 
 /**

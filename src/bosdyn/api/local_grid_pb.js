@@ -13,7 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var bosdyn_api_geometry_pb = require('../../bosdyn/api/geometry_pb.js');
 goog.object.extend(proto, bosdyn_api_geometry_pb);
@@ -721,7 +727,8 @@ proto.bosdyn.api.LocalGrid.toObject = function(includeInstance, msg) {
     data: msg.getData_asB64(),
     rleCountsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f,
     cellValueScale: jspb.Message.getFloatingPointFieldWithDefault(msg, 8, 0.0),
-    cellValueOffset: jspb.Message.getFloatingPointFieldWithDefault(msg, 9, 0.0)
+    cellValueOffset: jspb.Message.getFloatingPointFieldWithDefault(msg, 9, 0.0),
+    unknownCells: msg.getUnknownCells_asB64()
   };
 
   if (includeInstance) {
@@ -806,6 +813,10 @@ proto.bosdyn.api.LocalGrid.deserializeBinaryFromReader = function(msg, reader) {
     case 9:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setCellValueOffset(value);
+      break;
+    case 10:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setUnknownCells(value);
       break;
     default:
       reader.skipField();
@@ -913,6 +924,13 @@ proto.bosdyn.api.LocalGrid.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0.0) {
     writer.writeDouble(
       9,
+      f
+    );
+  }
+  f = message.getUnknownCells_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      10,
       f
     );
   }
@@ -1236,6 +1254,48 @@ proto.bosdyn.api.LocalGrid.prototype.getCellValueOffset = function() {
  */
 proto.bosdyn.api.LocalGrid.prototype.setCellValueOffset = function(value) {
   return jspb.Message.setProto3FloatField(this, 9, value);
+};
+
+
+/**
+ * optional bytes unknown_cells = 10;
+ * @return {!(string|Uint8Array)}
+ */
+proto.bosdyn.api.LocalGrid.prototype.getUnknownCells = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * optional bytes unknown_cells = 10;
+ * This is a type-conversion wrapper around `getUnknownCells()`
+ * @return {string}
+ */
+proto.bosdyn.api.LocalGrid.prototype.getUnknownCells_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getUnknownCells()));
+};
+
+
+/**
+ * optional bytes unknown_cells = 10;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getUnknownCells()`
+ * @return {!Uint8Array}
+ */
+proto.bosdyn.api.LocalGrid.prototype.getUnknownCells_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getUnknownCells()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.bosdyn.api.LocalGrid} returns this
+ */
+proto.bosdyn.api.LocalGrid.prototype.setUnknownCells = function(value) {
+  return jspb.Message.setProto3BytesField(this, 10, value);
 };
 
 

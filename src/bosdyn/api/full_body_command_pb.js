@@ -13,7 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var bosdyn_api_basic_command_pb = require('../../bosdyn/api/basic_command_pb.js');
 goog.object.extend(proto, bosdyn_api_basic_command_pb);
@@ -199,7 +205,7 @@ proto.bosdyn.api.FullBodyCommand.serializeBinaryToWriter = function(message, wri
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.bosdyn.api.FullBodyCommand.Request.oneofGroups_ = [[1,2,3,4,5,6,7]];
+proto.bosdyn.api.FullBodyCommand.Request.oneofGroups_ = [[1,2,3,4,5,6,7,8]];
 
 /**
  * @enum {number}
@@ -212,7 +218,8 @@ proto.bosdyn.api.FullBodyCommand.Request.CommandCase = {
   SAFE_POWER_OFF_REQUEST: 4,
   BATTERY_CHANGE_POSE_REQUEST: 5,
   PAYLOAD_ESTIMATION_REQUEST: 6,
-  CONSTRAINED_MANIPULATION_REQUEST: 7
+  CONSTRAINED_MANIPULATION_REQUEST: 7,
+  JOINT_REQUEST: 8
 };
 
 /**
@@ -260,6 +267,7 @@ proto.bosdyn.api.FullBodyCommand.Request.toObject = function(includeInstance, ms
     batteryChangePoseRequest: (f = msg.getBatteryChangePoseRequest()) && bosdyn_api_basic_command_pb.BatteryChangePoseCommand.Request.toObject(includeInstance, f),
     payloadEstimationRequest: (f = msg.getPayloadEstimationRequest()) && bosdyn_api_payload_estimation_pb.PayloadEstimationCommand.Request.toObject(includeInstance, f),
     constrainedManipulationRequest: (f = msg.getConstrainedManipulationRequest()) && bosdyn_api_basic_command_pb.ConstrainedManipulationCommand.Request.toObject(includeInstance, f),
+    jointRequest: (f = msg.getJointRequest()) && bosdyn_api_basic_command_pb.JointCommand.Request.toObject(includeInstance, f),
     params: (f = msg.getParams()) && google_protobuf_any_pb.Any.toObject(includeInstance, f)
   };
 
@@ -331,6 +339,11 @@ proto.bosdyn.api.FullBodyCommand.Request.deserializeBinaryFromReader = function(
       var value = new bosdyn_api_basic_command_pb.ConstrainedManipulationCommand.Request;
       reader.readMessage(value,bosdyn_api_basic_command_pb.ConstrainedManipulationCommand.Request.deserializeBinaryFromReader);
       msg.setConstrainedManipulationRequest(value);
+      break;
+    case 8:
+      var value = new bosdyn_api_basic_command_pb.JointCommand.Request;
+      reader.readMessage(value,bosdyn_api_basic_command_pb.JointCommand.Request.deserializeBinaryFromReader);
+      msg.setJointRequest(value);
       break;
     case 100:
       var value = new google_protobuf_any_pb.Any;
@@ -420,6 +433,14 @@ proto.bosdyn.api.FullBodyCommand.Request.serializeBinaryToWriter = function(mess
       7,
       f,
       bosdyn_api_basic_command_pb.ConstrainedManipulationCommand.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getJointRequest();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      bosdyn_api_basic_command_pb.JointCommand.Request.serializeBinaryToWriter
     );
   }
   f = message.getParams();
@@ -693,6 +714,43 @@ proto.bosdyn.api.FullBodyCommand.Request.prototype.hasConstrainedManipulationReq
 
 
 /**
+ * optional JointCommand.Request joint_request = 8;
+ * @return {?proto.bosdyn.api.JointCommand.Request}
+ */
+proto.bosdyn.api.FullBodyCommand.Request.prototype.getJointRequest = function() {
+  return /** @type{?proto.bosdyn.api.JointCommand.Request} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_basic_command_pb.JointCommand.Request, 8));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.JointCommand.Request|undefined} value
+ * @return {!proto.bosdyn.api.FullBodyCommand.Request} returns this
+*/
+proto.bosdyn.api.FullBodyCommand.Request.prototype.setJointRequest = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 8, proto.bosdyn.api.FullBodyCommand.Request.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.FullBodyCommand.Request} returns this
+ */
+proto.bosdyn.api.FullBodyCommand.Request.prototype.clearJointRequest = function() {
+  return this.setJointRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.FullBodyCommand.Request.prototype.hasJointRequest = function() {
+  return jspb.Message.getField(this, 8) != null;
+};
+
+
+/**
  * optional google.protobuf.Any params = 100;
  * @return {?proto.google.protobuf.Any}
  */
@@ -738,7 +796,7 @@ proto.bosdyn.api.FullBodyCommand.Request.prototype.hasParams = function() {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.bosdyn.api.FullBodyCommand.Feedback.oneofGroups_ = [[1,2,3,4,5,6,7]];
+proto.bosdyn.api.FullBodyCommand.Feedback.oneofGroups_ = [[1,2,3,4,5,6,7,8]];
 
 /**
  * @enum {number}
@@ -751,7 +809,8 @@ proto.bosdyn.api.FullBodyCommand.Feedback.FeedbackCase = {
   SAFE_POWER_OFF_FEEDBACK: 4,
   BATTERY_CHANGE_POSE_FEEDBACK: 5,
   PAYLOAD_ESTIMATION_FEEDBACK: 6,
-  CONSTRAINED_MANIPULATION_FEEDBACK: 7
+  CONSTRAINED_MANIPULATION_FEEDBACK: 7,
+  JOINT_FEEDBACK: 8
 };
 
 /**
@@ -799,6 +858,7 @@ proto.bosdyn.api.FullBodyCommand.Feedback.toObject = function(includeInstance, m
     batteryChangePoseFeedback: (f = msg.getBatteryChangePoseFeedback()) && bosdyn_api_basic_command_pb.BatteryChangePoseCommand.Feedback.toObject(includeInstance, f),
     payloadEstimationFeedback: (f = msg.getPayloadEstimationFeedback()) && bosdyn_api_payload_estimation_pb.PayloadEstimationCommand.Feedback.toObject(includeInstance, f),
     constrainedManipulationFeedback: (f = msg.getConstrainedManipulationFeedback()) && bosdyn_api_basic_command_pb.ConstrainedManipulationCommand.Feedback.toObject(includeInstance, f),
+    jointFeedback: (f = msg.getJointFeedback()) && bosdyn_api_basic_command_pb.JointCommand.Feedback.toObject(includeInstance, f),
     status: jspb.Message.getFieldWithDefault(msg, 100, 0)
   };
 
@@ -870,6 +930,11 @@ proto.bosdyn.api.FullBodyCommand.Feedback.deserializeBinaryFromReader = function
       var value = new bosdyn_api_basic_command_pb.ConstrainedManipulationCommand.Feedback;
       reader.readMessage(value,bosdyn_api_basic_command_pb.ConstrainedManipulationCommand.Feedback.deserializeBinaryFromReader);
       msg.setConstrainedManipulationFeedback(value);
+      break;
+    case 8:
+      var value = new bosdyn_api_basic_command_pb.JointCommand.Feedback;
+      reader.readMessage(value,bosdyn_api_basic_command_pb.JointCommand.Feedback.deserializeBinaryFromReader);
+      msg.setJointFeedback(value);
       break;
     case 100:
       var value = /** @type {!proto.bosdyn.api.RobotCommandFeedbackStatus.Status} */ (reader.readEnum());
@@ -958,6 +1023,14 @@ proto.bosdyn.api.FullBodyCommand.Feedback.serializeBinaryToWriter = function(mes
       7,
       f,
       bosdyn_api_basic_command_pb.ConstrainedManipulationCommand.Feedback.serializeBinaryToWriter
+    );
+  }
+  f = message.getJointFeedback();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      bosdyn_api_basic_command_pb.JointCommand.Feedback.serializeBinaryToWriter
     );
   }
   f = message.getStatus();
@@ -1226,6 +1299,43 @@ proto.bosdyn.api.FullBodyCommand.Feedback.prototype.clearConstrainedManipulation
  */
 proto.bosdyn.api.FullBodyCommand.Feedback.prototype.hasConstrainedManipulationFeedback = function() {
   return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional JointCommand.Feedback joint_feedback = 8;
+ * @return {?proto.bosdyn.api.JointCommand.Feedback}
+ */
+proto.bosdyn.api.FullBodyCommand.Feedback.prototype.getJointFeedback = function() {
+  return /** @type{?proto.bosdyn.api.JointCommand.Feedback} */ (
+    jspb.Message.getWrapperField(this, bosdyn_api_basic_command_pb.JointCommand.Feedback, 8));
+};
+
+
+/**
+ * @param {?proto.bosdyn.api.JointCommand.Feedback|undefined} value
+ * @return {!proto.bosdyn.api.FullBodyCommand.Feedback} returns this
+*/
+proto.bosdyn.api.FullBodyCommand.Feedback.prototype.setJointFeedback = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 8, proto.bosdyn.api.FullBodyCommand.Feedback.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.bosdyn.api.FullBodyCommand.Feedback} returns this
+ */
+proto.bosdyn.api.FullBodyCommand.Feedback.prototype.clearJointFeedback = function() {
+  return this.setJointFeedback(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.bosdyn.api.FullBodyCommand.Feedback.prototype.hasJointFeedback = function() {
+  return jspb.Message.getField(this, 8) != null;
 };
 
 

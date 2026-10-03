@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright (c) 2022 Boston Dynamics, Inc.  All rights reserved.
+// Copyright (c) 2023 Boston Dynamics, Inc.  All rights reserved.
 //
 // Downloading, reproducing, distributing or otherwise using the SDK Software
 // is subject to the terms and conditions of the Boston Dynamics Software
@@ -99,8 +99,31 @@ function deserialize_bosdyn_api_RobotStateResponse(buffer_arg) {
   return bosdyn_api_robot_state_pb.RobotStateResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_bosdyn_api_RobotStateStreamRequest(arg) {
+  if (!(arg instanceof bosdyn_api_robot_state_pb.RobotStateStreamRequest)) {
+    throw new Error('Expected argument of type bosdyn.api.RobotStateStreamRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
 
-// The robot state service tracks all information about the measured and computed states of the robot at the current time.
+function deserialize_bosdyn_api_RobotStateStreamRequest(buffer_arg) {
+  return bosdyn_api_robot_state_pb.RobotStateStreamRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_RobotStateStreamResponse(arg) {
+  if (!(arg instanceof bosdyn_api_robot_state_pb.RobotStateStreamResponse)) {
+    throw new Error('Expected argument of type bosdyn.api.RobotStateStreamResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_RobotStateStreamResponse(buffer_arg) {
+  return bosdyn_api_robot_state_pb.RobotStateStreamResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+
+// The robot state service tracks all information about the measured and computed states of the
+// robot at the current time.
 var RobotStateServiceService = exports.RobotStateServiceService = {
   // Get robot state information (such as kinematic state, power state, or faults).
 getRobotState: {
@@ -138,7 +161,7 @@ getRobotHardwareConfiguration: {
     responseSerialize: serialize_bosdyn_api_RobotHardwareConfigurationResponse,
     responseDeserialize: deserialize_bosdyn_api_RobotHardwareConfigurationResponse,
   },
-  // Returns the OBJ file for a specifc robot link. Intended to be called after
+  // Returns the OBJ file for a specific robot link. Intended to be called after
 // GetRobotHardwareConfiguration, using the link names returned by that call.
 getRobotLinkModel: {
     path: '/bosdyn.api.RobotStateService/GetRobotLinkModel',
@@ -153,4 +176,21 @@ getRobotLinkModel: {
   },
 };
 
-exports.RobotStateServiceClient = grpc.makeGenericClientConstructor(RobotStateServiceService);
+exports.RobotStateServiceClient = grpc.makeGenericClientConstructor(RobotStateServiceService, 'RobotStateService');
+// This service is in BETA and may undergo changes in future releases.
+var RobotStateStreamingServiceService = exports.RobotStateStreamingServiceService = {
+  // Lightweight Streaming version of RobotState
+getRobotStateStream: {
+    path: '/bosdyn.api.RobotStateStreamingService/GetRobotStateStream',
+    requestStream: false,
+    responseStream: true,
+    requestType: bosdyn_api_robot_state_pb.RobotStateStreamRequest,
+    responseType: bosdyn_api_robot_state_pb.RobotStateStreamResponse,
+    requestSerialize: serialize_bosdyn_api_RobotStateStreamRequest,
+    requestDeserialize: deserialize_bosdyn_api_RobotStateStreamRequest,
+    responseSerialize: serialize_bosdyn_api_RobotStateStreamResponse,
+    responseDeserialize: deserialize_bosdyn_api_RobotStateStreamResponse,
+  },
+};
+
+exports.RobotStateStreamingServiceClient = grpc.makeGenericClientConstructor(RobotStateStreamingServiceService, 'RobotStateStreamingService');

@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright (c) 2022 Boston Dynamics, Inc.  All rights reserved.
+// Copyright (c) 2023 Boston Dynamics, Inc.  All rights reserved.
 //
 // Downloading, reproducing, distributing or otherwise using the SDK Software
 // is subject to the terms and conditions of the Boston Dynamics Software
@@ -99,8 +99,30 @@ function deserialize_bosdyn_api_GetStatusResponse(buffer_arg) {
   return bosdyn_api_data_acquisition_pb.GetStatusResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_bosdyn_api_LiveDataRequest(arg) {
+  if (!(arg instanceof bosdyn_api_data_acquisition_pb.LiveDataRequest)) {
+    throw new Error('Expected argument of type bosdyn.api.LiveDataRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
 
-// The DataAcquisitionService is the main data acquisition service run on robot, which recieves
+function deserialize_bosdyn_api_LiveDataRequest(buffer_arg) {
+  return bosdyn_api_data_acquisition_pb.LiveDataRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_bosdyn_api_LiveDataResponse(arg) {
+  if (!(arg instanceof bosdyn_api_data_acquisition_pb.LiveDataResponse)) {
+    throw new Error('Expected argument of type bosdyn.api.LiveDataResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_bosdyn_api_LiveDataResponse(buffer_arg) {
+  return bosdyn_api_data_acquisition_pb.LiveDataResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+
+// The DataAcquisitionService is the main data acquisition service run on robot, which receives
 // incoming requests and sends queries to all directory-registered DataAcquisitionPluginServices.
 var DataAcquisitionServiceService = exports.DataAcquisitionServiceService = {
   // Trigger a data acquisition to save data and metadata to the data buffer.
@@ -128,7 +150,7 @@ getStatus: {
     responseSerialize: serialize_bosdyn_api_GetStatusResponse,
     responseDeserialize: deserialize_bosdyn_api_GetStatusResponse,
   },
-  // Get information from a DAQ service; lists acquisition capabilities.
+  // Get information from a Data Acquisition service; lists acquisition capabilities.
 getServiceInfo: {
     path: '/bosdyn.api.DataAcquisitionService/GetServiceInfo',
     requestStream: false,
@@ -152,6 +174,19 @@ cancelAcquisition: {
     responseSerialize: serialize_bosdyn_api_CancelAcquisitionResponse,
     responseDeserialize: deserialize_bosdyn_api_CancelAcquisitionResponse,
   },
+  // Request live data available from DAQ plugins during teleoperation.
+// Please use the other RPCs for typical data acquisition.
+getLiveData: {
+    path: '/bosdyn.api.DataAcquisitionService/GetLiveData',
+    requestStream: false,
+    responseStream: false,
+    requestType: bosdyn_api_data_acquisition_pb.LiveDataRequest,
+    responseType: bosdyn_api_data_acquisition_pb.LiveDataResponse,
+    requestSerialize: serialize_bosdyn_api_LiveDataRequest,
+    requestDeserialize: deserialize_bosdyn_api_LiveDataRequest,
+    responseSerialize: serialize_bosdyn_api_LiveDataResponse,
+    responseDeserialize: deserialize_bosdyn_api_LiveDataResponse,
+  },
 };
 
-exports.DataAcquisitionServiceClient = grpc.makeGenericClientConstructor(DataAcquisitionServiceService);
+exports.DataAcquisitionServiceClient = grpc.makeGenericClientConstructor(DataAcquisitionServiceService, 'DataAcquisitionService');

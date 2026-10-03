@@ -13,7 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var bosdyn_api_header_pb = require('../../../bosdyn/api/header_pb.js');
 goog.object.extend(proto, bosdyn_api_header_pb);
@@ -1068,8 +1074,6 @@ proto.bosdyn.api.spot.SpotCheckFeedbackResponse.toObject = function(includeInsta
     loadCellResultsMap: (f = msg.getLoadCellResultsMap()) ? f.toObject(includeInstance, proto.bosdyn.api.spot.LoadCellSpotCheckResult.toObject) : [],
     kinematicCalResultsMap: (f = msg.getKinematicCalResultsMap()) ? f.toObject(includeInstance, proto.bosdyn.api.spot.JointKinematicCheckResult.toObject) : [],
     payloadResult: (f = msg.getPayloadResult()) && proto.bosdyn.api.spot.PayloadCheckResult.toObject(includeInstance, f),
-    footHeightResultsMap: (f = msg.getFootHeightResultsMap()) ? f.toObject(includeInstance, proto.bosdyn.api.spot.FootHeightCheckResult.toObject) : [],
-    legPairResultsMap: (f = msg.getLegPairResultsMap()) ? f.toObject(includeInstance, proto.bosdyn.api.spot.LegPairCheckResult.toObject) : [],
     hipRangeOfMotionResultsMap: (f = msg.getHipRangeOfMotionResultsMap()) ? f.toObject(includeInstance, proto.bosdyn.api.spot.HipRangeOfMotionResult.toObject) : [],
     progress: jspb.Message.getFloatingPointFieldWithDefault(msg, 7, 0.0),
     lastCalTimestamp: (f = msg.getLastCalTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
@@ -1148,18 +1152,6 @@ proto.bosdyn.api.spot.SpotCheckFeedbackResponse.deserializeBinaryFromReader = fu
       var value = new proto.bosdyn.api.spot.PayloadCheckResult;
       reader.readMessage(value,proto.bosdyn.api.spot.PayloadCheckResult.deserializeBinaryFromReader);
       msg.setPayloadResult(value);
-      break;
-    case 10:
-      var value = msg.getFootHeightResultsMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.bosdyn.api.spot.FootHeightCheckResult.deserializeBinaryFromReader, "", new proto.bosdyn.api.spot.FootHeightCheckResult());
-         });
-      break;
-    case 11:
-      var value = msg.getLegPairResultsMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.bosdyn.api.spot.LegPairCheckResult.deserializeBinaryFromReader, "", new proto.bosdyn.api.spot.LegPairCheckResult());
-         });
       break;
     case 13:
       var value = msg.getHipRangeOfMotionResultsMap();
@@ -1254,14 +1246,6 @@ proto.bosdyn.api.spot.SpotCheckFeedbackResponse.serializeBinaryToWriter = functi
       proto.bosdyn.api.spot.PayloadCheckResult.serializeBinaryToWriter
     );
   }
-  f = message.getFootHeightResultsMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(10, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.bosdyn.api.spot.FootHeightCheckResult.serializeBinaryToWriter);
-  }
-  f = message.getLegPairResultsMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(11, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.bosdyn.api.spot.LegPairCheckResult.serializeBinaryToWriter);
-  }
   f = message.getHipRangeOfMotionResultsMap(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(13, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.bosdyn.api.spot.HipRangeOfMotionResult.serializeBinaryToWriter);
@@ -1301,7 +1285,8 @@ proto.bosdyn.api.spot.SpotCheckFeedbackResponse.State = {
   STATE_WAITING_FOR_COMMAND: 10,
   STATE_HIP_RANGE_OF_MOTION_CHECK: 11,
   STATE_GRIPPER_CAL: 12,
-  STATE_SIT_DOWN_AFTER_RUN: 13
+  STATE_SIT_DOWN_AFTER_RUN: 13,
+  STATE_ARM_JOINT_CHECK: 14
 };
 
 /**
@@ -1322,7 +1307,9 @@ proto.bosdyn.api.spot.SpotCheckFeedbackResponse.Error = {
   ERROR_POWER_OFF_FAILURE: 11,
   ERROR_REVERT_FAILURE: 12,
   ERROR_FGKC_FAILURE: 13,
-  ERROR_GRIPPER_CAL_TIMEOUT: 14
+  ERROR_GRIPPER_CAL_TIMEOUT: 14,
+  ERROR_ARM_CHECK_COLLISION: 15,
+  ERROR_ARM_CHECK_TIMEOUT: 16
 };
 
 /**
@@ -1517,50 +1504,6 @@ proto.bosdyn.api.spot.SpotCheckFeedbackResponse.prototype.clearPayloadResult = f
 proto.bosdyn.api.spot.SpotCheckFeedbackResponse.prototype.hasPayloadResult = function() {
   return jspb.Message.getField(this, 8) != null;
 };
-
-
-/**
- * map<string, FootHeightCheckResult> foot_height_results = 10;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,!proto.bosdyn.api.spot.FootHeightCheckResult>}
- */
-proto.bosdyn.api.spot.SpotCheckFeedbackResponse.prototype.getFootHeightResultsMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,!proto.bosdyn.api.spot.FootHeightCheckResult>} */ (
-      jspb.Message.getMapField(this, 10, opt_noLazyCreate,
-      proto.bosdyn.api.spot.FootHeightCheckResult));
-};
-
-
-/**
- * Clears values from the map. The map will be non-null.
- * @return {!proto.bosdyn.api.spot.SpotCheckFeedbackResponse} returns this
- */
-proto.bosdyn.api.spot.SpotCheckFeedbackResponse.prototype.clearFootHeightResultsMap = function() {
-  this.getFootHeightResultsMap().clear();
-  return this;};
-
-
-/**
- * map<string, LegPairCheckResult> leg_pair_results = 11;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,!proto.bosdyn.api.spot.LegPairCheckResult>}
- */
-proto.bosdyn.api.spot.SpotCheckFeedbackResponse.prototype.getLegPairResultsMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,!proto.bosdyn.api.spot.LegPairCheckResult>} */ (
-      jspb.Message.getMapField(this, 11, opt_noLazyCreate,
-      proto.bosdyn.api.spot.LegPairCheckResult));
-};
-
-
-/**
- * Clears values from the map. The map will be non-null.
- * @return {!proto.bosdyn.api.spot.SpotCheckFeedbackResponse} returns this
- */
-proto.bosdyn.api.spot.SpotCheckFeedbackResponse.prototype.clearLegPairResultsMap = function() {
-  this.getLegPairResultsMap().clear();
-  return this;};
 
 
 /**
@@ -2333,7 +2276,9 @@ proto.bosdyn.api.spot.JointKinematicCheckResult.Error = {
   ERROR_UNKNOWN: 0,
   ERROR_NONE: 1,
   ERROR_CLUTCH_SLIP: 2,
-  ERROR_INVALID_RANGE_OF_MOTION: 3
+  ERROR_INVALID_RANGE_OF_MOTION: 3,
+  ERROR_ENCODER_SHIFTED: 4,
+  ERROR_COLLISION: 5
 };
 
 /**
@@ -3749,7 +3694,8 @@ proto.bosdyn.api.spot.CameraCalibrationFeedbackResponse.Status = {
   STATUS_NEVER_RUN: 10,
   STATUS_CAMERA_NOT_DETECTED: 15,
   STATUS_INTRINSIC_WRITE_FAILED: 16,
-  STATUS_EXTRINSIC_WRITE_FAILED: 17
+  STATUS_EXTRINSIC_WRITE_FAILED: 17,
+  STATUS_CALIBRATION_VERIFICATION_FAILED: 18
 };
 
 /**
