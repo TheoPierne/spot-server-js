@@ -37,15 +37,15 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^59.0.2",
     "eslint-plugin-prettier": "^5.5.4",
-    "prettier": "^3.8.1"
+    "prettier": "^3.9.9"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.14.3",
-    "argparse": "^2.0.1",
+    "@grpc/grpc-js": "^1.14.5",
+    "argparse": "^3.0.2",
     "google-protobuf": "^3.21.4",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "luxon": "^3.7.2",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.5",
     "winston": "^3.19.0"
   }
 }
